@@ -13,7 +13,7 @@
   align-items: center;
   justify-content: center;
   background-color: #ffffff !important;
-  padding: 80px 24px 90px;
+  padding: 80px 24px 78px;
   box-sizing: border-box;
 }
 
@@ -200,7 +200,7 @@
   border-radius: 32px;
   overflow: hidden;
   box-shadow: none !important; /* Rule: no box shadow for boxes */
-  background-color: #f1f5f9;
+  background-color: #f3f6f3;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -236,18 +236,22 @@
   background-image: url('/box3.jpg');
 }
 
-/* Subtle Gradient Overlay for Clean Legibility */
+/* Greenish Gradient Overlay matching the Hero Section for Visual Harmony & Clean Legibility */
 .stat-box-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 22%, rgba(15, 23, 42, 0.42) 52%, rgba(15, 23, 42, 0.85) 100%);
+  background: 
+    radial-gradient(circle at 0% 100%, rgba(155, 215, 95, 0.42) 0%, rgba(135, 205, 88, 0.22) 32%, transparent 60%),
+    linear-gradient(180deg, rgba(12, 28, 16, 0) 20%, rgba(16, 36, 20, 0.45) 52%, rgba(10, 26, 14, 0.88) 100%);
   pointer-events: none;
   z-index: 2;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, background 0.4s ease;
 }
 
 .stat-box:hover .stat-box-overlay {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 18%, rgba(15, 23, 42, 0.48) 48%, rgba(15, 23, 42, 0.9) 100%);
+  background: 
+    radial-gradient(circle at 0% 100%, rgba(155, 215, 95, 0.52) 0%, rgba(135, 205, 88, 0.28) 36%, transparent 65%),
+    linear-gradient(180deg, rgba(12, 28, 16, 0) 16%, rgba(16, 36, 20, 0.50) 48%, rgba(10, 26, 14, 0.92) 100%);
 }
 
 .stat-box-content {
@@ -292,7 +296,7 @@
 
 @media (max-width: 768px) {
   .about-quote-section {
-    padding: 60px 20px 70px;
+    padding: 60px 20px 66px;
   }
 
   .about-quote-text {

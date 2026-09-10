@@ -78,16 +78,25 @@
 }
 
 /* Full White CTA Button with Black Text and Sleek Arrow */
+.hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
 .hero-cta-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   background-color: #ffffff;
   color: #000000;
   font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
   font-size: 0.95rem;
   font-weight: 600; /* Crisp semi-bold */
-  padding: 14px 28px;
+  height: 50px;
+  padding: 0 28px;
   border-radius: 9999px;
   border: none;
   width: fit-content;
@@ -95,7 +104,7 @@
   transition: all 0.2s ease;
   cursor: pointer;
   text-decoration: none;
-  margin-top: 6px;
+  box-sizing: border-box;
 }
 
 .hero-cta-btn:hover {
@@ -116,6 +125,87 @@
 
 .hero-cta-btn:hover .sleek-arrow {
   transform: translateX(3px);
+}
+
+/* WhatsApp Icon Button alongside Book a Call */
+.hero-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #25d366;
+  border: none;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.hero-whatsapp-btn:hover {
+  background-color: #f2f4f5;
+  color: #20ba59;
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.hero-whatsapp-icon {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.hero-whatsapp-btn:hover .hero-whatsapp-icon {
+  transform: scale(1.06);
+}
+
+/* ==========================================================================
+   Top Left Brand Logo (matches Footer "abc" logotype)
+   ========================================================================== */
+.hero-logo-box {
+  position: absolute;
+  top: 32px;
+  left: 36px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.hero-logo-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-logo-link:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.hero-logo-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(2rem, 2.8vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #000000;
+  line-height: 1;
+}
+
+.hero-logo-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: var(--accent-blue, #1868db);
+  border-radius: 50%;
+  margin-left: 2px;
 }
 
 /* ==========================================================================
@@ -343,6 +433,20 @@
     gap: 8px;
   }
 
+  .hero-logo-box {
+    top: 20px;
+    left: 20px;
+  }
+
+  .hero-logo-text {
+    font-size: 1.6rem;
+  }
+
+  .hero-logo-dot {
+    width: 5px;
+    height: 5px;
+  }
+
   .hero-contact-btn {
     padding: 8px 16px;
     font-size: 0.82rem;
@@ -359,5 +463,21 @@
 
   .hero-title {
     font-size: 1.95rem;
+  }
+
+  .hero-cta-btn {
+    height: 44px;
+    padding: 0 22px;
+    font-size: 0.9rem;
+  }
+
+  .hero-whatsapp-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .hero-whatsapp-icon {
+    width: 20px;
+    height: 20px;
   }
 }

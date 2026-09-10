@@ -1,108 +1,314 @@
-/* Why Choose Us Section Styles */
+/* ==========================================================================
+   Why Us Section: 80vh Minimalist Split Layout
+   - Pure white background (#ffffff !important)
+   - Left Column: Title, Quote placed directly under Title, and Map Circle Button
+   - Right Column: Big vertically scrolling review cards in low-padding container
+   - Section Height: 80vh
+   ========================================================================== */
+
 .why-us-section {
-  padding: 85px 0;
-  background-color: var(--bg-white);
-}
-
-.why-us-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 55px;
+  width: 100%;
+  min-height: 80vh;
+  background-color: #ffffff !important;
+  display: flex;
   align-items: center;
-}
-
-/* Left Image Placeholder */
-.why-us-placeholder {
-  height: 310px;
-  background: linear-gradient(135deg, #0b2545 0%, #134074 50%, #1d5799 100%);
-  border-radius: 8px;
-  box-shadow: 0 16px 32px rgba(11, 37, 69, 0.15);
+  justify-content: center;
+  padding: clamp(36px, 4.5vh, 56px) 0;
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .why-us-section {
+    height: 80vh;
+  }
+}
+
+/* 2-Column Grid matching container margin */
+.why-us-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  column-gap: clamp(40px, 6vw, 84px);
+  align-items: center;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Left Column: Title, Quote directly underneath, and Map Circle Button
+   ========================================================================== */
+.why-us-left-col {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
+  align-items: flex-start;
+  gap: clamp(20px, 3vh, 32px);
 }
 
-.skyscraper-visual {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  color: #c4d7ec;
-}
-
-.skyscraper-visual svg {
-  width: 72px;
-  height: 72px;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
-}
-
-.skyscraper-visual-text {
-  font-size: 0.9rem;
+.why-us-main-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(3.4rem, 6.5vw, 5.2rem);
   font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #dbe7f6;
-}
-
-/* Right Content */
-.why-us-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.why-us-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #102a5c;
-  letter-spacing: -0.3px;
-}
-
-.why-us-list {
-  list-style: none;
-  padding: 0;
+  color: #000000;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
   margin: 0;
+}
+
+.why-us-quote-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #111827;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+  max-width: 490px;
+}
+
+/* Single Clean Minimalist Circle Map Button (Black & White) */
+.clean-map-circle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 1.5px solid #000000;
+  color: #000000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+  margin-top: 4px;
+}
+
+.clean-map-circle-btn:hover {
+  background-color: #000000;
+  color: #ffffff;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.clean-map-icon {
+  width: 25px;
+  height: 25px;
+  transition: transform 0.25s ease;
+}
+
+.clean-map-circle-btn:hover .clean-map-icon {
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Right Column: Big Vertically Scrolling Cards Container
+   ========================================================================== */
+.why-us-right-col {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  width: 100%;
 }
 
-.why-us-list li {
+/* Container Box with visible border & minimal padding */
+.why-us-scroll-box {
+  width: 100%;
+  height: clamp(470px, 60vh, 550px);
+  background-color: #fafbfc;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 12px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
   position: relative;
-  padding-left: 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1e293b;
-  line-height: 1.5;
 }
 
-.why-us-list li::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  top: -1px;
-  font-size: 1.5rem;
-  color: #1e293b;
+.why-us-scroll-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
+
+.why-us-scroll-track {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  animation: verticalScrollVerySlow 85s linear infinite;
+  will-change: transform;
+}
+
+.why-us-scroll-box:hover .why-us-scroll-track {
+  animation-play-state: paused;
+}
+
+@keyframes verticalScrollVerySlow {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+/* Big Review Card */
+.why-us-big-card {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: clamp(20px, 2.6vh, 24px) clamp(20px, 2.4vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.why-us-big-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06);
+}
+
+/* Big Card Header */
+.big-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+}
+
+.big-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.96rem;
+  flex-shrink: 0;
+}
+
+.big-card-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.big-card-author {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.big-card-stats {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+.big-card-google-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Big Card Rating & Time */
+.big-card-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0;
+}
+
+.big-card-stars {
+  color: #f59e0b;
+  font-size: 0.98rem;
+  letter-spacing: 2.5px;
   line-height: 1;
 }
 
-@media (max-width: 868px) {
-  .why-us-grid {
+.big-card-time {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+/* Big Card Quote */
+.big-card-quote {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #334155;
+  margin: 0;
+}
+
+/* Big Card Footer */
+.big-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid #f8fafc;
+}
+
+.big-card-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 960px) {
+  .why-us-section {
+    height: auto;
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  .why-us-layout {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 40px;
   }
 
-  .why-us-placeholder {
-    order: 2;
-    height: 240px;
-  }
-
-  .why-us-content {
-    order: 1;
+  .why-us-scroll-box {
+    height: 480px;
   }
 }
+
+
+

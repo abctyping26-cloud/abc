@@ -1,20 +1,21 @@
 /* ==========================================================================
-   What We Do Section: Organic Flowing Cloud (100vh Minimalist Layout)
+   What We Do Section: Organic Flowing Constellation (100vh Minimalist Layout)
    - Central "What We Do" title at visual & focal center (borderless)
    - Surrounded by 42 minimalist black rectangular buttons
    - Flowing, staggered, non-row organic scatter (NO rigid brick-wall grid)
+   - Guaranteed clearance: NO overlaps, NO sticking, perfectly balanced spacing
    - Gentle ambient float micro-motions
    - Strict rule: Pure monochrome (Black / White / Grayscale), NO colors
    ========================================================================== */
 
 .what-we-do-section {
   width: 100%;
-  min-height: 100vh;
+  min-height: auto;
   background-color: #ffffff !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 24px;
+  padding: 52px 24px 60px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -22,43 +23,71 @@
 
 .what-we-do-container {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 22px;
 }
 
-/* Organic Flowing Streams (staggered interleaving) */
+/* Organic Flowing Streams (staggered interleaving with alternating wave offsets) */
 .what-we-do-stream {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 15px 16px;
+  gap: 16px;
   width: 100%;
+  flex-wrap: nowrap;
 }
 
-/* Middle Tier: Left Crescent + Central Title Hub + Right Crescent */
+/* Horizontal Wave Shifts: Breaks column alignment completely so buttons don't look like brick grid */
+.stream-shift-1 { transform: translateX(-18px); }
+.stream-shift-2 { transform: translateX(16px); }
+.stream-shift-3 { transform: translateX(-10px); }
+.stream-shift-4 { transform: translateX(14px); }
+.stream-shift-5 { transform: translateX(-16px); }
+.stream-shift-6 { transform: translateX(10px); }
+
+/* Middle Tier: Left Flank + Central Title Hub + Right Flank */
 .what-we-do-middle-tier {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   width: 100%;
-  margin: 10px 0;
+  margin: 4px 0;
 }
 
-.what-we-do-crescent {
+/* Flanks on left and right of title: structured as 2 sub-rows of 2 items */
+.what-we-do-flank {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 14px 16px;
-  max-width: 400px;
-  flex: 1 1 360px;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1 1 380px;
+  max-width: 440px;
 }
+
+.what-we-do-flank-left {
+  align-items: flex-end;
+}
+
+.what-we-do-flank-right {
+  align-items: flex-start;
+}
+
+.what-we-do-flank-subrow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+/* Subtle crescent contour curving around the title */
+.flank-curve-top-left { margin-right: 18px; }
+.flank-curve-bottom-left { margin-right: 4px; }
+.flank-curve-top-right { margin-left: 18px; }
+.flank-curve-bottom-right { margin-left: 4px; }
 
 /* Center Hub Title Block - Clean & Borderless */
 .what-we-do-center-hub {
@@ -67,7 +96,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 10px 32px;
+  padding: 6px 36px;
   background-color: transparent;
   border: none;
   box-shadow: none !important;
@@ -77,17 +106,17 @@
 
 .what-we-do-kicker {
   font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #71717a;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .what-we-do-main-title {
   font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
-  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  font-size: clamp(2.6rem, 4.6vw, 3.8rem);
   font-weight: 700;
   color: #000000;
   letter-spacing: -0.04em;
@@ -95,18 +124,162 @@
   margin: 0;
 }
 
+/* Capsule Search Bar - Clean & Minimalist */
+.what-we-do-search-capsule {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  height: 42px;
+  padding: 0 14px;
+  margin-top: 14px;
+  background-color: #ffffff;
+  border: 1px solid #18181b;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, max-width 0.2s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.what-we-do-search-capsule:focus-within {
+  border-color: #000000;
+  box-shadow: 0 0 0 1px #000000;
+}
+
+.search-capsule-icon {
+  color: #71717a;
+  flex-shrink: 0;
+  margin-right: 9px;
+  transition: color 0.2s ease;
+}
+
+.what-we-do-search-capsule:focus-within .search-capsule-icon {
+  color: #000000;
+}
+
+.search-input-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.search-ghost-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family) !important;
+  font-size: 0.86rem !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  white-space: pre;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  line-height: normal;
+}
+
+.ghost-prefix {
+  visibility: hidden;
+  white-space: pre;
+}
+
+.ghost-suffix {
+  color: #a1a1aa;
+  white-space: pre;
+  opacity: 0.9;
+}
+
+.ghost-placeholder {
+  color: #a1a1aa;
+  font-weight: 400;
+  white-space: pre;
+}
+
+.search-capsule-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family) !important;
+  font-size: 0.86rem !important;
+  font-weight: 500 !important;
+  color: #000000;
+  letter-spacing: -0.01em !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: normal;
+}
+
+.search-tab-badge {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #71717a;
+  background-color: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  border-radius: 4px;
+  padding: 1px 5px;
+  margin-left: 6px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  z-index: 5;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  line-height: 1.2;
+}
+
+.search-tab-badge:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.search-capsule-clear {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: #71717a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color 0.18s ease;
+  flex-shrink: 0;
+  margin-left: 6px;
+  z-index: 5;
+}
+
+.search-capsule-clear:hover {
+  color: #000000;
+}
+
 /* Rectangular Minimalist Service Buttons */
 .service-rect-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 19px;
+  padding: 9px 18px;
   background-color: #ffffff;
   color: #000000;
   border: 1px solid #18181b;
   border-radius: 8px;
   font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 500;
   letter-spacing: -0.01em;
   white-space: nowrap;
@@ -114,8 +287,8 @@
   cursor: default;
   user-select: none;
   position: relative;
-  will-change: transform;
-  transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+  will-change: transform, opacity;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.22s ease, filter 0.22s ease;
 }
 
 .service-rect-btn:hover {
@@ -126,27 +299,40 @@
   animation-play-state: paused !important;
 }
 
-/* ==========================================================================
-   Organic Stagger Offsets: Breaks horizontal row baselines completely
-   ========================================================================== */
-.drift-up-1 { --base-y: -14px; transform: translateY(-14px); }
-.drift-down-1 { --base-y: 15px; transform: translateY(15px); }
-.drift-up-2 { --base-y: -9px; transform: translateY(-9px); }
-.drift-down-2 { --base-y: 12px; transform: translateY(12px); }
-.drift-up-3 { --base-y: -17px; transform: translateY(-17px); }
-.drift-down-3 { --base-y: 18px; transform: translateY(18px); }
-.drift-up-4 { --base-y: -6px; transform: translateY(-6px); }
-.drift-down-4 { --base-y: 9px; transform: translateY(9px); }
+.service-rect-btn.btn-dimmed {
+  opacity: 0.15 !important;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.service-rect-btn.btn-matched {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  z-index: 20;
+}
 
 /* ==========================================================================
-   Gentle Ambient Floating Micro-Motions
+   Controlled Organic Stagger Offsets:
+   - Subtle vertical jitter (max ±4px) with guaranteed clearance in 22px row gap
+   ========================================================================== */
+.drift-up-1 { --base-y: -4px; transform: translateY(-4px); }
+.drift-down-1 { --base-y: 4px; transform: translateY(4px); }
+.drift-up-2 { --base-y: -3px; transform: translateY(-3px); }
+.drift-down-2 { --base-y: 3px; transform: translateY(3px); }
+.drift-up-3 { --base-y: -4px; transform: translateY(-4px); }
+.drift-down-3 { --base-y: 4px; transform: translateY(4px); }
+.drift-zero { --base-y: 0px; transform: translateY(0px); }
+
+/* ==========================================================================
+   Gentle Ambient Floating Micro-Motions (bounded ±2.2px Y, ±1.2px X)
    ========================================================================== */
 @keyframes float-drift-a {
   0%, 100% {
     transform: translateY(var(--base-y, 0)) translateX(0);
   }
   50% {
-    transform: translateY(calc(var(--base-y, 0) - 5px)) translateX(2px);
+    transform: translateY(calc(var(--base-y, 0) - 2.2px)) translateX(1.2px);
   }
 }
 
@@ -155,7 +341,7 @@
     transform: translateY(var(--base-y, 0)) translateX(0);
   }
   50% {
-    transform: translateY(calc(var(--base-y, 0) + 6px)) translateX(-2px);
+    transform: translateY(calc(var(--base-y, 0) + 2.2px)) translateX(-1.2px);
   }
 }
 
@@ -164,7 +350,7 @@
     transform: translateY(var(--base-y, 0)) translateX(0);
   }
   50% {
-    transform: translateY(calc(var(--base-y, 0) - 6px)) translateX(-3px);
+    transform: translateY(calc(var(--base-y, 0) - 1.8px)) translateX(-1.2px);
   }
 }
 
@@ -173,64 +359,92 @@
     transform: translateY(var(--base-y, 0)) translateX(0);
   }
   50% {
-    transform: translateY(calc(var(--base-y, 0) + 5px)) translateX(3px);
+    transform: translateY(calc(var(--base-y, 0) + 1.8px)) translateX(1.2px);
   }
 }
 
-.float-a { animation: float-drift-a 6.5s ease-in-out infinite; }
-.float-b { animation: float-drift-b 7.5s ease-in-out infinite; }
-.float-c { animation: float-drift-c 8.2s ease-in-out infinite; }
-.float-d { animation: float-drift-d 7.0s ease-in-out infinite; }
+.float-a { animation: float-drift-a 6.8s ease-in-out infinite; }
+.float-b { animation: float-drift-b 7.6s ease-in-out infinite; }
+.float-c { animation: float-drift-c 8.4s ease-in-out infinite; }
+.float-d { animation: float-drift-d 7.2s ease-in-out infinite; }
 
 /* Responsive Adjustments */
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
+  .what-we-do-stream {
+    flex-wrap: wrap;
+    gap: 12px 14px;
+  }
+  .stream-shift-1, .stream-shift-2, .stream-shift-3,
+  .stream-shift-4, .stream-shift-5, .stream-shift-6 {
+    transform: none;
+  }
+  .flank-curve-top-left, .flank-curve-bottom-left,
+  .flank-curve-top-right, .flank-curve-bottom-right {
+    margin: 0;
+  }
+}
+
+@media (max-width: 1024px) {
   .what-we-do-middle-tier {
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
 
-  .what-we-do-crescent {
+  .what-we-do-flank {
     max-width: 100%;
-    flex: none;
+    align-items: center !important;
+  }
+
+  .what-we-do-flank-subrow {
+    justify-content: center;
   }
 
   .what-we-do-center-hub {
     order: -1;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 }
 
 @media (max-width: 768px) {
   .what-we-do-section {
     min-height: auto;
-    padding: 60px 16px;
+    padding: 52px 16px 60px;
   }
 
   .service-rect-btn {
-    padding: 8px 14px;
-    font-size: 0.82rem;
+    padding: 7px 13px;
+    font-size: 0.8rem;
+  }
+
+  .what-we-do-container {
+    gap: 14px;
   }
 
   .what-we-do-stream,
-  .what-we-do-crescent {
-    gap: 10px;
+  .what-we-do-flank-subrow {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 10px;
   }
 
   .what-we-do-center-hub {
-    padding: 10px 16px;
+    padding: 8px 12px;
   }
 
   .what-we-do-main-title {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
   }
 
-  /* Reduce dramatic vertical offsets on mobile to prevent clipping */
-  .drift-up-1, .drift-up-2, .drift-up-3, .drift-up-4 {
-    --base-y: -4px !important;
-    transform: translateY(-4px) !important;
+  .what-we-do-search-capsule {
+    max-width: 270px;
+    height: 38px;
+    margin-top: 10px;
+    padding: 0 12px;
   }
-  .drift-down-1, .drift-down-2, .drift-down-3, .drift-down-4 {
-    --base-y: 4px !important;
-    transform: translateY(4px) !important;
+
+  .drift-up-1, .drift-up-2, .drift-up-3,
+  .drift-down-1, .drift-down-2, .drift-down-3, .drift-zero {
+    --base-y: 0px !important;
+    transform: none !important;
   }
 }

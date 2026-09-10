@@ -1,0 +1,481 @@
+/* ==========================================================================
+   Footer Section Styles
+   - 100vh full-height space on black background (#000000)
+   - 60/40 vertical division with a 70vh ultra-thin divider line
+   - Left side (60%): Top-left "abc" logo, 3-column services directory with ▸ bullets
+   - Right side (40%): Premium CTA card with WhatsApp & Enquiry Us buttons
+   ========================================================================== */
+
+.footer-section {
+  background-color: #000000 !important;
+  color: #ffffff;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(32px, 4vh, 56px) clamp(24px, 4vw, 64px);
+}
+
+/* Background ambient luxury lighting */
+.footer-ambient-glow {
+  position: absolute;
+  top: -15%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(24, 104, 219, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-ambient-glow-left {
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(37, 211, 102, 0.05) 0%, rgba(0, 0, 0, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Split layout: 60% left | 70vh thin divider | 40% right */
+.footer-split-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 82vh;
+  gap: 0;
+}
+
+/* ==========================================================================
+   Left Column: 60% Width
+   ========================================================================== */
+.footer-left-col {
+  flex: 0 0 60%;
+  width: 60%;
+  padding-right: clamp(32px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 72vh;
+  box-sizing: border-box;
+}
+
+/* Logo: "abc" top-left */
+.footer-logo-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+
+.footer-logo-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.footer-logo-link:hover {
+  opacity: 0.9;
+}
+
+.footer-logo-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.footer-logo-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-blue, #1868db);
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+.footer-logo-tagline {
+  font-family: 'Inter', var(--font-family);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #71717a;
+  margin-top: 6px;
+}
+
+/* Services 3-Column Directory */
+.footer-services-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  margin-bottom: clamp(16px, 2.5vh, 28px);
+}
+
+.footer-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2.2vw, 32px);
+  width: 100%;
+}
+
+.footer-services-col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.2vh, 12px);
+}
+
+.footer-service-item {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: 'Inter', var(--font-family);
+  font-size: clamp(0.78rem, 0.92vw, 0.88rem);
+  line-height: 1.45;
+  color: #d4d4d8;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-service-item:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.footer-service-item:hover .service-bullet {
+  color: var(--accent-blue, #1868db);
+  transform: scale(1.15);
+}
+
+.service-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #a1a1aa;
+  font-size: 0.72rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.service-label {
+  letter-spacing: -0.01em;
+}
+
+/* Bottom Bar (Left Column) */
+.footer-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'Inter', var(--font-family);
+  font-size: 0.76rem;
+  color: #71717a;
+}
+
+.footer-copyright {
+  letter-spacing: -0.01em;
+}
+
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-bottom-links a {
+  color: #71717a;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #e4e4e7;
+}
+
+/* ==========================================================================
+   Divider Line: ~70vh Height & Ultra-Thin (1px)
+   ========================================================================== */
+.footer-divider-line {
+  width: 1px;
+  height: 70vh;
+  background: rgba(255, 255, 255, 0.16);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* ==========================================================================
+   Right Column: 40% Width (CTA Area)
+   ========================================================================== */
+.footer-right-col {
+  flex: 0 0 40%;
+  width: 40%;
+  padding-left: clamp(32px, 4vw, 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72vh;
+  box-sizing: border-box;
+}
+
+.footer-cta-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: clamp(28px, 4.5vh, 48px) clamp(24px, 3.5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle corner accent line inside CTA card */
+.footer-cta-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+}
+
+.footer-cta-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 14px;
+}
+
+.footer-cta-desc {
+  font-family: 'Inter', var(--font-family);
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  color: #a1a1aa;
+  line-height: 1.6;
+  margin-bottom: 28px;
+  max-width: 440px;
+}
+
+/* Buttons Container */
+.footer-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* 1. Chat in WhatsApp Button */
+.footer-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #25d366;
+  color: #ffffff;
+  font-family: 'Inter', var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.3);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-whatsapp-btn:hover {
+  background-color: #20ba59;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.45);
+}
+
+.footer-whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+/* 2. Enquiry Us Button */
+.footer-enquiry-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #09090b;
+  font-family: 'Inter', var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 14px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.footer-enquiry-btn:hover {
+  background-color: #f4f4f5;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.18);
+}
+
+.footer-enquiry-arrow {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+  transition: transform 0.2s ease;
+}
+
+.footer-enquiry-btn:hover .footer-enquiry-arrow {
+  transform: translateX(3px);
+}
+
+/* Contact Info Quick Strip */
+.footer-contact-info {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  font-family: 'Inter', var(--font-family);
+  font-size: 0.8rem;
+  color: #71717a;
+}
+
+.footer-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-contact-row svg {
+  width: 14px;
+  height: 14px;
+  stroke: #a1a1aa;
+  flex-shrink: 0;
+}
+
+.footer-contact-row a {
+  color: #a1a1aa;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-contact-row a:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .footer-section {
+    min-height: auto;
+    height: auto;
+    padding: 60px 24px 40px;
+  }
+
+  .footer-split-wrapper {
+    flex-direction: column;
+    min-height: auto;
+    gap: 0;
+  }
+
+  .footer-left-col {
+    flex: none;
+    width: 100%;
+    padding-right: 0;
+    min-height: auto;
+    margin-bottom: 30px;
+  }
+
+  /* When stacked, divider line becomes horizontal */
+  .footer-divider-line {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 36px 0;
+  }
+
+  .footer-right-col {
+    flex: none;
+    width: 100%;
+    padding-left: 0;
+    min-height: auto;
+  }
+
+  .footer-cta-card {
+    max-width: 540px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .footer-cta-card {
+    padding: 28px 20px;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-services-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .footer-cta-actions {
+    flex-direction: column;
+  }
+}
