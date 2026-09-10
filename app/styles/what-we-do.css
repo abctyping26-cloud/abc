@@ -1,0 +1,236 @@
+/* ==========================================================================
+   What We Do Section: Organic Flowing Cloud (100vh Minimalist Layout)
+   - Central "What We Do" title at visual & focal center (borderless)
+   - Surrounded by 42 minimalist black rectangular buttons
+   - Flowing, staggered, non-row organic scatter (NO rigid brick-wall grid)
+   - Gentle ambient float micro-motions
+   - Strict rule: Pure monochrome (Black / White / Grayscale), NO colors
+   ========================================================================== */
+
+.what-we-do-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.what-we-do-container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Organic Flowing Streams (staggered interleaving) */
+.what-we-do-stream {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px 16px;
+  width: 100%;
+}
+
+/* Middle Tier: Left Crescent + Central Title Hub + Right Crescent */
+.what-we-do-middle-tier {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.what-we-do-crescent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 14px 16px;
+  max-width: 400px;
+  flex: 1 1 360px;
+}
+
+/* Center Hub Title Block - Clean & Borderless */
+.what-we-do-center-hub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px 32px;
+  background-color: transparent;
+  border: none;
+  box-shadow: none !important;
+  flex: 0 0 auto;
+  z-index: 5;
+}
+
+.what-we-do-kicker {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #71717a;
+  margin-bottom: 4px;
+}
+
+.what-we-do-main-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(2.6rem, 4.8vw, 4rem);
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* Rectangular Minimalist Service Buttons */
+.service-rect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 19px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #18181b;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: none !important;
+  cursor: default;
+  user-select: none;
+  position: relative;
+  will-change: transform;
+  transition: background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.service-rect-btn:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  z-index: 20;
+  animation-play-state: paused !important;
+}
+
+/* ==========================================================================
+   Organic Stagger Offsets: Breaks horizontal row baselines completely
+   ========================================================================== */
+.drift-up-1 { --base-y: -14px; transform: translateY(-14px); }
+.drift-down-1 { --base-y: 15px; transform: translateY(15px); }
+.drift-up-2 { --base-y: -9px; transform: translateY(-9px); }
+.drift-down-2 { --base-y: 12px; transform: translateY(12px); }
+.drift-up-3 { --base-y: -17px; transform: translateY(-17px); }
+.drift-down-3 { --base-y: 18px; transform: translateY(18px); }
+.drift-up-4 { --base-y: -6px; transform: translateY(-6px); }
+.drift-down-4 { --base-y: 9px; transform: translateY(9px); }
+
+/* ==========================================================================
+   Gentle Ambient Floating Micro-Motions
+   ========================================================================== */
+@keyframes float-drift-a {
+  0%, 100% {
+    transform: translateY(var(--base-y, 0)) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(var(--base-y, 0) - 5px)) translateX(2px);
+  }
+}
+
+@keyframes float-drift-b {
+  0%, 100% {
+    transform: translateY(var(--base-y, 0)) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(var(--base-y, 0) + 6px)) translateX(-2px);
+  }
+}
+
+@keyframes float-drift-c {
+  0%, 100% {
+    transform: translateY(var(--base-y, 0)) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(var(--base-y, 0) - 6px)) translateX(-3px);
+  }
+}
+
+@keyframes float-drift-d {
+  0%, 100% {
+    transform: translateY(var(--base-y, 0)) translateX(0);
+  }
+  50% {
+    transform: translateY(calc(var(--base-y, 0) + 5px)) translateX(3px);
+  }
+}
+
+.float-a { animation: float-drift-a 6.5s ease-in-out infinite; }
+.float-b { animation: float-drift-b 7.5s ease-in-out infinite; }
+.float-c { animation: float-drift-c 8.2s ease-in-out infinite; }
+.float-d { animation: float-drift-d 7.0s ease-in-out infinite; }
+
+/* Responsive Adjustments */
+@media (max-width: 1100px) {
+  .what-we-do-middle-tier {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .what-we-do-crescent {
+    max-width: 100%;
+    flex: none;
+  }
+
+  .what-we-do-center-hub {
+    order: -1;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .what-we-do-section {
+    min-height: auto;
+    padding: 60px 16px;
+  }
+
+  .service-rect-btn {
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+
+  .what-we-do-stream,
+  .what-we-do-crescent {
+    gap: 10px;
+  }
+
+  .what-we-do-center-hub {
+    padding: 10px 16px;
+  }
+
+  .what-we-do-main-title {
+    font-size: 2.3rem;
+  }
+
+  /* Reduce dramatic vertical offsets on mobile to prevent clipping */
+  .drift-up-1, .drift-up-2, .drift-up-3, .drift-up-4 {
+    --base-y: -4px !important;
+    transform: translateY(-4px) !important;
+  }
+  .drift-down-1, .drift-down-2, .drift-down-3, .drift-down-4 {
+    --base-y: 4px !important;
+    transform: translateY(4px) !important;
+  }
+}

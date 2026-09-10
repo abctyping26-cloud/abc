@@ -1,0 +1,363 @@
+/* ==========================================================================
+   Hero Section: 100% Width & 100vh Flex Box with 24px Margins
+   - Background: hero.jpg with subtle bottom-left leaf-green gradient (NO blue shade)
+   - Left-aligned light typography (Plus Jakarta Sans)
+   - Full white CTA button with black text & sleek arrow
+   ========================================================================== */
+
+:root {
+  --hero-margin: 24px;
+  --hero-box-radius: 28px;
+  --hero-content-y-offset: 45px; /* Nudges the content down from the vertical center */
+}
+
+.hero-section {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff !important;
+}
+
+/* Hero Box: Full-viewport card with 24px margins on all 4 sides */
+.hero-box {
+  margin: var(--hero-margin);
+  width: calc(100% - (var(--hero-margin) * 2));
+  min-height: calc(100vh - (var(--hero-margin) * 2));
+  border-radius: var(--hero-box-radius);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  /* Flexbox positioning: lowered to the bottom */
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 60px 72px 64px;
+
+  /* Background: hero.jpg + bright-to-transparent gradient from bottom-left only to center */
+  background: 
+    radial-gradient(circle at 0% 100%, rgba(155, 215, 95, 0.42) 0%, rgba(135, 205, 88, 0.20) 28%, rgba(135, 205, 88, 0) 50%, transparent 50%),
+    url('/hero.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  background-repeat: no-repeat;
+  color: var(--text-white);
+}
+
+/* Left Hero Content - Lowered to the bottom */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 650px;
+  position: relative;
+  z-index: 2;
+  transform: none; /* Lowered naturally to the bottom */
+}
+
+.hero-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 3.1rem;
+  font-weight: 500; /* Medium weight */
+  line-height: 1.18;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.hero-subtitle {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.6;
+  max-width: 520px;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* Full White CTA Button with Black Text and Sleek Arrow */
+.hero-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600; /* Crisp semi-bold */
+  padding: 14px 28px;
+  border-radius: 9999px;
+  border: none;
+  width: fit-content;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+.hero-cta-btn:hover {
+  background-color: #f2f4f5;
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: none;
+}
+
+.sleek-arrow {
+  width: 17px;
+  height: 17px;
+  stroke: #000000;
+  stroke-width: 2;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.hero-cta-btn:hover .sleek-arrow {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Top Right Navigation & Action Buttons
+   ========================================================================== */
+.hero-top-nav {
+  position: absolute;
+  top: 32px;
+  right: 36px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+}
+
+.hero-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-nav-link {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background-color: transparent;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-nav-link:hover {
+  color: #000000;
+  background-color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.hero-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Call Button with Phone Icon Only */
+.hero-call-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  border: none;
+}
+
+.hero-call-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: #000000;
+}
+
+.hero-call-btn:hover {
+  background-color: #f2f4f5;
+  transform: scale(1.06);
+  box-shadow: none;
+}
+
+/* Contact Us Button (media_1788626679088.png reference) */
+.hero-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #000000;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.hero-contact-btn:hover {
+  background-color: #f2f4f5;
+  color: #000000;
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Bottom Right Client Stat Card (media_1788626619489.png reference)
+   ========================================================================== */
+.hero-stat-card {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  width: 215px;
+  padding: 24px 22px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.16) 100%);
+  backdrop-filter: blur(20px) saturate(190%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%);
+  border: none; /* No border line as requested */
+  box-shadow: none !important; /* Rule: no box shadow */
+  z-index: 10;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-group {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-row-img {
+  display: block;
+  height: 42px;
+  width: auto;
+  border-radius: 9999px;
+}
+
+.avatar-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.avatar-circle:not(:first-child) {
+  margin-left: -10px;
+}
+
+.avatar-circle svg {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-plus {
+  background-color: #72be2a;
+  border-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-plus svg {
+  width: 16px;
+  height: 16px;
+  stroke: #ffffff;
+}
+
+.stat-number {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #000000;
+  margin-top: 16px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+}
+
+.stat-desc {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #000000;
+  margin-top: 8px;
+  line-height: 1.45;
+  text-shadow: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 968px) {
+  .hero-box {
+    padding: 90px 32px 40px;
+    min-height: auto;
+  }
+
+  .hero-nav-links {
+    display: none; /* Keep call & contact us buttons compact */
+  }
+
+  .hero-title {
+    font-size: 2.35rem;
+  }
+
+  .hero-stat-card {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 36px;
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --hero-margin: 16px;
+    --hero-box-radius: 20px;
+    --hero-content-y-offset: 10px;
+  }
+
+  .hero-top-nav {
+    top: 20px;
+    right: 20px;
+    gap: 8px;
+  }
+
+  .hero-contact-btn {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+
+  .hero-call-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero-box {
+    padding: 80px 20px 32px;
+  }
+
+  .hero-title {
+    font-size: 1.95rem;
+  }
+}

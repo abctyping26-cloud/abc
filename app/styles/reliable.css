@@ -1,0 +1,102 @@
+/* Reliable Section Styles */
+.reliable-section {
+  padding: 40px 0 80px;
+  background-color: var(--bg-white);
+}
+
+.reliable-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 55px;
+  align-items: center;
+}
+
+.reliable-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reliable-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #102a5c;
+  letter-spacing: -0.3px;
+}
+
+.reliable-description {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #475569;
+}
+
+/* Image Placeholder for Reliable Section */
+.reliable-placeholder {
+  height: 310px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e293b 100%);
+  border-radius: 8px;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/* Stylized visual representation of files/folders tabs */
+.files-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.file-tab {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 6px;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-left: 5px solid #1868db;
+}
+
+.file-tab:nth-child(2) {
+  border-left-color: #0d9488;
+  transform: translateX(10px);
+}
+
+.file-tab:nth-child(3) {
+  border-left-color: #e11d48;
+  transform: translateX(20px);
+}
+
+.file-tab-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #0f172a;
+  text-transform: uppercase;
+}
+
+.file-tab-meta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+@media (max-width: 868px) {
+  .reliable-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  
+  .reliable-placeholder {
+    height: 260px;
+  }
+}
