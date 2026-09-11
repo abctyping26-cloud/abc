@@ -2,34 +2,95 @@
 
 import React, { useState } from "react";
 
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
 export default function LoginForm() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState<{
+    id: string;
+    identifier: string;
+    name?: string;
+  } | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier.trim() || !password) return;
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/v1/client/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: identifier.trim(),
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to log in. Please try again.");
+      }
+
+      // Store authentication token and user profile
+      if (data.data?.token) {
+        localStorage.setItem("abc_client_token", data.data.token);
+      }
+      if (data.data?.user) {
+        localStorage.setItem(
+          "abc_client_user",
+          JSON.stringify(data.data.user)
+        );
+        setCurrentUser(data.data.user);
+      }
+
+      setIsNewUser(Boolean(data.isNewUser));
+      setSubmitted(true);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred. Please try again.";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setSubmitted(false);
+    setError(null);
     setIdentifier("");
     setPassword("");
+    setIsNewUser(false);
+    setCurrentUser(null);
   };
 
   return (
     <div className="login-form-container">
       <div className="login-form-header">
         <h1 className="login-title">Log in to your account</h1>
+        <p className="login-subtitle" style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "4px" }}>
+          New here? An account is automatically created on your first login.
+        </p>
       </div>
 
       {submitted ? (
         <div
           style={{
-            padding: "24px",
+            padding: "28px 24px",
             backgroundColor: "#f8fafc",
             borderRadius: "16px",
             border: "1px solid #e2e8f0",
@@ -45,8 +106,8 @@ export default function LoginForm() {
               width: "48px",
               height: "48px",
               borderRadius: "50%",
-              backgroundColor: "#dcfce7",
-              color: "#16a34a",
+              backgroundColor: isNewUser ? "#e0f2fe" : "#dcfce7",
+              color: isNewUser ? "#0284c7" : "#16a34a",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -66,11 +127,25 @@ export default function LoginForm() {
             </svg>
           </div>
           <div>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#0f172a" }}>
-              Signing In...
+            <span
+              style={{
+                display: "inline-block",
+                padding: "2px 10px",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                borderRadius: "9999px",
+                backgroundColor: isNewUser ? "#e0f2fe" : "#dcfce7",
+                color: isNewUser ? "#0369a1" : "#15803d",
+                marginBottom: "8px",
+              }}
+            >
+              {isNewUser ? "✨ Account Created" : "👋 Welcome Back"}
+            </span>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: 600, color: "#0f172a" }}>
+              {isNewUser ? "Account Created & Logged In" : "Authentication Successful"}
             </h3>
             <p style={{ fontSize: "0.88rem", color: "#64748b", marginTop: "4px" }}>
-              Authenticating credentials for {identifier}.
+              Logged in as <strong style={{ color: "#0f172a" }}>{currentUser?.identifier || identifier}</strong>.
             </p>
           </div>
           <button
@@ -92,6 +167,25 @@ export default function LoginForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="login-form">
+          {error && (
+            <div
+              style={{
+                padding: "10px 14px",
+                backgroundColor: "#fef2f2",
+                border: "1px solid #fecaca",
+                borderRadius: "10px",
+                color: "#b91c1c",
+                fontSize: "0.86rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span>⚠️</span>
+              <span>{error}</span>
+            </div>
+          )}
+
           {/* Email or Phone Number */}
           <div className="login-field">
             <label htmlFor="login-identifier" className="login-label">
@@ -106,6 +200,7 @@ export default function LoginForm() {
                 placeholder="name@company.com or +971 50 000 0000"
                 className="login-input"
                 required
+                disabled={isSubmitting}
               />
             </div>
           </div>
@@ -129,6 +224,7 @@ export default function LoginForm() {
                 placeholder="Enter your password"
                 className="login-input"
                 required
+                disabled={isSubmitting}
               />
               <button
                 type="button"
@@ -164,8 +260,13 @@ export default function LoginForm() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit" className="login-submit-btn">
-            <span>Sign In</span>
+          <button
+            type="submit"
+            className="login-submit-btn"
+            disabled={isSubmitting}
+            style={{ opacity: isSubmitting ? 0.75 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
+          >
+            <span>{isSubmitting ? "Signing in..." : "Sign In / Auto Register"}</span>
             <svg
               viewBox="0 0 24 24"
               fill="none"
