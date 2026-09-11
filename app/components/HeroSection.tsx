@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
@@ -46,6 +47,9 @@ export default function HeroSection() {
             <a href="#enquiry" className="hero-contact-btn">
               Contact Us
             </a>
+            <Link href="/login" className="hero-login-btn">
+              Login
+            </Link>
           </div>
         </div>
 
