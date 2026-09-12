@@ -83,13 +83,15 @@ export default function FAQSection() {
       <div className="container">
         <div className="faq-layout">
           {/* Left Column: Large FAQs Title */}
-          <div className="faq-left-col">
+          <div className="faq-left-col" data-aos="fade-right" data-aos-duration="800">
             <h2 className="faq-main-title">FAQs</h2>
           </div>
 
           {/* Right Column: Stack of Accordion Cards */}
           <div
             className="faq-right-col"
+            data-aos="fade-left"
+            data-aos-duration="800"
             role="region"
             aria-label="Frequently Asked Questions list"
           >

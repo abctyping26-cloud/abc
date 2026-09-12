@@ -2,30 +2,131 @@
 
 import React, { useState } from "react";
 
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const SERVICE_LABELS: Record<string, string> = {
+  "business-setup": "Business Setup & Formation",
+  "trade-license": "Trade License Cancellation & Renewal",
+  "golden-visa": "Golden Visa & Residency Services",
+  "attestation": "Certificate Attestation & Legal Translation",
+  "tax-vat": "Corporate Tax, VAT & Accounting",
+  "police-clearance": "Police Clearance & Approvals",
+  "other": "Other",
+};
+
 export default function EnquirySection() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [service, setService] = useState("");
   const [otherService, setOtherService] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submissionTime, setSubmissionTime] = useState<string>("");
+  const [submittedService, setSubmittedService] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !service) {
+    const cleanName = name.trim();
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanPhone = phone.trim();
+
+    if (!cleanName || !cleanEmail || !cleanPhone || !service) {
       return;
     }
     if (service === "other" && !otherService.trim()) {
       return;
     }
-    setSubmitted(true);
+
+    setIsSubmitting(true);
+    setError(null);
+
+    const cleanOther = otherService.trim();
+    const resolvedServiceName =
+      service === "other"
+        ? (cleanOther ? `Other: ${cleanOther}` : "Custom Service")
+        : (SERVICE_LABELS[service] || service);
+
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+    const formattedTime = now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+    const fullTimeString = `${formattedDate} at ${formattedTime}`;
+
+    const enquiryPayload = {
+      name: cleanName,
+      email: cleanEmail,
+      phone: cleanPhone,
+      service: resolvedServiceName,
+      otherService: cleanOther || undefined,
+      submittedAt: now.toISOString(),
+    };
+
+    try {
+      // 1. Send to Express Backend API
+      try {
+        await fetch(`${API_BASE_URL}/api/v1/client/enquiry`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(enquiryPayload),
+        });
+      } catch (networkErr) {
+        console.warn("Backend offline or unreachable, mirroring locally:", networkErr);
+      }
+
+      // 2. Mirror to LocalStorage abc_enquiries for instant local dev & cross-port parity
+      try {
+        const stored = localStorage.getItem("abc_enquiries");
+        const list = stored ? JSON.parse(stored) : [];
+        const localItem = {
+          _id: "enq_" + Date.now(),
+          name: cleanName,
+          email: cleanEmail,
+          phone: cleanPhone,
+          service: resolvedServiceName,
+          otherService: cleanOther || undefined,
+          status: "pending",
+          submittedAt: now.toISOString(),
+          createdAt: now.toISOString(),
+        };
+        const updated = [localItem, ...list];
+        localStorage.setItem("abc_enquiries", JSON.stringify(updated));
+        window.dispatchEvent(new Event("abc_enquiries_updated"));
+      } catch {
+        // Ignore storage errors
+      }
+
+      setSubmissionTime(fullTimeString);
+      setSubmittedService(resolvedServiceName);
+      setSubmitted(true);
+    } catch {
+      setError("Unable to submit enquiry. Please try again or reach us via WhatsApp.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setName("");
+    setEmail("");
     setPhone("");
     setService("");
     setOtherService("");
     setSubmitted(false);
+    setSubmissionTime("");
+    setSubmittedService("");
+    setError(null);
   };
 
   return (
@@ -33,7 +134,7 @@ export default function EnquirySection() {
       <div className="container">
         <div className="enquiry-layout">
           {/* Left Column: Title & Enquiry Form */}
-          <div className="enquiry-left-col">
+          <div className="enquiry-left-col" data-aos="fade-right" data-aos-duration="800">
             <h2 className="enquiry-title">Enquiry</h2>
 
             {submitted ? (
@@ -51,10 +152,32 @@ export default function EnquirySection() {
                   </svg>
                 </div>
                 <h3 className="enquiry-success-title">Enquiry Received</h3>
+                
+                {/* Submission Timestamp Badge */}
+                {submissionTime && (
+                  <div className="enquiry-time-badge">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>Submitted on {submissionTime}</span>
+                  </div>
+                )}
+
                 <p className="enquiry-success-desc">
-                  Thank you, <strong>{name}</strong>! Our legal specialists will reach out to you at{" "}
-                  <strong>{phone}</strong> shortly.
+                  Thank you, <strong>{name}</strong>! We have dispatched your request for{" "}
+                  <strong>{submittedService}</strong>. Our legal specialists will reach out to you at{" "}
+                  <strong>{phone}</strong> or <strong>{email}</strong> shortly.
                 </p>
+
                 <button
                   type="button"
                   onClick={handleReset}
@@ -65,6 +188,12 @@ export default function EnquirySection() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="enquiry-form">
+                {error && (
+                  <div style={{ color: "#b91c1c", fontSize: "0.85rem", fontWeight: 500 }}>
+                    {error}
+                  </div>
+                )}
+
                 <div className="enquiry-field-group">
                   <label htmlFor="enquiry-name" className="enquiry-label">
                     Full Name
@@ -77,6 +206,23 @@ export default function EnquirySection() {
                     placeholder="Enter your name"
                     className="enquiry-input"
                     required
+                    disabled={isSubmitting}
+                  />
+                </div>
+
+                <div className="enquiry-field-group">
+                  <label htmlFor="enquiry-email" className="enquiry-label">
+                    Email Address
+                  </label>
+                  <input
+                    id="enquiry-email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    className="enquiry-input"
+                    required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -92,6 +238,7 @@ export default function EnquirySection() {
                     placeholder="+971 50 000 0000"
                     className="enquiry-input"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -106,6 +253,7 @@ export default function EnquirySection() {
                       onChange={(e) => setService(e.target.value)}
                       className="enquiry-select"
                       required
+                      disabled={isSubmitting}
                     >
                       <option value="" disabled>
                         Select a service...
@@ -148,12 +296,17 @@ export default function EnquirySection() {
                       className="enquiry-input"
                       required
                       autoFocus
+                      disabled={isSubmitting}
                     />
                   </div>
                 )}
 
-                <button type="submit" className="enquiry-submit-btn">
-                  <span>Submit Enquiry</span>
+                <button
+                  type="submit"
+                  className="enquiry-submit-btn"
+                  disabled={isSubmitting}
+                >
+                  <span>{isSubmitting ? "Submitting..." : "Submit Enquiry"}</span>
                   <svg
                     className="enquiry-submit-arrow"
                     viewBox="0 0 24 24"
@@ -172,7 +325,7 @@ export default function EnquirySection() {
           </div>
 
           {/* Right Column: Contact Us on WhatsApp Capsule Only */}
-          <div className="enquiry-right-col">
+          <div className="enquiry-right-col" data-aos="fade-left" data-aos-duration="800">
             <a
               href="https://wa.me/971500000000?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20services"
               target="_blank"

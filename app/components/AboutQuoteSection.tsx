@@ -2,14 +2,14 @@ export default function AboutQuoteSection() {
   return (
     <section className="about-quote-section" id="about">
       <div className="about-quote-container">
-        <blockquote className="about-quote-text">
+        <blockquote className="about-quote-text" data-aos="fade-up">
           “We are your dedicated partners in business transition — bridging
           Kerala and the Gulf to simplify every document, resolve every legal
           step, and stand beside you with unwavering integrity.”
         </blockquote>
 
         {/* 3 Offices Connected Network Row */}
-        <div className="network-section">
+        <div className="network-section" data-aos="fade-up" data-aos-delay="100">
           <div className="network-track">
             {/* Node 1: Kollam (India) */}
             <div
@@ -144,7 +144,13 @@ export default function AboutQuoteSection() {
           {/* 3 Stats Boxes Row */}
           <div className="stats-boxes-grid">
             {/* Box 1: 5+ Years */}
-            <div className="stat-box stat-box-1" role="figure" aria-label="5+ Years">
+            <div
+              className="stat-box stat-box-1"
+              role="figure"
+              aria-label="5+ Years"
+              data-aos="fade-up"
+              data-aos-delay="100"
+            >
               <div
                 className="stat-box-bg"
                 style={{ backgroundImage: "url('/box1.jpg')" }}
@@ -161,6 +167,8 @@ export default function AboutQuoteSection() {
               className="stat-box stat-box-2"
               role="figure"
               aria-label="10k+ Documents Cleared"
+              data-aos="fade-up"
+              data-aos-delay="200"
             >
               <div
                 className="stat-box-bg"
@@ -178,6 +186,8 @@ export default function AboutQuoteSection() {
               className="stat-box stat-box-3"
               role="figure"
               aria-label="2 Countries"
+              data-aos="fade-up"
+              data-aos-delay="300"
             >
               <div
                 className="stat-box-bg"

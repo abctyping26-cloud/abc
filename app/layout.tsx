@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import AuthToast from "./components/AuthToast";
+import AOSInit from "./components/AosInit";
+import ServerWarmer from "./components/ServerWarmer";
+import "aos/dist/aos.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,7 +29,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <ServerWarmer />
+        <AOSInit />
+        <AuthToast />
+        {children}
+      </body>
     </html>
   );
 }

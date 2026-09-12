@@ -1,23 +1,37 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSlowResponse, setIsSlowResponse] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [isNewUser, setIsNewUser] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{
-    id: string;
-    identifier: string;
-    name?: string;
-  } | null>(null);
+
+  // Pre-warm the home route in the background for instant, seamless navigation
+  useEffect(() => {
+    router.prefetch("/");
+  }, [router]);
+
+  // Show friendly wake-up status if authentication takes longer than 3.5 seconds
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (isSubmitting) {
+      timer = setTimeout(() => {
+        setIsSlowResponse(true);
+      }, 3500);
+    } else {
+      setIsSlowResponse(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isSubmitting]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,29 +67,47 @@ export default function LoginForm() {
           "abc_client_user",
           JSON.stringify(data.data.user)
         );
-        setCurrentUser(data.data.user);
       }
 
-      setIsNewUser(Boolean(data.isNewUser));
-      setSubmitted(true);
+      // Save toast notification to sessionStorage so the home page displays it
+      const userIdentifier = data.data?.user?.identifier || identifier.trim();
+      const toastData = {
+        title: data.isNewUser ? "Account Created" : "Welcome Back",
+        message: `Logged in as ${userIdentifier}`,
+        isNewUser: Boolean(data.isNewUser),
+      };
+
+      try {
+        sessionStorage.setItem("abc_auth_toast", JSON.stringify(toastData));
+      } catch {
+        // Fallback or ignore
+      }
+
+      window.dispatchEvent(
+        new CustomEvent("abc:toast", { detail: toastData })
+      );
+
+      // Keep spinner spinning while transitioning to the home page in background
+      await new Promise((resolve) => setTimeout(resolve, 550));
+
+      router.push("/");
     } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : "An unexpected error occurred. Please try again.";
+      let message = "An unexpected error occurred. Please try again.";
+      if (err instanceof Error) {
+        if (
+          err.message.includes("Failed to fetch") ||
+          err.message.includes("NetworkError") ||
+          err.name === "TypeError"
+        ) {
+          message =
+            "Could not connect to the server. If it was sleeping, it may take up to 45 seconds to start. Please try again in a few seconds.";
+        } else {
+          message = err.message;
+        }
+      }
       setError(message);
-    } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const handleReset = () => {
-    setSubmitted(false);
-    setError(null);
-    setIdentifier("");
-    setPassword("");
-    setIsNewUser(false);
-    setCurrentUser(null);
   };
 
   return (
@@ -87,86 +119,7 @@ export default function LoginForm() {
         </p>
       </div>
 
-      {submitted ? (
-        <div
-          style={{
-            padding: "28px 24px",
-            backgroundColor: "#f8fafc",
-            borderRadius: "16px",
-            border: "1px solid #e2e8f0",
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "14px",
-          }}
-        >
-          <div
-            style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              backgroundColor: isNewUser ? "#e0f2fe" : "#dcfce7",
-              color: isNewUser ? "#0284c7" : "#16a34a",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-          </div>
-          <div>
-            <span
-              style={{
-                display: "inline-block",
-                padding: "2px 10px",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                borderRadius: "9999px",
-                backgroundColor: isNewUser ? "#e0f2fe" : "#dcfce7",
-                color: isNewUser ? "#0369a1" : "#15803d",
-                marginBottom: "8px",
-              }}
-            >
-              {isNewUser ? "✨ Account Created" : "👋 Welcome Back"}
-            </span>
-            <h3 style={{ fontSize: "1.15rem", fontWeight: 600, color: "#0f172a" }}>
-              {isNewUser ? "Account Created & Logged In" : "Authentication Successful"}
-            </h3>
-            <p style={{ fontSize: "0.88rem", color: "#64748b", marginTop: "4px" }}>
-              Logged in as <strong style={{ color: "#0f172a" }}>{currentUser?.identifier || identifier}</strong>.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={handleReset}
-            style={{
-              marginTop: "8px",
-              padding: "8px 18px",
-              fontSize: "0.85rem",
-              fontWeight: 500,
-              backgroundColor: "#ffffff",
-              border: "1px solid #cbd5e1",
-              borderRadius: "9999px",
-              cursor: "pointer",
-            }}
-          >
-            Use different account
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleSubmit} className="login-form">
           {error && (
             <div
               style={{
@@ -264,20 +217,51 @@ export default function LoginForm() {
             type="submit"
             className="login-submit-btn"
             disabled={isSubmitting}
-            style={{ opacity: isSubmitting ? 0.75 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
+            style={{
+              opacity: isSubmitting ? 0.85 : 1,
+              cursor: isSubmitting ? "wait" : "pointer",
+            }}
           >
-            <span>{isSubmitting ? "Signing in..." : "Sign In / Auto Register"}</span>
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
+            {isSubmitting ? (
+              <>
+                <span className="login-spinner" />
+                <span>Signing in...</span>
+              </>
+            ) : (
+              <>
+                <span>Sign In / Auto Register</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </>
+            )}
           </button>
+          {isSlowResponse && (
+            <div
+              style={{
+                marginTop: "8px",
+                padding: "8px 12px",
+                backgroundColor: "#f8fafc",
+                border: "1px solid #e2e8f0",
+                borderRadius: "8px",
+                fontSize: "0.8rem",
+                color: "#64748b",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span>⏳</span>
+              <span>Server is waking up from sleep mode, please wait a moment...</span>
+            </div>
+          )}
 
           {/* Divider */}
           <div className="login-divider">
@@ -316,7 +300,6 @@ export default function LoginForm() {
             <span>Sign in with Google</span>
           </button>
         </form>
-      )}
     </div>
   );
 }

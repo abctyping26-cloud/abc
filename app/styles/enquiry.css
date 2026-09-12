@@ -220,6 +220,26 @@
   margin: 0;
 }
 
+.enquiry-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #475569;
+}
+
+.enquiry-time-badge svg {
+  width: 14px;
+  height: 14px;
+  stroke: #64748b;
+  flex-shrink: 0;
+}
+
 .enquiry-reset-btn {
   background: none;
   border: none;
@@ -237,6 +257,7 @@
 .enquiry-reset-btn:hover {
   color: #1251ad;
 }
+
 
 /* ==========================================================================
    Right Column: WhatsApp Capsule Only (Vertical Split)

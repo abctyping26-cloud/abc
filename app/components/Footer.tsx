@@ -54,7 +54,7 @@ export default function Footer() {
           {/* =======================================================
               Left Column: 60% Width
               ======================================================= */}
-          <div className="footer-left-col">
+          <div className="footer-left-col" data-aos="fade-up" data-aos-duration="800">
             {/* Top Left: abc Logo */}
             <div className="footer-logo-box">
               <a href="#" className="footer-logo-link" aria-label="ABC Typing Services Homepage">
@@ -145,7 +145,7 @@ export default function Footer() {
           {/* =======================================================
               Right Column: 40% Width (CTA Area)
               ======================================================= */}
-          <div className="footer-right-col">
+          <div className="footer-right-col" data-aos="fade-up" data-aos-delay="150" data-aos-duration="800">
             <div className="footer-cta-card">
               <h2 className="footer-cta-title">
                 Have questions or need assistance?

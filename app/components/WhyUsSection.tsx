@@ -154,7 +154,7 @@ export default function WhyUsSection() {
       <div className="container">
         <div className="why-us-layout">
           {/* Left Column: Title, Quote directly underneath, and Map circle button */}
-          <div className="why-us-left-col">
+          <div className="why-us-left-col" data-aos="fade-right" data-aos-duration="800">
             <h2 className="why-us-main-title">Why Us</h2>
 
             <blockquote className="why-us-quote-text">
@@ -187,7 +187,7 @@ export default function WhyUsSection() {
           </div>
 
           {/* Right Column: Big vertically scrolling cards inside a bordered container */}
-          <div className="why-us-right-col">
+          <div className="why-us-right-col" data-aos="fade-left" data-aos-duration="800">
             <div className="why-us-scroll-box">
               <div
                 className="why-us-scroll-container"

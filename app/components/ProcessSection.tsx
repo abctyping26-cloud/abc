@@ -68,13 +68,13 @@ export default function ProcessSection() {
     <section className="process-section" id="process">
       <div className="container">
         {/* Section Header: Styled identically to 'What We Do' */}
-        <div className="process-header">
+        <div className="process-header" data-aos="fade-up">
           <span className="process-kicker">STEP-BY-STEP ROADMAP</span>
           <h2 className="process-title">Our Process</h2>
         </div>
 
         {/* 4 Connected Circles Network Row */}
-        <div className="process-network-wrapper">
+        <div className="process-network-wrapper" data-aos="fade-up" data-aos-delay="100">
           <div
             className="process-track"
             role="tablist"
@@ -150,6 +150,8 @@ export default function ProcessSection() {
         {/* Centered Idea Showcase Card directly under the circle row */}
         <div
           className="process-showcase-container"
+          data-aos="fade-up"
+          data-aos-delay="200"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >

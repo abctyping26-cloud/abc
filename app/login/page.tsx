@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main className="login-page-wrapper">
-      <div className="login-box">
+      <div className="login-box" data-aos="fade-up" data-aos-duration="800">
         {/* 60% Image Side */}
         <div className="login-image-side">
           <div className="login-image-top">

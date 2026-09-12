@@ -295,6 +295,7 @@
   padding: 10px 22px;
   border-radius: 9999px;
   text-decoration: none;
+  cursor: pointer;
   box-shadow: none;
   transition: all 0.2s ease;
   border: 1px solid rgba(255, 255, 255, 0.85);
@@ -307,7 +308,7 @@
   box-shadow: none;
 }
 
-/* Login Button (Inverted: Black Background, White Letters) */
+/* Login / Logout Button (Same natural padding and typography as Contact Us) */
 .hero-login-btn {
   display: inline-flex;
   align-items: center;
@@ -320,6 +321,7 @@
   padding: 10px 22px;
   border-radius: 9999px;
   text-decoration: none;
+  cursor: pointer;
   box-shadow: none;
   transition: all 0.2s ease;
   border: 1px solid #000000;
