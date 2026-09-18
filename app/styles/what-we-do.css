@@ -147,12 +147,26 @@
   box-shadow: none !important;
   cursor: pointer;
   user-select: none;
+  text-decoration: none;
   animation: serviceAosCascade 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
   transition: transform 0.18s ease;
 }
 
 .service-bullet-item:hover {
   transform: translateX(5px);
+}
+
+.service-bullet-arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.18s ease;
+  color: #000000;
+  flex-shrink: 0;
+}
+
+.service-bullet-item:hover .service-bullet-arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* The Bullet Dot */

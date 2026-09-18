@@ -1,173 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
+import Link from "next/link";
+import {
+  CATEGORIES,
+  slugify,
+  type ServiceCategory,
+  type ServiceItem,
+} from "../data/servicesData";
 
-export interface ServiceItem {
-  id: string;
-  name: string;
-  isNew?: boolean;
-}
+export { CATEGORIES, type ServiceCategory, type ServiceItem };
 
-export interface ServiceCategory {
-  id: string;
-  name: string;
-  shortName: string;
-  description: string;
-  services: ServiceItem[];
-}
-
-export const CATEGORIES: ServiceCategory[] = [
-  {
-    id: "business-setup",
-    name: "Business Setup & Corporate",
-    shortName: "Business Setup",
-    description:
-      "End-to-end corporate formation, trade licensing, amendments, virtual offices, and legal company liquidation across Abu Dhabi & UAE.",
-    services: [
-      { id: "bs-1", name: "Business Setup Services" },
-      { id: "bs-2", name: "Company Formation Services" },
-      { id: "bs-3", name: "Company Liquidation & License Cancellation" },
-      { id: "bs-4", name: "Economic License Details", isNew: true },
-      { id: "bs-5", name: "Business Activity Inquiry", isNew: true },
-      { id: "bs-6", name: "Corporate Services Abu Dhabi" },
-      { id: "bs-7", name: "Businessmen & Support Services" },
-      { id: "bs-8", name: "Virtual Offices Abu Dhabi" },
-      { id: "bs-9", name: "Business Bank Account Opening" },
-      { id: "bs-10", name: "UAE TAX & VAT Services" },
-      { id: "bs-11", name: "Trademark Registration" },
-      { id: "bs-12", name: "Copyright Registration" },
-      { id: "bs-13", name: "Patent Registration" },
-    ],
-  },
-  {
-    id: "uae-visas",
-    name: "UAE Visas & Residency",
-    shortName: "UAE Visas",
-    description:
-      "Comprehensive immigration and residency solutions including Golden Visa, Investor, Family, and employment clearance.",
-    services: [
-      { id: "uv-1", name: "UAE Family Visa" },
-      { id: "uv-2", name: "Family Visa Holding" },
-      { id: "uv-3", name: "Golden Visa (10-Year)" },
-      { id: "uv-4", name: "Investor & Partner Visa" },
-      { id: "uv-5", name: "Green Visa (5-Year)" },
-      { id: "uv-6", name: "Employment Visa Services" },
-      { id: "uv-7", name: "Domestic Worker / Maid Visa" },
-      { id: "uv-8", name: "Tourist / Visit Visa" },
-      { id: "uv-9", name: "Mission Visa Abu Dhabi" },
-      { id: "uv-10", name: "Fine Reduction Services" },
-      { id: "uv-11", name: "Out Pass (Exit Clearance)", isNew: true },
-    ],
-  },
-  {
-    id: "gov-portals",
-    name: "Government Portals & PRO",
-    shortName: "Gov Portals",
-    description:
-      "Direct integration and transaction processing with official UAE federal and local government systems.",
-    services: [
-      { id: "gp-1", name: "Tasheel Services (MOHRE)", isNew: true },
-      { id: "gp-2", name: "TAMM Services (Abu Dhabi)", isNew: true },
-      { id: "gp-3", name: "Tawjeeh Services", isNew: true },
-      { id: "gp-4", name: "Tadbeer Services", isNew: true },
-      { id: "gp-5", name: "Municipality Services", isNew: true },
-      { id: "gp-6", name: "Tawteek Work (Tawtheeq)", isNew: true },
-      { id: "gp-7", name: "ADNOC Registration" },
-      { id: "gp-8", name: "Government Entity Approvals & NOCs" },
-    ],
-  },
-  {
-    id: "foreign-visas",
-    name: "Foreign Visas & Travel",
-    shortName: "Foreign Visas",
-    description:
-      "Global outbound visa consultation, appointment booking, document preparation, and flight reservations.",
-    services: [
-      { id: "fv-1", name: "American Visa (US)", isNew: true },
-      { id: "fv-2", name: "Schengen Visa (Europe)", isNew: true },
-      { id: "fv-3", name: "Canada Visa", isNew: true },
-      { id: "fv-4", name: "Saudi Visa (KSA)", isNew: true },
-      { id: "fv-5", name: "Foreign Visa Assistance" },
-      { id: "fv-6", name: "Travel Desk & Ticket Booking" },
-    ],
-  },
-  {
-    id: "legal-attestation",
-    name: "Legal, Attestation & Translation",
-    shortName: "Legal & Attestation",
-    description:
-      "Certified legal translation, foreign document legalization, embassy attestation, and notary services.",
-    services: [
-      { id: "la-1", name: "Certificate Attestation (MOFA & Embassy)" },
-      { id: "la-2", name: "Certificate Equivalency Services" },
-      { id: "la-3", name: "Genuineness Certificate" },
-      { id: "la-4", name: "Legal Arabic & English Translation" },
-      { id: "la-5", name: "Notary Services Abu Dhabi" },
-      { id: "la-6", name: "Police Clearance Certificate (PCC)" },
-      { id: "la-7", name: "Legal & Court Services" },
-    ],
-  },
-  {
-    id: "traffic-vehicles",
-    name: "Traffic, Vehicles & Tolls",
-    shortName: "Traffic & Tolls",
-    description:
-      "Comprehensive vehicle administration, driver licensing, toll gate registrations, and commercial transport permits.",
-    services: [
-      { id: "tv-1", name: "Traffic Dept Work", isNew: true },
-      { id: "tv-2", name: "Vehicle Services Abu Dhabi" },
-      { id: "tv-3", name: "Abu Dhabi Driving License" },
-      { id: "tv-4", name: "Abu Dhabi Police Security for Vehicle", isNew: true },
-      { id: "tv-5", name: "DARB Toll Registration", isNew: true },
-      { id: "tv-6", name: "Salik Registration", isNew: true },
-      { id: "tv-7", name: "ITC Services (Transport)", isNew: true },
-      { id: "tv-8", name: "Asateel Work (Fleet Tracking)", isNew: true },
-    ],
-  },
-  {
-    id: "labor-insurance",
-    name: "Labor, Payroll & Insurance",
-    shortName: "Labor & Insurance",
-    description:
-      "Mandatory worker protection schemes, salary compliance, unemployment insurance, and health policies.",
-    services: [
-      { id: "li-1", name: "WPS Service (Wage Protection)", isNew: true },
-      { id: "li-2", name: "WP Insurance (Work Permit)", isNew: true },
-      { id: "li-3", name: "ILOE Insurance (Job Loss)" },
-      { id: "li-4", name: "Health & Vehicle Insurance" },
-      { id: "li-5", name: "General Insurance Services" },
-    ],
-  },
-  {
-    id: "pro-compliance",
-    name: "Professional Licensing & Compliance",
-    shortName: "Licensing & Compliance",
-    description:
-      "Specialized healthcare, engineering, anti-money laundering, and national security clearances.",
-    services: [
-      { id: "pc-1", name: "CICPA Pass (CNA / Port Passes)" },
-      { id: "pc-2", name: "AML Registration (goAML)", isNew: true },
-      { id: "pc-3", name: "Medical Professional Licensing (DOH/DHA)" },
-      { id: "pc-4", name: "Engineer License Registration" },
-      { id: "pc-5", name: "ICV Certification" },
-      { id: "pc-6", name: "ISO Certification" },
-    ],
-  },
-  {
-    id: "typing-office",
-    name: "Typing & Office Services",
-    shortName: "Typing & Office",
-    description:
-      "Front-office document drafting, bilingual typing, executive CV writing, high-speed printing, and digital marketing.",
-    services: [
-      { id: "to-1", name: "Arabic & English Typing" },
-      { id: "to-2", name: "Transactions Follow-up" },
-      { id: "to-3", name: "Professional CV Writing", isNew: true },
-      { id: "to-4", name: "PRINT Color and Black", isNew: true },
-      { id: "to-5", name: "Digital Marketing Abu Dhabi" },
-    ],
-  },
-];
 
 // Flat list of keywords for instant ghost suggestion autocomplete
 const ALL_SEARCH_KEYWORDS = Array.from(
@@ -249,14 +92,20 @@ const getSuggestionSuffix = (input: string): string => {
   return "";
 };
 
+const ROTATION_INTERVAL_MS = 5000;
+const INITIAL_DWELL_MS = 5000;
+const MANUAL_CLICK_FREEZE_MS = 10000;
+
 export default function WhatWeDoSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Refs for bulletproof timer tracking
+  // Refs for bulletproof timer and viewport tracking
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInSectionRef = useRef<boolean>(false);
   const isHoveringRef = useRef<boolean>(false);
   const manualPauseUntilRef = useRef<number>(0);
-  const nextAdvanceTimeRef = useRef<number>(Date.now() + 3000);
+  const nextAdvanceTimeRef = useRef<number>(0); // Inactive on page load
 
   const suggestionSuffix = getSuggestionSuffix(searchQuery);
 
@@ -273,36 +122,98 @@ export default function WhatWeDoSection() {
     }
   };
 
-  // High-precision 250ms scheduler: guarantees auto-rotation every 3s,
+  // Viewport visibility detection:
+  // Animation only starts after the user is in the section and waits 5 seconds.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const evaluateVisibility = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return rect.top < vh * 0.75 && rect.bottom > vh * 0.25;
+    };
+
+    const updateInSection = (inView: boolean) => {
+      if (inView) {
+        if (!isInSectionRef.current) {
+          isInSectionRef.current = true;
+          // Start 5-second countdown only after user arrives in the section
+          nextAdvanceTimeRef.current = Date.now() + INITIAL_DWELL_MS;
+        }
+      } else {
+        if (isInSectionRef.current) {
+          isInSectionRef.current = false;
+          // Reset timer when user leaves section so it doesn't rotate off-screen
+          nextAdvanceTimeRef.current = 0;
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        const inView = entry.isIntersecting && entry.intersectionRatio >= 0.15;
+        updateInSection(inView || evaluateVisibility());
+      },
+      {
+        threshold: [0, 0.15, 0.3, 0.5, 0.75],
+      }
+    );
+
+    observer.observe(el);
+
+    // Initial check (in case page loaded directly at anchor or already scrolled)
+    updateInSection(evaluateVisibility());
+
+    const handleScroll = () => {
+      updateInSection(evaluateVisibility());
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
+  // High-precision 250ms scheduler:
+  // Guarantees auto-rotation every 5s ONLY when in view after 5s wait,
   // pauses during hover or search, and respects the 10-second manual click pause
   useEffect(() => {
-    nextAdvanceTimeRef.current = Date.now() + 3000;
-
     const interval = setInterval(() => {
+      // Do nothing if user is not in the section or timer is inactive
+      if (!isInSectionRef.current || nextAdvanceTimeRef.current === 0) {
+        return;
+      }
+
       const now = Date.now();
 
       // Skip if user is actively searching
       if (searchQuery.trim()) {
-        nextAdvanceTimeRef.current = now + 3000;
+        nextAdvanceTimeRef.current = now + ROTATION_INTERVAL_MS;
         return;
       }
 
-      // Skip if user is hovering directly on any text item
+      // Skip if user is hovering directly on any text/category item
       if (isHoveringRef.current) {
-        nextAdvanceTimeRef.current = now + 3000;
+        nextAdvanceTimeRef.current = now + ROTATION_INTERVAL_MS;
         return;
       }
 
       // Skip if within the 10-second manual click freeze
       if (now < manualPauseUntilRef.current) {
-        nextAdvanceTimeRef.current = manualPauseUntilRef.current + 3000;
+        nextAdvanceTimeRef.current = manualPauseUntilRef.current + ROTATION_INTERVAL_MS;
         return;
       }
 
-      // If time reached, advance to the next category!
+      // If dwell/advance time reached, advance to the next category!
       if (now >= nextAdvanceTimeRef.current) {
         setActiveIndex((prev) => (prev + 1) % CATEGORIES.length);
-        nextAdvanceTimeRef.current = now + 3000;
+        nextAdvanceTimeRef.current = now + ROTATION_INTERVAL_MS;
       }
     }, 250);
 
@@ -313,8 +224,8 @@ export default function WhatWeDoSection() {
   // Immediately switch & freeze auto-advance for 10 full seconds!
   const handleSelectCategory = (index: number) => {
     setActiveIndex(index);
-    manualPauseUntilRef.current = Date.now() + 10000;
-    nextAdvanceTimeRef.current = Date.now() + 13000;
+    manualPauseUntilRef.current = Date.now() + MANUAL_CLICK_FREEZE_MS;
+    nextAdvanceTimeRef.current = Date.now() + MANUAL_CLICK_FREEZE_MS + ROTATION_INTERVAL_MS;
   };
 
   const activeCategory = CATEGORIES[activeIndex];
@@ -341,7 +252,7 @@ export default function WhatWeDoSection() {
   }, []);
 
   return (
-    <section className="what-we-do-split-section" id="services">
+    <section ref={sectionRef} className="what-we-do-split-section" id="services">
       <div className="container what-we-do-split-container">
         {/* =========================================================
             LEFT COLUMN: Services Showcase (No Boxes, Dot Bullets & Left Margin)
@@ -360,18 +271,32 @@ export default function WhatWeDoSection() {
               {searchResults && searchResults.length > 0 ? (
                 <div className="services-bullet-list">
                   {searchResults.map(({ category, service }, idx) => (
-                    <div
+                    <Link
+                      href={`/services/${slugify(service.name)}`}
                       key={`search-${category.id}-${service.id}`}
                       className="service-bullet-item"
                       style={{ animationDelay: `${idx * 35}ms` }}
                       onMouseEnter={() => { isHoveringRef.current = true; }}
                       onMouseLeave={() => { isHoveringRef.current = false; }}
+                      title={`View details for ${service.name}`}
                     >
                       <span className="service-bullet-dot" aria-hidden="true" />
                       <span className="service-bullet-title">{service.name}</span>
                       <span className="service-category-tag">{category.shortName}</span>
                       {service.isNew && <span className="service-new-tag">NEW</span>}
-                    </div>
+                      <svg
+                        className="service-bullet-arrow"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.2"
+                        aria-hidden="true"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </Link>
                   ))}
                 </div>
               ) : (
@@ -402,17 +327,31 @@ export default function WhatWeDoSection() {
               {/* Clean Dot-Bulleted List (Hover target strictly on text item) */}
               <div className="services-bullet-list">
                 {activeCategory.services.map((service, idx) => (
-                  <div
+                  <Link
+                    href={`/services/${slugify(service.name)}`}
                     key={`${activeCategory.id}-${service.id}`}
                     className="service-bullet-item"
                     style={{ animationDelay: `${idx * 40}ms` }}
                     onMouseEnter={() => { isHoveringRef.current = true; }}
                     onMouseLeave={() => { isHoveringRef.current = false; }}
+                    title={`View details for ${service.name}`}
                   >
                     <span className="service-bullet-dot" aria-hidden="true" />
                     <span className="service-bullet-title">{service.name}</span>
                     {service.isNew && <span className="service-new-tag">NEW</span>}
-                  </div>
+                    <svg
+                      className="service-bullet-arrow"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </Link>
                 ))}
               </div>
             </div>
