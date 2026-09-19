@@ -88,9 +88,16 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", sizes: "500x500", type: "image/png" },
+      { url: "/logo.jpg", sizes: "500x500", type: "image/jpeg" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/logo.jpg" },
+    ],
   },
 };
 
@@ -99,7 +106,8 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: "ABC Typing",
   alternateName: "ABC Typing Services Abu Dhabi",
-  image: "https://abcauh.ae/hero.jpg",
+  image: "https://abcauh.ae/logo.jpg",
+  logo: "https://abcauh.ae/logo.jpg",
   "@id": "https://abcauh.ae",
   url: "https://abcauh.ae",
   telephone: "+971 2 642 7667",
