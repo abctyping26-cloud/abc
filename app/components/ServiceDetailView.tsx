@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { ServiceDetail } from "../data/servicesData";
 import BusinessSetupDetailView from "./BusinessSetupDetailView";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -335,9 +336,9 @@ export default function ServiceDetailView({
           <aside className="service-sidebar">
             {/* Direct WhatsApp Quick Chat */}
             <a
-              href={`https://wa.me/971500000000?text=${encodeURIComponent(
-                `Hello ABC Typing, I would like more details regarding ${service.name}.`
-              )}`}
+              href={getWhatsAppUrl(
+                WHATSAPP_MESSAGES.serviceDetail(service.name, service.category?.name)
+              )}
               target="_blank"
               rel="noopener noreferrer"
               className="service-whatsapp-direct"

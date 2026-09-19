@@ -8,6 +8,7 @@ import {
   type ServiceCategory,
   type ServiceItem,
 } from "../data/servicesData";
+import { getWhatsAppUrl } from "../utils/whatsapp";
 
 export { CATEGORIES, type ServiceCategory, type ServiceItem };
 
@@ -322,6 +323,35 @@ export default function WhatWeDoSection() {
                 </div>
                 <h3 className="category-showcase-title">{activeCategory.name}</h3>
                 <p className="category-showcase-desc">{activeCategory.description}</p>
+                <a
+                  href={getWhatsAppUrl(
+                    `Hello ABC Typing, I would like more details regarding services in ${activeCategory.name}.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="category-showcase-wa-btn"
+                  title={`Chat with us on WhatsApp about ${activeCategory.name}`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    marginTop: "10px",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    color: "#15803d",
+                    textDecoration: "none",
+                    backgroundColor: "#f0fdf4",
+                    border: "1px solid #bbf7d0",
+                    padding: "4px 10px",
+                    borderRadius: "9999px",
+                    width: "fit-content",
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.54 1.83.822 2.796.822 3.182 0 5.767-2.586 5.768-5.766 0-3.18-2.586-5.808-5.768-5.808zm3.387 8.248c-.145.409-.726.772-1.025.808-.299.037-.687.054-2.222-.596-1.536-.65-2.531-2.247-2.607-2.351-.076-.104-.627-.834-.627-1.591 0-.756.398-1.127.538-1.282.141-.155.308-.194.411-.194.103 0 .205.001.296.006.095.005.223-.036.349.266.126.302.431 1.05.469 1.127.038.077.064.168.013.272-.051.104-.077.168-.154.259-.077.091-.162.203-.231.272-.077.077-.157.16-.068.314.089.154.397.656.852 1.061.585.521 1.079.682 1.233.759.154.077.244.064.334-.038.09-.103.385-.448.487-.602.103-.154.205-.129.346-.077.141.051.898.423 1.052.5.154.077.256.116.295.18.038.064.038.372-.107.781z" />
+                  </svg>
+                  <span>Chat on WhatsApp about this category</span>
+                </a>
               </div>
 
               {/* Clean Dot-Bulleted List (Hover target strictly on text item) */}

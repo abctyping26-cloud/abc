@@ -47,7 +47,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         isTemplateMode={slug === "template"}
       />
       <Footer />
-      <FloatingActions />
+      <FloatingActions serviceContext={service.name} />
     </>
   );
 }

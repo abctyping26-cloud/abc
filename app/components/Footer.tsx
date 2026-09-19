@@ -1,42 +1,44 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
-// Column 1: Business & Corporate Services (7 items from Image 2)
+// Column 1: Business & Corporate Services
 const COLUMN_1_SERVICES = [
-  "Typing Services Abu Dhabi.",
-  "PRO Services Abu Dhabi.",
-  "Business Setup Abu Dhabi.",
-  "Company Formation Abu Dhabi.",
-  "Businessmen Services Abu Dhabi.",
-  "Business Support Services Abu Dhabi.",
-  "Corporate Services Abu Dhabi.",
+  { label: "Business Setup Abu Dhabi", href: "/services/business-setup-services" },
+  { label: "Company Formation Abu Dhabi", href: "/services/company-formation-services" },
+  { label: "Company Liquidation Abu Dhabi", href: "/services/company-liquidation-license-cancellation" },
+  { label: "PRO Services Abu Dhabi", href: "/#services" },
+  { label: "Businessmen Services Abu Dhabi", href: "/services/businessmen-support-services" },
+  { label: "Corporate Services Abu Dhabi", href: "/services/corporate-services-abu-dhabi" },
+  { label: "UAE TAX & VAT Services", href: "/services/uae-tax-vat-services" },
 ];
 
-// Column 2: Legal, Attestation & Gov Services (9 items from Image 1, Left)
+// Column 2: Legal, Attestation & Gov Services
 const COLUMN_2_SERVICES = [
-  "Normal & Legal Translation.",
-  "MOFA, Embassy Attestation.",
-  "Notary Services Abu Dhabi.",
-  "Digital Marketing Abu Dhabi.",
-  "Insurance Services.",
-  "Transaction Follow-Up.",
-  "Abu Dhabi Driving License.",
-  "Vehicle Services Abu Dhabi.",
-  "Virtual Offices Abu Dhabi.",
+  { label: "MOFA & Embassy Attestation", href: "/services/certificate-attestation-mofa-embassy" },
+  { label: "Normal & Legal Translation", href: "/services/legal-arabic-english-translation" },
+  { label: "Notary Services Abu Dhabi", href: "/services/notary-services-abu-dhabi" },
+  { label: "Police Clearance Certificate (PCC)", href: "/services/police-clearance-certificate-pcc" },
+  { label: "Virtual Offices Abu Dhabi", href: "/services/virtual-offices-abu-dhabi" },
+  { label: "Abu Dhabi Driving License", href: "/services/abu-dhabi-driving-license" },
+  { label: "Vehicle Services Abu Dhabi", href: "/services/vehicle-services-abu-dhabi" },
+  { label: "General Insurance Services", href: "/services/general-insurance-services" },
+  { label: "Digital Marketing Abu Dhabi", href: "/services/digital-marketing-abu-dhabi" },
 ];
 
-// Column 3: Visa Services (9 items from Image 1, Right)
+// Column 3: Visa Services
 const COLUMN_3_SERVICES = [
-  "Golden Visa Abu Dhabi.",
-  "Investor Visa Abu Dhabi.",
-  "Family Visa Abu Dhabi.",
-  "Employment Visa Abu Dhabi.",
-  "Tourist Visit Visa Abu Dhabi.",
-  "Mission Visa Abu Dhabi.",
-  "Green Visa Abu Dhabi.",
-  "Domestic Worker-Maid Visa.",
-  "Foreign Visa Services.",
+  { label: "Golden Visa Abu Dhabi (10-Year)", href: "/services/golden-visa-10-year" },
+  { label: "Investor & Partner Visa", href: "/services/investor-partner-visa" },
+  { label: "UAE Family Visa", href: "/services/uae-family-visa" },
+  { label: "Tourist & Visit Visa (30/60 Days)", href: "/services/tourist-visit-visa" },
+  { label: "Employment Visa Services", href: "/services/employment-visa-services" },
+  { label: "Green Visa Abu Dhabi (5-Year)", href: "/services/green-visa-5-year" },
+  { label: "Domestic Worker / Maid Visa", href: "/services/domestic-worker-maid-visa" },
+  { label: "Mission Visa Abu Dhabi", href: "/services/mission-visa-abu-dhabi" },
+  { label: "Foreign Visa Assistance", href: "/services/foreign-visa-assistance" },
 ];
 
 export default function Footer() {
@@ -72,51 +74,51 @@ export default function Footer() {
                 {/* Column 1 */}
                 <div className="footer-services-col">
                   {COLUMN_1_SERVICES.map((item, idx) => (
-                    <a
+                    <Link
                       key={`col1-${idx}`}
-                      href="#services"
+                      href={item.href}
                       className="footer-service-item"
-                      title={item}
+                      title={item.label}
                     >
                       <span className="service-bullet" aria-hidden="true">
                         &#9656;
                       </span>
-                      <span className="service-label">{item}</span>
-                    </a>
+                      <span className="service-label">{item.label}</span>
+                    </Link>
                   ))}
                 </div>
 
                 {/* Column 2 */}
                 <div className="footer-services-col">
                   {COLUMN_2_SERVICES.map((item, idx) => (
-                    <a
+                    <Link
                       key={`col2-${idx}`}
-                      href="#services"
+                      href={item.href}
                       className="footer-service-item"
-                      title={item}
+                      title={item.label}
                     >
                       <span className="service-bullet" aria-hidden="true">
                         &#9656;
                       </span>
-                      <span className="service-label">{item}</span>
-                    </a>
+                      <span className="service-label">{item.label}</span>
+                    </Link>
                   ))}
                 </div>
 
                 {/* Column 3 */}
                 <div className="footer-services-col">
                   {COLUMN_3_SERVICES.map((item, idx) => (
-                    <a
+                    <Link
                       key={`col3-${idx}`}
-                      href="#services"
+                      href={item.href}
                       className="footer-service-item"
-                      title={item}
+                      title={item.label}
                     >
                       <span className="service-bullet" aria-hidden="true">
                         &#9656;
                       </span>
-                      <span className="service-label">{item}</span>
-                    </a>
+                      <span className="service-label">{item.label}</span>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -160,7 +162,7 @@ export default function Footer() {
               <div className="footer-cta-actions">
                 {/* 1. Chat in WhatsApp */}
                 <a
-                  href="https://wa.me/971500000000?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20services"
+                  href={getWhatsAppUrl(WHATSAPP_MESSAGES.footer)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer-whatsapp-btn"

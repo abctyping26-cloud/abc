@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ServiceDetail } from "../data/servicesData";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
@@ -199,9 +200,7 @@ export default function BusinessSetupDetailView({
                   </svg>
                 </a>
                 <a
-                  href={`https://wa.me/971500000000?text=${encodeURIComponent(
-                    "Hello ABC Typing, I want to discuss Business Setup Services."
-                  )}`}
+                  href={getWhatsAppUrl(WHATSAPP_MESSAGES.businessSetup)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="setup-hero-whatsapp-btn"

@@ -1,46 +1,85 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
-export default function FloatingActions() {
+interface FloatingActionsProps {
+  serviceContext?: string;
+}
+
+export default function FloatingActions({ serviceContext }: FloatingActionsProps = {}) {
   const [inHero, setInHero] = useState(true);
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
   useEffect(() => {
     const heroEl = document.getElementById("hero") || document.querySelector(".hero-section");
     if (!heroEl) {
       setInHero(false);
-      return;
     }
 
     const checkHeroVisibility = () => {
-      const heroRect = heroEl.getBoundingClientRect();
-      // If the bottom of the hero section is still well within or above the viewport,
-      // user is still viewing the hero. When hero bottom is scrolled above viewport (<= 80px),
-      // they have transitioned to the next section.
-      setInHero(heroRect.bottom > 80);
+      if (heroEl) {
+        const heroRect = heroEl.getBoundingClientRect();
+        setInHero(heroRect.bottom > 80);
+      }
     };
 
-    // Run immediate check
     checkHeroVisibility();
 
-    // IntersectionObserver for optimized tracking
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setInHero(entry.isIntersecting && entry.intersectionRatio > 0.05);
-      },
-      {
-        threshold: [0, 0.05, 0.2],
-      }
-    );
+    // Section observer to detect which section the user is currently viewing
+    const sectionIds = ["services", "process", "why-us", "enquiry", "faq", "footer"];
+    const sectionObservers: IntersectionObserver[] = [];
 
-    observer.observe(heroEl);
+    sectionIds.forEach((id) => {
+      const el =
+        document.getElementById(id) ||
+        (id === "footer" ? document.querySelector("footer") : null);
+      if (el) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.2) {
+              setActiveSection(id);
+            }
+          },
+          { threshold: [0.2, 0.5] }
+        );
+        observer.observe(el);
+        sectionObservers.push(observer);
+      }
+    });
+
     window.addEventListener("scroll", checkHeroVisibility, { passive: true });
 
     return () => {
-      observer.disconnect();
+      sectionObservers.forEach((obs) => obs.disconnect());
       window.removeEventListener("scroll", checkHeroVisibility);
     };
   }, []);
+
+  // Compute contextual WhatsApp message based on current section or service
+  const getContextualWhatsAppText = (): string => {
+    if (serviceContext) {
+      return WHATSAPP_MESSAGES.serviceContextual(serviceContext);
+    }
+    switch (activeSection) {
+      case "services":
+        return WHATSAPP_MESSAGES.services;
+      case "process":
+        return WHATSAPP_MESSAGES.process;
+      case "why-us":
+        return WHATSAPP_MESSAGES.whyUs;
+      case "enquiry":
+        return WHATSAPP_MESSAGES.enquiry;
+      case "faq":
+        return WHATSAPP_MESSAGES.faq;
+      case "footer":
+        return WHATSAPP_MESSAGES.footer;
+      default:
+        return WHATSAPP_MESSAGES.hero;
+    }
+  };
+
+  const whatsappUrl = getWhatsAppUrl(getContextualWhatsAppText());
 
   const handleSearchClick = () => {
     const searchSection = document.getElementById("services");
@@ -93,7 +132,7 @@ export default function FloatingActions() {
       {/* 2. WhatsApp */}
       <div className="floating-item">
         <a
-          href="https://wa.me/971500000000?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20services"
+          href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="floating-btn floating-whatsapp-btn"

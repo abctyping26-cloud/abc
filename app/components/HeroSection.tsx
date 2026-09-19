@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
 export default function HeroSection() {
   const [currentUser, setCurrentUser] = useState<{
@@ -337,9 +338,7 @@ export default function HeroSection() {
                       </svg>
                     </Link>
                     <a
-                      href={`https://wa.me/971500000000?text=${encodeURIComponent(
-                        "Hello ABC Typing, I want to discuss Business Setup Services."
-                      )}`}
+                      href={getWhatsAppUrl(WHATSAPP_MESSAGES.businessSetup)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="setup-hero-whatsapp-btn"
