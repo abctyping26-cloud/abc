@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface ProcessStep {
   number: number;
@@ -42,24 +42,78 @@ const steps: ProcessStep[] = [
 
 export default function ProcessSection() {
   const [activeStep, setActiveStep] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [animKey, setAnimKey] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const isHoveredRef = useRef(false);
+  isHoveredRef.current = isHovered;
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    if (isPaused) return;
+  // Advance to next step smoothly
+  const nextStep = useCallback(() => {
+    setActiveStep((prev) => (prev + 1) % steps.length);
+    setAnimKey((k) => k + 1);
+  }, []);
 
+  // Continuous, robust 3-second auto-advance timer
+  const startAutoAdvance = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
     timerRef.current = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
+      // Auto-advance continuously unless paused by desktop mouse hover
+      if (!isHoveredRef.current) {
+        nextStep();
+      }
     }, 3000);
+  }, [nextStep]);
 
+  // Mount effect: start auto-advance
+  useEffect(() => {
+    startAutoAdvance();
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
     };
-  }, [isPaused, activeStep]);
+  }, [startAutoAdvance]);
 
+  // Resume smoothly if mobile browser tab was locked or backgrounded
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        startAutoAdvance();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [startAutoAdvance]);
+
+  // Tap or click on any step circle to jump immediately
   const handleSelectStep = (index: number) => {
     setActiveStep(index);
-    if (timerRef.current) clearInterval(timerRef.current);
+    setAnimKey((k) => k + 1);
+    startAutoAdvance();
+  };
+
+  // Laptop/Desktop hover pause (strictly guarded against mobile touch devices)
+  const handleMouseEnter = () => {
+    if (
+      typeof window !== "undefined" &&
+      window.innerWidth > 820 &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      setIsHovered(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (typeof window !== "undefined" && window.innerWidth > 820) {
+      setIsHovered(false);
+    }
   };
 
   const currentStep = steps[activeStep];
@@ -67,7 +121,7 @@ export default function ProcessSection() {
   return (
     <section className="process-section" id="process">
       <div className="container">
-        {/* Section Header: Styled identically to 'What We Do' */}
+        {/* Section Header */}
         <div className="process-header" data-aos="fade-up">
           <span className="process-kicker">STEP-BY-STEP ROADMAP</span>
           <h2 className="process-title">Our Process</h2>
@@ -86,7 +140,7 @@ export default function ProcessSection() {
 
               return (
                 <React.Fragment key={step.number}>
-                  {/* Node Button */}
+                  {/* Node Button: native button with immediate tap & click support */}
                   <button
                     type="button"
                     onClick={() => handleSelectStep(idx)}
@@ -112,9 +166,9 @@ export default function ProcessSection() {
                             r="46"
                           />
                           <circle
-                            key={`ring-${activeStep}`}
+                            key={`ring-${activeStep}-${animKey}`}
                             className={`ring-fill ${
-                              isPaused ? "ring-fill-paused" : ""
+                              isHovered ? "ring-fill-paused" : ""
                             }`}
                             cx="50"
                             cy="50"
@@ -152,22 +206,22 @@ export default function ProcessSection() {
           className="process-showcase-container"
           data-aos="fade-up"
           data-aos-delay="200"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <div className="process-showcase-card">
             {/* Top 3s countdown progress line */}
             <div className="process-timer-track" aria-hidden="true">
               <div
-                key={`bar-${activeStep}`}
+                key={`bar-${activeStep}-${animKey}`}
                 className={`process-timer-bar ${
-                  isPaused ? "timer-paused" : ""
+                  isHovered ? "timer-paused" : ""
                 }`}
               />
             </div>
 
             {/* Inner Content with smooth entrance animation */}
-            <div className="process-showcase-inner" key={activeStep}>
+            <div className="process-showcase-inner" key={`content-${activeStep}`}>
               <h3 className="process-showcase-title">{currentStep.title}</h3>
               <p className="process-showcase-desc">{currentStep.description}</p>
             </div>

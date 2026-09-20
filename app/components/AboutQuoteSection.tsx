@@ -13,7 +13,7 @@ export default function AboutQuoteSection() {
           <div className="network-track">
             {/* Node 1: Kollam (India) */}
             <div
-              className="network-node"
+              className="network-node network-node-1"
               tabIndex={0}
               role="button"
               aria-label="Kollam Office, India"
@@ -70,7 +70,7 @@ export default function AboutQuoteSection() {
 
             {/* Node 2: Abu Dhabi (UAE) */}
             <div
-              className="network-node"
+              className="network-node network-node-2"
               tabIndex={0}
               role="button"
               aria-label="Abu Dhabi Office, UAE"
@@ -105,7 +105,7 @@ export default function AboutQuoteSection() {
 
             {/* Node 3: Dubai (UAE) */}
             <div
-              className="network-node"
+              className="network-node network-node-3"
               tabIndex={0}
               role="button"
               aria-label="Dubai Office, UAE"

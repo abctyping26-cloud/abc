@@ -571,39 +571,74 @@
   }
 
   .category-menu-card {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 9999px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .category-menu-card::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-menu-item {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+
+  .category-item-text {
+    font-size: 0.86rem;
+    white-space: nowrap;
+  }
+
+  .category-item-dot {
+    display: none;
   }
 
   .services-bullet-list {
-    margin-left: 12px;
+    margin-left: 0;
+    gap: 10px;
+  }
+
+  .service-bullet-item {
+    padding: 10px 14px;
+    min-height: 46px;
+    border-radius: 12px;
+    background-color: #f8fafc;
+    border: 1px solid #f1f5f9;
   }
 }
 
 @media (max-width: 640px) {
   .what-we-do-split-section {
-    padding: 56px 0;
-  }
-
-  .category-menu-card {
-    grid-template-columns: 1fr;
-  }
-
-  .services-bullet-list {
-    margin-left: 8px;
-    gap: 12px;
-  }
-
-  .service-bullet-title {
-    font-size: 0.96rem;
+    padding: 50px 0;
   }
 
   .what-we-do-main-title {
-    font-size: 2.2rem;
+    font-size: clamp(2rem, 7.5vw, 2.5rem);
   }
 
   .category-showcase-title {
     font-size: 1.35rem;
+  }
+
+  .category-showcase-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .service-bullet-title {
+    font-size: 0.92rem;
+  }
+
+  .search-capsule-input {
+    font-size: 16px !important;
   }
 }

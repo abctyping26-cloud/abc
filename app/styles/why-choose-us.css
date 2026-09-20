@@ -306,7 +306,37 @@
   }
 
   .why-us-scroll-box {
-    height: 480px;
+    height: 440px;
+  }
+}
+
+@media (max-width: 640px) {
+  .why-us-section {
+    padding: 50px 0;
+  }
+
+  .why-us-layout {
+    gap: 32px;
+  }
+
+  .why-us-main-title {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+  }
+
+  .why-us-quote-text {
+    font-size: 1.02rem;
+    line-height: 1.48;
+  }
+
+  .why-us-scroll-box {
+    height: 380px;
+    border-radius: 20px;
+    padding: 10px;
+  }
+
+  .big-review-card {
+    padding: 18px 16px;
+    border-radius: 16px;
   }
 }
 

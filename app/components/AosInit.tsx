@@ -9,8 +9,9 @@ export default function AOSInit() {
     AOS.init({
       duration: 800,
       easing: "ease-out-cubic",
-      once: false,
-      offset: 60,
+      once: true,
+      offset: 40,
+      disable: () => window.innerWidth <= 820,
     });
   }, []);
 

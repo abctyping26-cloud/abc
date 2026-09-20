@@ -71,6 +71,9 @@
   position: relative;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   outline: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 10;
 }
 
 .process-node:focus-visible {
@@ -92,6 +95,7 @@
   position: relative;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+  pointer-events: none;
 }
 
 .process-circle-number {
@@ -102,6 +106,8 @@
   letter-spacing: -0.03em;
   line-height: 1;
   transition: color 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  user-select: none;
 }
 
 .process-node:hover .process-circle {
@@ -295,19 +301,59 @@
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .process-track {
-    --circle-size: clamp(52px, 12vw, 70px);
+    --circle-size: clamp(50px, 12vw, 68px);
+  }
+
+  .process-node {
+    padding: 6px;
+    touch-action: manipulation;
+  }
+
+  .process-node:active .process-circle {
+    transform: scale(0.94);
   }
 
   .process-connector {
-    min-width: 14px;
+    min-width: 12px;
   }
 
   .process-circle-number {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .process-showcase-inner {
     padding: 24px 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .process-section {
+    padding: 50px 0;
+  }
+
+  .process-title {
+    font-size: clamp(2rem, 7.5vw, 2.5rem);
+  }
+
+  .process-track {
+    --circle-size: clamp(46px, 12vw, 58px);
+  }
+
+  .process-connector {
+    min-width: 10px;
+  }
+
+  .process-circle-number {
+    font-size: 1.1rem;
+  }
+
+  .process-showcase-title {
+    font-size: 1.3rem;
+  }
+
+  .process-showcase-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
   }
 }
 

@@ -474,24 +474,24 @@
 
 @media (max-width: 600px) {
   :root {
-    --hero-margin: 16px;
+    --hero-margin: 12px;
     --hero-box-radius: 20px;
     --hero-content-y-offset: 10px;
   }
 
   .hero-top-nav {
-    top: 20px;
-    right: 20px;
-    gap: 8px;
+    top: 18px;
+    right: 18px;
+    gap: 6px;
   }
 
   .hero-logo-box {
-    top: 20px;
-    left: 20px;
+    top: 18px;
+    left: 18px;
   }
 
   .hero-logo-text {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
   .hero-logo-dot {
@@ -501,37 +501,89 @@
 
   .hero-contact-btn,
   .hero-login-btn {
-    padding: 8px 16px;
-    font-size: 0.82rem;
+    padding: 7px 13px;
+    font-size: 0.8rem;
+    white-space: nowrap;
   }
 
   .hero-call-btn {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+
+  .hero-call-btn svg {
+    width: 16px;
+    height: 16px;
   }
 
   .hero-box {
-    padding: 80px 20px 32px;
+    padding: 76px 18px 76px;
+    margin: 12px;
+    width: calc(100% - 24px);
+    min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
+  }
+
+  .hero-content {
+    gap: 14px;
   }
 
   .hero-title {
-    font-size: 1.95rem;
+    font-size: clamp(1.85rem, 6.2vw, 2.3rem);
+    line-height: 1.16;
+  }
+
+  .hero-subtitle {
+    font-size: 0.94rem;
+    line-height: 1.5;
+  }
+
+  .hero-cta-group {
+    margin-top: 4px;
+    gap: 10px;
   }
 
   .hero-cta-btn {
-    height: 44px;
-    padding: 0 22px;
-    font-size: 0.9rem;
+    height: 46px;
+    padding: 0 20px;
+    font-size: 0.88rem;
   }
 
   .hero-whatsapp-btn {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
   }
 
   .hero-whatsapp-icon {
     width: 20px;
     height: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-top-nav {
+    gap: 5px;
+    right: 14px;
+    top: 14px;
+  }
+
+  .hero-logo-box {
+    left: 14px;
+    top: 14px;
+  }
+
+  .hero-contact-btn {
+    display: none;
+  }
+
+  .hero-box {
+    padding: 68px 14px 68px;
+    margin: 8px;
+    width: calc(100% - 16px);
+    min-height: calc(100vh - 16px);
+    min-height: calc(100dvh - 16px);
+    border-radius: 16px;
   }
 }
 
@@ -727,6 +779,67 @@
     margin: 12px;
     width: calc(100% - 24px);
     min-height: calc(100vh - 24px);
+    min-height: calc(100dvh - 24px);
+  }
+
+  /* Slide 1: Setup Hero mobile optimization */
+  .setup-carousel-hero-box {
+    padding: 76px 18px 76px;
+    justify-content: space-between;
+  }
+
+  .setup-carousel-hero-box .setup-hero-main-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .setup-carousel-hero-box .setup-hero-left-content {
+    align-items: center;
+    gap: 16px;
+  }
+
+  .setup-carousel-hero-box .setup-hero-large-hook {
+    font-size: clamp(2rem, 7vw, 2.6rem);
+    line-height: 1.12;
+  }
+
+  .setup-carousel-hero-box .setup-hero-cta-row {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .setup-carousel-hero-box .setup-hero-primary-btn {
+    padding: 11px 22px;
+    font-size: 0.88rem;
+  }
+
+  .setup-carousel-hero-box .setup-hero-whatsapp-btn {
+    padding: 10px 18px;
+    font-size: 0.84rem;
+  }
+
+  .setup-carousel-hero-box .setup-hero-right-showcase {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .setup-carousel-hero-box .setup-feature-card.tall {
+    width: 100%;
+    max-width: 290px;
+    height: 200px;
+    border-radius: 18px;
+  }
+
+  .setup-carousel-hero-box .setup-feature-chevron-left,
+  .setup-carousel-hero-box .setup-feature-right-col {
+    display: none;
   }
 }
 

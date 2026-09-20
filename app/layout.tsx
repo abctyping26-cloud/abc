@@ -1,9 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import AuthToast from "./components/AuthToast";
 import AOSInit from "./components/AosInit";
 import ServerWarmer from "./components/ServerWarmer";
 import "aos/dist/aos.css";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://abcauh.ae"),
@@ -226,15 +233,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(jsonLd),
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                document.documentElement.classList.add('is-mobile-device');
-              }
-            `,
           }}
         />
       </head>

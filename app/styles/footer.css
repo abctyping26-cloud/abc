@@ -470,12 +470,34 @@
 }
 
 @media (max-width: 480px) {
+  .footer-section {
+    padding: 48px 18px 36px;
+  }
+
   .footer-services-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 18px;
+  }
+
+  .footer-cta-card {
+    padding: 24px 16px;
+    border-radius: 20px;
+  }
+
+  .footer-cta-heading {
+    font-size: 1.25rem;
   }
 
   .footer-cta-actions {
     flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .footer-whatsapp-btn,
+  .footer-enquiry-btn {
+    width: 100%;
+    height: 48px;
+    justify-content: center;
   }
 }
