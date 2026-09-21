@@ -1584,406 +1584,164 @@
 }
 
 /* --------------------------------------------------------------------------
-   "Best Websites" Showcase Section (Top-Right Layered Cards | Bottom-Left Title)
+   "Your Business. Your Brand. Your Website." Showcase Section
    -------------------------------------------------------------------------- */
 .setup-websites-section {
   position: relative;
-  overflow: hidden;
-  padding: 100px 48px 110px;
+  overflow: hidden; /* Clips the overflowing bottom-right corner of the cards */
+  padding: 110px 48px 120px;
   background-color: #ffffff;
   border-top: 1px solid #f4f4f5;
+  min-height: 720px;
+  box-sizing: border-box;
 }
 
 .setup-websites-container {
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  min-height: 620px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  min-height: 520px;
   position: relative;
+  display: flex;
+  align-items: flex-start;
 }
 
-/* Top-Right Area: Preserved empty space */
-.setup-websites-top-right {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+/* Top-Left Headline */
+.setup-websites-top-left {
   position: relative;
-  z-index: 5;
-  margin-bottom: 40px;
-  min-height: 275px;
-}
-
-.setup-webcards-deck {
-  position: relative;
-  width: 440px;
-  height: 275px;
-}
-
-.setup-webcard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 440px;
-  height: 275px;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #ffffff;
-  border: 1.5px solid #e4e4e7;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-/* Layer 3: Back Card */
-.setup-webcard.back-card {
-  transform: translate(28px, 32px) scale(0.92) rotate(3deg);
-  opacity: 0.52;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Layer 2: Middle Card */
-.setup-webcard.middle-card {
-  transform: translate(14px, 16px) scale(0.96) rotate(-2deg);
-  opacity: 0.85;
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Layer 1: Top Card (Animated Going & Coming) */
-.setup-webcard.top-card {
-  transform: translate(0, 0) scale(1) rotate(0deg);
-  z-index: 3;
-  animation: topCardGoingComing 6s cubic-bezier(0.34, 1.15, 0.64, 1) infinite;
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
-  will-change: transform, box-shadow;
-}
-
-.setup-webcards-deck:hover .setup-webcard.top-card {
-  animation-play-state: paused;
-  transform: translate(75px, -45px) rotate(8deg) scale(1.03);
-  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.16);
-}
-
-@keyframes topCardGoingComing {
-  0% {
-    transform: translate(0px, 0px) rotate(0deg) scale(1);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
-  }
-  20% {
-    /* Resting in place */
-    transform: translate(0px, 0px) rotate(0deg) scale(1);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
-  }
-  48% {
-    /* "Going" - slides out toward top-right with elegant tilt */
-    transform: translate(75px, -45px) rotate(8.5deg) scale(1.03);
-    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.16);
-  }
-  62% {
-    /* Peak of departure revealing cards beneath */
-    transform: translate(78px, -48px) rotate(9deg) scale(1.03);
-    box-shadow: 0 38px 75px rgba(0, 0, 0, 0.18);
-  }
-  82% {
-    /* "Coming" - gliding smoothly back toward the deck */
-    transform: translate(12px, -6px) rotate(1.2deg) scale(1.01);
-    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.12);
-  }
-  100% {
-    /* Back resting in place */
-    transform: translate(0px, 0px) rotate(0deg) scale(1);
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
-  }
-}
-
-/* Browser Chrome on Website Cards */
-.setup-webcard-browser-bar {
-  height: 38px;
-  background: #fafafa;
-  border-bottom: 1px solid #f0f0f2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  flex-shrink: 0;
-}
-
-.setup-browser-dots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.setup-browser-dots .dot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.setup-browser-dots .dot.red {
-  background: #ef4444;
-}
-
-.setup-browser-dots .dot.yellow {
-  background: #f59e0b;
-}
-
-.setup-browser-dots .dot.green {
-  background: #10b981;
-}
-
-.setup-browser-url {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #ffffff;
-  border: 1px solid #e4e4e7;
-  border-radius: 9999px;
-  padding: 3px 12px;
-  font-size: 0.7rem;
-  font-family: monospace;
-  color: #52525b;
-}
-
-.setup-browser-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #16a34a;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  padding: 2px 8px;
-  border-radius: 9999px;
-}
-
-.setup-browser-status .live-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #16a34a;
-}
-
-/* Card Mock Body */
-.setup-webcard-body {
-  flex: 1;
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: #ffffff;
-}
-
-.setup-mock-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-}
-
-.setup-mock-brand-main {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  color: #09090b;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.setup-mock-brand-main .brand-circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #000000;
-}
-
-.setup-mock-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.7rem;
-  color: #71717a;
-  font-weight: 600;
-}
-
-.setup-mock-cta-btn {
-  background: #000000;
-  color: #ffffff;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-}
-
-.setup-mock-hero-main {
-  display: flex;
-  flex-direction: column;
-}
-
-.setup-mock-kicker {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  color: #2563eb;
-  margin-bottom: 4px;
-}
-
-.setup-mock-headline {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #09090b;
-  line-height: 1.25;
-  margin: 0 0 6px;
-}
-
-.setup-mock-sub {
-  font-size: 0.74rem;
-  color: #71717a;
-  margin: 0 0 12px;
-  line-height: 1.35;
-}
-
-.setup-mock-action-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.setup-mock-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #18181b;
-  background: #f4f4f5;
-  padding: 3px 10px;
-  border-radius: 6px;
-}
-
-.setup-mock-badge-pill .pill-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #f59e0b;
-}
-
-.setup-mock-badge-pill .pill-dot.green {
-  background: #10b981;
-}
-
-/* Card 2 & 3 Mock Content Styles */
-.setup-mock-brand {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 800;
-  font-size: 0.76rem;
-  color: #09090b;
-  letter-spacing: 0.05em;
-}
-
-.setup-mock-pill {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #52525b;
-  background: #f4f4f5;
-  padding: 2px 8px;
-  border-radius: 9999px;
-}
-
-.setup-mock-h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1rem;
-  font-weight: 800;
-  color: #09090b;
-  margin-bottom: 12px;
-  line-height: 1.25;
-}
-
-.setup-mock-stats-row {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
-
-.setup-mock-stats-row .mock-stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.setup-mock-stats-row .stat-v {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.96rem;
-  font-weight: 800;
-  color: #09090b;
-}
-
-.setup-mock-stats-row .stat-l {
-  font-size: 0.68rem;
-  color: #71717a;
-}
-
-.setup-mock-badges {
-  display: flex;
-  gap: 8px;
-}
-
-.setup-mock-badges .mock-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #18181b;
-  background: #f4f4f5;
-  padding: 3px 10px;
-  border-radius: 6px;
-}
-
-/* Left-Bottom Corner: Person image + "best websites" Title */
-.setup-websites-left-bottom {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
-  z-index: 4;
-}
-
-.setup-websites-person-wrap {
-  position: absolute;
-  bottom: 0;
-  left: -60px;
-  z-index: 1;
-  pointer-events: none;
-  user-select: none;
-  line-height: 0;
-  filter: drop-shadow(0 24px 36px rgba(0, 0, 0, 0.09));
-}
-
-.setup-websites-person-img {
-  width: auto;
-  height: clamp(600px, 64vw, 800px);
-  max-width: none;
-  object-fit: contain;
-  object-position: bottom left;
-  display: block;
+  z-index: 10;
+  max-width: 540px;
 }
 
 .setup-websites-title {
   position: relative;
-  z-index: 3;
+  z-index: 10;
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(4.6rem, 9vw, 8.64rem);
+  font-size: clamp(3rem, 5.2vw, 5.2rem);
   font-weight: 900;
   color: #09090b;
-  letter-spacing: -0.05em;
-  line-height: 0.94;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
   margin: 0;
+  text-align: left;
+}
+
+/* Corner Deck Container: anchored to bottom-right, overflowing the section */
+.setup-websites-deck-wrap {
+  position: absolute;
+  right: -60px;
+  bottom: -70px;
+  width: clamp(560px, 54vw, 860px);
+  height: clamp(400px, 39vw, 580px);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.setup-layered-card {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
+  border: 5px solid #000000;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.75s ease;
+  will-change: transform, opacity;
+  pointer-events: auto;
+}
+
+/* Layer 0: Active Top Card */
+.setup-layered-card.layer-0 {
+  z-index: 4;
+  opacity: 1;
+  transform: translate(0px, 0px) scale(1);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.2);
+}
+
+/* Layer 1: Middle Card */
+.setup-layered-card.layer-1 {
+  z-index: 3;
+  opacity: 0.88;
+  transform: translate(-36px, -32px) scale(0.94);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+}
+
+/* Layer 2: Back Card */
+.setup-layered-card.layer-2 {
+  z-index: 2;
+  opacity: 0.65;
+  transform: translate(-72px, -64px) scale(0.88);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.1);
+}
+
+/* Layer 3: Hidden/Incoming Card behind deck */
+.setup-layered-card.layer-3 {
+  z-index: 1;
+  opacity: 0;
+  transform: translate(-108px, -96px) scale(0.82);
+  pointer-events: none;
+}
+
+/* Top card fading out on transition */
+.setup-layered-card.card-fading-out {
+  z-index: 10 !important;
+  opacity: 0 !important;
+  transform: translate(30px, 30px) scale(1.03) !important;
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  pointer-events: none;
+}
+
+.setup-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 23px;
+}
+
+.setup-layered-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+}
+
+.setup-card-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.setup-card-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.setup-card-badge-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
 }
 
 /* Block Section Wrapper */
@@ -2577,20 +2335,23 @@
   }
 
   .setup-websites-section {
-    padding: 100px 24px 110px;
+    padding: 70px 24px 80px;
   }
 
   .setup-websites-container {
-    min-height: 500px;
+    min-height: 560px;
   }
 
-  .setup-websites-top-right {
-    min-height: 240px;
+  .setup-websites-title {
+    font-size: clamp(2.6rem, 4.6vw, 3.8rem);
   }
 
-  .setup-webcard {
-    width: 380px;
-    height: 240px;
+  .setup-websites-person-img {
+    height: clamp(400px, 42vw, 500px);
+  }
+
+  .setup-websites-showcase-wrap {
+    max-width: 480px;
   }
 }
 
@@ -2934,7 +2695,7 @@
   }
 
   .setup-websites-section {
-    padding: 80px 16px 90px;
+    padding: 60px 16px 70px;
   }
 
   .setup-websites-container {
@@ -2942,57 +2703,70 @@
     gap: 0;
   }
 
-  .setup-websites-top-right {
-    display: none;
-  }
-
-  .setup-webcards-deck {
-    width: 100%;
-    max-width: 330px;
-    height: 215px;
-    margin: 0 auto;
-  }
-
-  .setup-webcard {
-    width: 100%;
-    height: 215px;
-    border-radius: 16px;
-  }
-
-  .setup-websites-left-bottom {
-    text-align: center;
-    margin: 0 auto;
-    position: relative;
-    padding-top: 140px;
-  }
-
-  .setup-websites-person-wrap {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .setup-websites-person-img {
-    height: clamp(340px, 70vw, 420px);
-    object-position: bottom center;
+  .setup-websites-top-left {
+    margin-bottom: 20px;
+    text-align: left;
   }
 
   .setup-websites-title {
-    font-size: clamp(3.4rem, 11.5vw, 5rem);
-    line-height: 0.98;
+    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    line-height: 1.05;
   }
 
-  @keyframes topCardGoingComing {
-    0%, 20% {
-      transform: translate(0px, 0px) rotate(0deg) scale(1);
-    }
-    48%, 62% {
-      transform: translate(32px, -20px) rotate(5deg) scale(1.02);
-    }
-    82%, 100% {
-      transform: translate(0px, 0px) rotate(0deg) scale(1);
-    }
+  .setup-websites-main-row {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto;
+    gap: 28px;
+  }
+
+  .setup-websites-showcase-wrap {
+    margin-left: 0;
+    max-width: 100%;
+    padding-bottom: 0;
+  }
+
+  .setup-web-showcase-frame {
+    border-radius: 22px;
+    border: 5px solid #000000;
+  }
+
+  .setup-website-slide-img {
+    border-radius: 17px;
+  }
+
+  .setup-web-slide-caption {
+    bottom: 12px;
+    left: 12px;
+    padding: 4px 10px;
+  }
+
+  .setup-web-slide-tag {
+    font-size: 0.62rem;
+  }
+
+  .setup-web-slide-name {
+    font-size: 0.72rem;
+  }
+
+  .setup-web-dots {
+    bottom: 12px;
+    right: 12px;
+    padding: 6px 10px;
+  }
+
+  .setup-websites-person-wrap {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    margin: 10px auto 0;
+    text-align: center;
+  }
+
+  .setup-websites-person-img {
+    height: clamp(280px, 68vw, 380px);
+    margin: 0 auto;
+    object-position: bottom center;
   }
 }
 

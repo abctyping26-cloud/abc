@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ServiceDetail } from "../data/servicesData";
@@ -8,6 +8,29 @@ import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const sampleWebsites = [
+  {
+    src: "/sample-web/web1.jpeg",
+    title: "Prosen IT Solutions",
+    tag: "Enterprise Portal",
+  },
+  {
+    src: "/sample-web/web2.jpeg",
+    title: "Expert Handyman Services",
+    tag: "Service Business",
+  },
+  {
+    src: "/sample-web/web3.jpeg",
+    title: "LOGISTIQO Global Shipping",
+    tag: "Logistics & Trade",
+  },
+  {
+    src: "/sample-web/web4.jpeg",
+    title: "Ecovia Clean Energy",
+    tag: "CleanTech Platform",
+  },
+];
 
 interface BusinessSetupDetailViewProps {
   service: ServiceDetail;
@@ -36,6 +59,28 @@ export default function BusinessSetupDetailView({
 
   // Flip state for the right box
   const [isFlipped, setIsFlipped] = useState(false);
+
+  // Rotating layered website cards (changes every 2s, top card fades out)
+  const [activeWebIndex, setActiveWebIndex] = useState(0);
+  const [fadingIndex, setFadingIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    let fadeTimer: NodeJS.Timeout;
+
+    const intervalTimer = setInterval(() => {
+      setFadingIndex(activeWebIndex);
+      setActiveWebIndex((prev) => (prev + 1) % sampleWebsites.length);
+
+      fadeTimer = setTimeout(() => {
+        setFadingIndex(null);
+      }, 750);
+    }, 2000);
+
+    return () => {
+      clearInterval(intervalTimer);
+      clearTimeout(fadeTimer);
+    };
+  }, [activeWebIndex]);
 
   // Form states
   const [name, setName] = useState("");
@@ -528,26 +573,48 @@ export default function BusinessSetupDetailView({
       </section>
 
       {/* ------------------------------------------------------------------
-          "Best Websites" Showcase Section (Top-Right Layered Cards | Bottom-Left Title)
+          "Your Business. Your Brand. Your Website." Showcase Section
           ------------------------------------------------------------------ */}
       <section className="setup-websites-section" id="best-websites">
         <div className="setup-websites-container">
-          {/* Top-Right Corner: Preserved empty space */}
-          <div className="setup-websites-top-right" aria-hidden="true" />
+          {/* Top-Left: Bold 3-line Headline */}
+          <div className="setup-websites-top-left">
+            <h2 className="setup-websites-title">
+              Your Business.<br />
+              Your Brand.<br />
+              Your Website.
+            </h2>
+          </div>
 
-          {/* Left-Bottom Corner: Person image + "best websites" Title */}
-          <div className="setup-websites-left-bottom">
-            <div className="setup-websites-person-wrap">
-              <Image
-                src="/remove-bg_-0.png"
-                alt="Best Websites"
-                width={520}
-                height={780}
-                priority
-                className="setup-websites-person-img"
-              />
-            </div>
-            <h2 className="setup-websites-title">Best Websites.</h2>
+          {/* Layered Website Cards Overflowing Bottom-Right Corner */}
+          <div className="setup-websites-deck-wrap" aria-label="Websites Showcase">
+            {sampleWebsites.map((web, idx) => {
+              const isFading = idx === fadingIndex;
+              const offset = (idx - activeWebIndex + sampleWebsites.length) % sampleWebsites.length;
+
+              return (
+                <div
+                  key={web.src}
+                  className={`setup-layered-card ${isFading ? "card-fading-out" : `layer-${offset}`}`}
+                  aria-hidden={offset !== 0 && !isFading}
+                >
+                  <div className="setup-card-inner">
+                    <Image
+                      src={web.src}
+                      alt={web.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 860px"
+                      priority={idx === 0}
+                      className="setup-layered-card-img"
+                    />
+                    <div className="setup-card-badge">
+                      <span className="setup-card-badge-dot" />
+                      <span className="setup-card-badge-title">{web.title}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
