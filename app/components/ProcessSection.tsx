@@ -48,55 +48,68 @@ export default function ProcessSection() {
   const isHoveredRef = useRef(false);
   isHoveredRef.current = isHovered;
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastAdvanceTimeRef = useRef(Date.now());
 
   // Advance to next step smoothly
   const nextStep = useCallback(() => {
     setActiveStep((prev) => (prev + 1) % steps.length);
     setAnimKey((k) => k + 1);
+    lastAdvanceTimeRef.current = Date.now();
   }, []);
 
-  // Continuous, robust 3-second auto-advance timer
-  const startAutoAdvance = useCallback(() => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    timerRef.current = setInterval(() => {
-      // Auto-advance continuously unless paused by desktop mouse hover
-      if (!isHoveredRef.current) {
-        nextStep();
-      }
-    }, 3000);
-  }, [nextStep]);
-
-  // Mount effect: start auto-advance
+  // Continuous 3-second auto-advance loop (immune to iOS Safari timer throttling)
   useEffect(() => {
-    startAutoAdvance();
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
+    lastAdvanceTimeRef.current = Date.now();
+    let animId: number;
+
+    const checkAutoAdvance = () => {
+      const now = Date.now();
+      if (now - lastAdvanceTimeRef.current >= 3000) {
+        if (!isHoveredRef.current) {
+          setActiveStep((prev) => (prev + 1) % steps.length);
+          setAnimKey((k) => k + 1);
+        }
+        lastAdvanceTimeRef.current = now;
       }
+      animId = requestAnimationFrame(checkAutoAdvance);
     };
-  }, [startAutoAdvance]);
+
+    animId = requestAnimationFrame(checkAutoAdvance);
+
+    // Fallback interval (runs every 1s, ensures advancing even if RAF paused during background/scroll)
+    const intervalId = setInterval(() => {
+      const now = Date.now();
+      if (now - lastAdvanceTimeRef.current >= 3000 && !isHoveredRef.current) {
+        setActiveStep((prev) => (prev + 1) % steps.length);
+        setAnimKey((k) => k + 1);
+        lastAdvanceTimeRef.current = now;
+      }
+    }, 1000);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      clearInterval(intervalId);
+    };
+  }, []);
 
   // Resume smoothly if mobile browser tab was locked or backgrounded
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        startAutoAdvance();
+        lastAdvanceTimeRef.current = Date.now();
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [startAutoAdvance]);
+  }, []);
 
   // Tap or click on any step circle to jump immediately
   const handleSelectStep = (index: number) => {
     setActiveStep(index);
     setAnimKey((k) => k + 1);
-    startAutoAdvance();
+    lastAdvanceTimeRef.current = Date.now();
   };
 
   // Laptop/Desktop hover pause (strictly guarded against mobile touch devices)

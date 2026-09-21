@@ -602,7 +602,10 @@
   display: flex;
   width: 200%;
   transition: transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+  -webkit-transition: -webkit-transform 0.85s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .hero-carousel-slide {
@@ -612,6 +615,10 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .hero-carousel-slide .hero-box,
@@ -663,91 +670,6 @@
   transform: translateY(-50%) scale(0.96);
 }
 
-/* Floating Bottom Indicator Bar */
-.hero-carousel-indicators {
-  position: absolute;
-  bottom: 48px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 30;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 6px 10px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.32);
-}
-
-.hero-indicator-pill {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 18px;
-  border-radius: 9999px;
-  border: none;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.65);
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 650;
-  cursor: pointer;
-  overflow: hidden;
-  transition: all 0.22s ease;
-  user-select: none;
-}
-
-.hero-indicator-pill:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.hero-indicator-pill.active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.hero-indicator-num {
-  font-family: 'Space Grotesk', system-ui, monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  opacity: 0.8;
-  letter-spacing: 0.05em;
-}
-
-.hero-indicator-label {
-  letter-spacing: -0.01em;
-}
-
-/* 3-Second Linear Auto-Advance Progress Bar */
-@keyframes heroProgressAnim {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.hero-indicator-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2.5px;
-  background: #7C5CFC;
-  box-shadow: 0 0 8px rgba(124, 92, 252, 0.8);
-  border-radius: 9999px;
-  animation: heroProgressAnim 3s linear forwards;
-}
-
-.hero-section:hover .hero-indicator-progress {
-  animation-play-state: paused;
-}
-
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .hero-arrow-left {
@@ -756,24 +678,13 @@
   .hero-arrow-right {
     right: 32px;
   }
-  .hero-carousel-indicators {
-    bottom: 36px;
-  }
 }
 
 @media (max-width: 768px) {
   .hero-carousel-arrow {
     display: none;
   }
-  .hero-carousel-indicators {
-    bottom: 24px;
-    padding: 5px 8px;
-    gap: 6px;
-  }
-  .hero-indicator-pill {
-    padding: 7px 14px;
-    font-size: 0.8rem;
-  }
+
   .hero-carousel-slide .hero-box,
   .hero-carousel-slide .setup-fullscreen-box {
     margin: 12px;
@@ -784,8 +695,20 @@
 
   /* Slide 1: Setup Hero mobile optimization */
   .setup-carousel-hero-box {
-    padding: 76px 18px 76px;
+    padding: 76px 18px 60px;
     justify-content: space-between;
+  }
+
+  .setup-carousel-hero-box .hero-call-btn {
+    border: 1px solid #e4e4e7;
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .setup-carousel-hero-box .hero-contact-btn {
+    color: #000000;
+    border: 1px solid #e4e4e7;
+    background-color: #ffffff;
   }
 
   .setup-carousel-hero-box .setup-hero-main-area {
@@ -843,11 +766,19 @@
   }
 }
 
+@media (max-width: 480px) {
+  .hero-carousel-slide .hero-box,
+  .hero-carousel-slide .setup-fullscreen-box {
+    margin: 8px;
+    width: calc(100% - 16px);
+    min-height: calc(100vh - 16px);
+    min-height: calc(100dvh - 16px);
+    border-radius: 18px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-carousel-track {
     transition: none !important;
-  }
-  .hero-indicator-progress {
-    animation: none !important;
   }
 }

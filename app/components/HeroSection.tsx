@@ -14,9 +14,12 @@ export default function HeroSection() {
 
   // Carousel slide state: 0 = Liquidation & Closure, 1 = Business Setup
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const touchStartXRef = useRef<number | null>(null);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const isHoveredRef = useRef(false);
+  isHoveredRef.current = isHovered;
+
+  const lastSlideTimeRef = useRef(Date.now());
+  const touchStartPos = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     // Check if user is logged in
@@ -46,43 +49,82 @@ export default function HeroSection() {
     );
   };
 
-  // Carousel slide transitions
+  // Slide transitions with timestamp reset
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+    lastSlideTimeRef.current = Date.now();
   }, []);
 
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev === 1 ? 0 : 1));
+    lastSlideTimeRef.current = Date.now();
   }, []);
 
+  // Jump directly to slide
+  const goToSlide = useCallback((slideIndex: number) => {
+    setCurrentSlide(slideIndex);
+    lastSlideTimeRef.current = Date.now();
+  }, []);
 
-  // 3-second auto-slide interval (moves back & forth / left & right)
+  // Continuous 3-second auto-slide loop (immune to iOS Safari timer throttling)
   useEffect(() => {
-    if (isPaused) return;
+    lastSlideTimeRef.current = Date.now();
+    let animId: number;
 
-    timerRef.current = setInterval(() => {
-      nextSlide();
-    }, 3000);
-
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+    const checkAutoSlide = () => {
+      const now = Date.now();
+      if (now - lastSlideTimeRef.current >= 3000) {
+        // On mobile, isHoveredRef.current is ALWAYS false so it never pauses
+        // On laptop/desktop, only pauses if hovered by a real mouse
+        if (!isHoveredRef.current) {
+          setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+        }
+        lastSlideTimeRef.current = now;
+      }
+      animId = requestAnimationFrame(checkAutoSlide);
     };
-  }, [isPaused, nextSlide]);
 
-  // Pause when tab is hidden to avoid interval backlog
-  useEffect(() => {
+    animId = requestAnimationFrame(checkAutoSlide);
+
+    // Fallback interval
+    const intervalId = setInterval(() => {
+      const now = Date.now();
+      if (now - lastSlideTimeRef.current >= 3000 && !isHoveredRef.current) {
+        setCurrentSlide((prev) => (prev === 0 ? 1 : 0));
+        lastSlideTimeRef.current = now;
+      }
+    }, 1000);
+
     const handleVisibilityChange = () => {
-      if (document.hidden) {
-        setIsPaused(true);
-      } else {
-        setIsPaused(false);
+      if (!document.hidden) {
+        lastSlideTimeRef.current = Date.now();
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
+      cancelAnimationFrame(animId);
+      clearInterval(intervalId);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
+
+  // Desktop-only hover pause: strictly guarded against touch screens
+  const handleMouseEnter = () => {
+    if (
+      typeof window !== "undefined" &&
+      window.innerWidth > 820 &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      setIsHovered(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (typeof window !== "undefined" && window.innerWidth > 820) {
+      setIsHovered(false);
+    }
+  };
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -93,24 +135,29 @@ export default function HeroSection() {
     }
   };
 
-  // Touch swipe support
+  // Touch swipe support (distinguishes horizontal swipe from vertical scroll)
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
+    touchStartPos.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartXRef.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartXRef.current - touchEndX;
+    if (!touchStartPos.current) return;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = touchStartPos.current.x - endX;
+    const diffY = touchStartPos.current.y - endY;
 
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        nextSlide();
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        goToSlide(1);
       } else {
-        prevSlide();
+        goToSlide(0);
       }
     }
-    touchStartXRef.current = null;
+    touchStartPos.current = null;
   };
 
   return (
@@ -119,8 +166,8 @@ export default function HeroSection() {
       id="hero"
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
@@ -130,7 +177,10 @@ export default function HeroSection() {
         {/* Sliding Track (200% width, translates horizontally between 0% and -50%) */}
         <div
           className="hero-carousel-track"
-          style={{ transform: `translateX(-${currentSlide * 50}%)` }}
+          style={{
+            transform: `translate3d(-${currentSlide * 50}%, 0px, 0px)`,
+            WebkitTransform: `translate3d(-${currentSlide * 50}%, 0px, 0px)`,
+          }}
         >
           {/* =========================================================
               SLIDE 0: Original Home Hero (Liquidation & Closure)
