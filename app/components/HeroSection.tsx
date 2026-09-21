@@ -374,18 +374,6 @@ export default function HeroSection() {
                   <div className="setup-hero-cta-row">
                     <Link href="/services/business-setup-services" className="setup-hero-primary-btn">
                       <span>See More</span>
-                      <svg
-                        className="sleek-arrow"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                      </svg>
                     </Link>
                     <a
                       href={getWhatsAppUrl(WHATSAPP_MESSAGES.businessSetup)}
@@ -404,12 +392,12 @@ export default function HeroSection() {
                 {/* Right: 3-Card Interactive Portrait Showcase */}
                 <div className="setup-hero-right-showcase">
                   {/* Tall Card (hr-1.jpg / Taxes optimized) */}
-                  <div className="setup-feature-card tall">
+                  <div className="setup-feature-card tall setup-box-1">
                     <Image
                       src="/images/hr-1.jpg"
                       alt="Taxes optimized"
                       fill
-                      sizes="(max-width: 768px) 100vw, 300px"
+                      sizes="(max-width: 768px) 50vw, 300px"
                       quality={95}
                       priority
                       className="setup-feature-img setup-img-tall"
@@ -424,12 +412,15 @@ export default function HeroSection() {
                           <circle cx="14" cy="16.5" r="1" fill="currentColor" />
                         </svg>
                       </div>
-                      <span className="setup-pill-text">Taxes optimized</span>
+                      <span className="setup-pill-text">
+                        <span className="pill-long">Taxes optimized</span>
+                        <span className="pill-short">Taxes optimized</span>
+                      </span>
                     </div>
                   </div>
 
-                  {/* Chevrons pointing left */}
-                  <div className="setup-feature-chevron-left" aria-hidden="true">
+                  {/* Chevrons pointing left (Desktop only) */}
+                  <div className="setup-feature-chevron-left hero-feature-hide-mobile" aria-hidden="true">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="15 18 9 12 15 6" />
                     </svg>
@@ -447,12 +438,12 @@ export default function HeroSection() {
                   {/* Right Column: 2 Stacked Cards with Down Chevrons */}
                   <div className="setup-feature-right-col">
                     {/* Top Card (coding.jpg / 100% Compliance) */}
-                    <div className="setup-feature-card small">
+                    <div className="setup-feature-card small setup-box-2">
                       <Image
                         src="/images/coding.jpg"
                         alt="100% Compliance"
                         fill
-                        sizes="(max-width: 768px) 100vw, 260px"
+                        sizes="(max-width: 768px) 50vw, 260px"
                         quality={95}
                         priority
                         className="setup-feature-img setup-img-small"
@@ -464,12 +455,15 @@ export default function HeroSection() {
                             <path d="m9 12 2 2 4-4" />
                           </svg>
                         </div>
-                        <span className="setup-pill-text">100% Compliance</span>
+                        <span className="setup-pill-text">
+                          <span className="pill-long">100% Compliance</span>
+                          <span className="pill-short">100% Compliance</span>
+                        </span>
                       </div>
                     </div>
 
-                    {/* Down Chevrons */}
-                    <div className="setup-feature-chevron-down" aria-hidden="true">
+                    {/* Down Chevrons (Desktop only) */}
+                    <div className="setup-feature-chevron-down hero-feature-hide-mobile" aria-hidden="true">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="6 9 12 15 18 9" />
                       </svg>
@@ -485,12 +479,12 @@ export default function HeroSection() {
                     </div>
 
                     {/* Bottom Card (sales.jpg / Payroll always on time) */}
-                    <div className="setup-feature-card small">
+                    <div className="setup-feature-card small setup-box-3">
                       <Image
                         src="/images/sales.jpg"
                         alt="Payroll always on time"
                         fill
-                        sizes="(max-width: 768px) 100vw, 260px"
+                        sizes="(max-width: 768px) 50vw, 260px"
                         quality={95}
                         priority
                         className="setup-feature-img setup-img-small"
@@ -506,8 +500,11 @@ export default function HeroSection() {
                           </svg>
                         </div>
                         <span className="setup-pill-text setup-pill-multiline">
-                          <span>Payroll always</span>
-                          <span>on time</span>
+                          <span className="pill-long">
+                            <span>Payroll always</span>
+                            <span>on time</span>
+                          </span>
+                          <span className="pill-short">Payroll on time</span>
                         </span>
                       </div>
                     </div>

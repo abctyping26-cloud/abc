@@ -555,12 +555,224 @@
 }
 
 /* ==========================================================================
+   MOBILE CATEGORY DROPDOWN CAPSULE
+   - Replaces the horizontal scroll strip on mobile devices
+   - Completely hidden on desktop (> 1024px) to preserve exact desktop layout
+   ========================================================================== */
+.category-mobile-dropdown-container {
+  display: none;
+  position: relative;
+  width: 100%;
+  margin-top: 14px;
+  z-index: 40;
+}
+
+.category-mobile-dropdown-capsule {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 9999px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.22s ease;
+  user-select: none;
+  box-sizing: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.category-mobile-dropdown-capsule:hover,
+.category-mobile-dropdown-capsule.is-open {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.category-mobile-dropdown-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.category-mobile-dropdown-num {
+  font-family: 'Space Grotesk', system-ui, monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0f172a;
+  background-color: #e2e8f0;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.category-mobile-dropdown-name {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 650;
+  color: #0f172a;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.category-mobile-dropdown-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.category-mobile-dropdown-chevron {
+  color: #0f172a;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.category-mobile-dropdown-chevron.chevron-open {
+  transform: rotate(180deg);
+}
+
+/* Floating Dropdown Menu */
+.category-mobile-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 8px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 380px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: mobileDropdownSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mobileDropdownSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.category-mobile-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 14px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+  user-select: none;
+  box-sizing: border-box;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.category-mobile-dropdown-item:active,
+.category-mobile-dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+.category-mobile-dropdown-item.is-active {
+  background-color: #f8fafc;
+}
+
+.category-mobile-dropdown-item.is-active .dropdown-item-name {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.dropdown-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+
+.dropdown-item-num {
+  font-family: 'Space Grotesk', system-ui, monospace;
+  font-size: 0.70rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.dropdown-item-name {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 550;
+  color: #334155;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-item-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.dropdown-item-services-count {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 1024px) {
+  /* 1. Remove the 5 attached clutter elements on mobile view */
+  .what-we-do-kicker,
+  .right-col-subtitle,
+  .category-meta-badge-row,
+  .category-showcase-desc,
+  .category-showcase-wa-btn {
+    display: none !important;
+  }
+
+  /* 2. Hide the horizontal scrolling category capsule */
+  .category-menu-card {
+    display: none !important;
+  }
+
+  /* 3. Display the Category Dropdown Capsule on mobile */
+  .category-mobile-dropdown-container {
+    display: block;
+  }
+
   .what-we-do-split-container {
     flex-direction: column-reverse;
-    gap: 36px;
+    gap: 28px;
   }
 
   .what-we-do-right-col {
@@ -570,36 +782,11 @@
     flex: auto;
   }
 
-  .category-menu-card {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 8px;
-    padding: 6px;
-    border-radius: 9999px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .category-menu-card::-webkit-scrollbar {
-    display: none;
-  }
-
-  .category-menu-item {
-    flex: 0 0 auto;
-    padding: 8px 16px;
-    border-radius: 9999px;
-    white-space: nowrap;
-  }
-
-  .category-item-text {
-    font-size: 0.86rem;
-    white-space: nowrap;
-  }
-
-  .category-item-dot {
-    display: none;
+  .category-showcase-header {
+    border-bottom: none;
+    padding-bottom: 0;
+    gap: 0;
+    margin-bottom: 14px;
   }
 
   .services-bullet-list {
@@ -623,15 +810,15 @@
 
   .what-we-do-main-title {
     font-size: clamp(2rem, 7.5vw, 2.5rem);
+    margin-bottom: 0;
+  }
+
+  .right-col-header {
+    margin-bottom: 12px;
   }
 
   .category-showcase-title {
     font-size: 1.35rem;
-  }
-
-  .category-showcase-desc {
-    font-size: 0.88rem;
-    line-height: 1.5;
   }
 
   .service-bullet-title {

@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://abcauh.ae"),
+  metadataBase: new URL("https://www.abcauh.ae"),
   title: {
     default: "ABC Typing Abu Dhabi | Visa, Business Setup & Typing Services",
     template: "%s | ABC Typing Abu Dhabi",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     "Tasheel services Abu Dhabi",
     "Musaffah ME9 typing center",
   ],
-  authors: [{ name: "ABC Typing Services", url: "https://abcauh.ae" }],
+  authors: [{ name: "ABC Typing Services", url: "https://www.abcauh.ae" }],
   creator: "ABC Typing Services",
   publisher: "ABC Typing Services",
   formatDetection: {
@@ -57,12 +57,12 @@ export const metadata: Metadata = {
     telephone: true,
   },
   alternates: {
-    canonical: "https://abcauh.ae",
+    canonical: "https://www.abcauh.ae",
   },
   openGraph: {
     type: "website",
     locale: "en_AE",
-    url: "https://abcauh.ae",
+    url: "https://www.abcauh.ae",
     siteName: "ABC Typing Services Abu Dhabi",
     title: "ABC Typing Abu Dhabi | Visa, Business Setup & Typing Services",
     description:
@@ -113,10 +113,10 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: "ABC Typing",
   alternateName: "ABC Typing Services Abu Dhabi",
-  image: "https://abcauh.ae/logo.jpg",
-  logo: "https://abcauh.ae/logo.jpg",
-  "@id": "https://abcauh.ae",
-  url: "https://abcauh.ae",
+  image: "https://www.abcauh.ae/logo.jpg",
+  logo: "https://www.abcauh.ae/logo.jpg",
+  "@id": "https://www.abcauh.ae",
+  url: "https://www.abcauh.ae",
   telephone: "+971 2 642 7667",
   email: "info@abcauh.ae",
   priceRange: "$$",

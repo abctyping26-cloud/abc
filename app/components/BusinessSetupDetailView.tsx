@@ -186,18 +186,6 @@ export default function BusinessSetupDetailView({
               <div className="setup-hero-cta-row">
                 <a href="#what-we-do" onClick={scrollToContent} className="setup-hero-primary-btn">
                   <span>See More</span>
-                  <svg
-                    className="sleek-arrow"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
                 </a>
                 <a
                   href={getWhatsAppUrl(WHATSAPP_MESSAGES.businessSetup)}
@@ -216,12 +204,12 @@ export default function BusinessSetupDetailView({
             {/* Right: 3-Card Interactive Portrait Showcase matching design */}
             <div className="setup-hero-right-showcase">
               {/* Left Column: Tall Card (hr-1.jpg / Taxes optimized) */}
-              <div className="setup-feature-card tall">
+              <div className="setup-feature-card tall setup-box-1">
                 <Image
                   src="/images/hr-1.jpg"
                   alt="Taxes optimized"
                   fill
-                  sizes="(max-width: 768px) 100vw, 300px"
+                  sizes="(max-width: 768px) 50vw, 300px"
                   quality={95}
                   priority
                   className="setup-feature-img setup-img-tall"
@@ -236,12 +224,15 @@ export default function BusinessSetupDetailView({
                       <circle cx="14" cy="16.5" r="1" fill="currentColor" />
                     </svg>
                   </div>
-                  <span className="setup-pill-text">Taxes optimized</span>
+                  <span className="setup-pill-text">
+                    <span className="pill-long">Taxes optimized</span>
+                    <span className="pill-short">Taxes optimized</span>
+                  </span>
                 </div>
               </div>
 
               {/* Chevrons pointing left */}
-              <div className="setup-feature-chevron-left" aria-hidden="true">
+              <div className="setup-feature-chevron-left hero-feature-hide-mobile" aria-hidden="true">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
@@ -259,12 +250,12 @@ export default function BusinessSetupDetailView({
               {/* Right Column: 2 Stacked Cards with Down Chevrons */}
               <div className="setup-feature-right-col">
                 {/* Top Card (coding.jpg / 100% Compliance) */}
-                <div className="setup-feature-card small">
+                <div className="setup-feature-card small setup-box-2">
                   <Image
                     src="/images/coding.jpg"
                     alt="100% Compliance"
                     fill
-                    sizes="(max-width: 768px) 100vw, 260px"
+                    sizes="(max-width: 768px) 50vw, 260px"
                     quality={95}
                     priority
                     className="setup-feature-img setup-img-small"
@@ -276,12 +267,15 @@ export default function BusinessSetupDetailView({
                         <path d="m9 12 2 2 4-4" />
                       </svg>
                     </div>
-                    <span className="setup-pill-text">100% Compliance</span>
+                    <span className="setup-pill-text">
+                      <span className="pill-long">100% Compliance</span>
+                      <span className="pill-short">100% Compliance</span>
+                    </span>
                   </div>
                 </div>
 
                 {/* Down Chevrons */}
-                <div className="setup-feature-chevron-down" aria-hidden="true">
+                <div className="setup-feature-chevron-down hero-feature-hide-mobile" aria-hidden="true">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1e293b" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                   </svg>
@@ -297,12 +291,12 @@ export default function BusinessSetupDetailView({
                 </div>
 
                 {/* Bottom Card (sales.jpg / Payroll always on time) */}
-                <div className="setup-feature-card small">
+                <div className="setup-feature-card small setup-box-3">
                   <Image
                     src="/images/sales.jpg"
                     alt="Payroll always on time"
                     fill
-                    sizes="(max-width: 768px) 100vw, 260px"
+                    sizes="(max-width: 768px) 50vw, 260px"
                     quality={95}
                     priority
                     className="setup-feature-img setup-img-small"
@@ -318,8 +312,11 @@ export default function BusinessSetupDetailView({
                       </svg>
                     </div>
                     <span className="setup-pill-text setup-pill-multiline">
-                      <span>Payroll always</span>
-                      <span>on time</span>
+                      <span className="pill-long">
+                        <span>Payroll always</span>
+                        <span>on time</span>
+                      </span>
+                      <span className="pill-short">Payroll on time</span>
                     </span>
                   </div>
                 </div>
@@ -535,129 +532,8 @@ export default function BusinessSetupDetailView({
           ------------------------------------------------------------------ */}
       <section className="setup-websites-section" id="best-websites">
         <div className="setup-websites-container">
-          {/* Top-Right Corner: Layered Website Cards with Animated Top Card */}
-          <div className="setup-websites-top-right">
-            <div className="setup-webcards-deck">
-              {/* Card 3 (Bottom Layer) */}
-              <div className="setup-webcard back-card" aria-hidden="true">
-                <div className="setup-webcard-browser-bar">
-                  <div className="setup-browser-dots">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                  </div>
-                  <div className="setup-browser-url">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    <span>alreem-holding.ae</span>
-                  </div>
-                </div>
-                <div className="setup-webcard-body card-3-body">
-                  <div className="setup-mock-nav">
-                    <div className="setup-mock-brand">AL REEM</div>
-                    <div className="setup-mock-pill">Global Trade</div>
-                  </div>
-                  <div className="setup-mock-hero">
-                    <div className="setup-mock-h1">Commercial Enterprise Gateway</div>
-                    <div className="setup-mock-badges">
-                      <span className="mock-tag">Mainland</span>
-                      <span className="mock-tag">Abu Dhabi</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2 (Middle Layer) */}
-              <div className="setup-webcard middle-card" aria-hidden="true">
-                <div className="setup-webcard-browser-bar">
-                  <div className="setup-browser-dots">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                  </div>
-                  <div className="setup-browser-url">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    <span>aurora-ventures.io</span>
-                  </div>
-                </div>
-                <div className="setup-webcard-body card-2-body">
-                  <div className="setup-mock-nav">
-                    <div className="setup-mock-brand">AURORA</div>
-                    <div className="setup-mock-pill">Venture Capital</div>
-                  </div>
-                  <div className="setup-mock-hero">
-                    <div className="setup-mock-h1">Next-Gen Wealth & Corporate Advisory</div>
-                    <div className="setup-mock-stats-row">
-                      <div className="mock-stat">
-                        <span className="stat-v">AED 25M+</span>
-                        <span className="stat-l">Capital</span>
-                      </div>
-                      <div className="mock-stat">
-                        <span className="stat-v">100%</span>
-                        <span className="stat-l">Foreign Direct</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 1 (Top Layer - Animated Going & Coming) */}
-              <div className="setup-webcard top-card">
-                <div className="setup-webcard-browser-bar">
-                  <div className="setup-browser-dots">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                  </div>
-                  <div className="setup-browser-url">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    <span>apexglobal.ae</span>
-                  </div>
-                  <div className="setup-browser-status">
-                    <span className="live-dot" /> Live
-                  </div>
-                </div>
-                <div className="setup-webcard-body card-1-body">
-                  <div className="setup-mock-nav">
-                    <div className="setup-mock-brand-main">
-                      <span className="brand-circle" />
-                      APEX GROUP
-                    </div>
-                    <div className="setup-mock-nav-links">
-                      <span>Services</span>
-                      <span>Pricing</span>
-                      <span className="setup-mock-cta-btn">Launch →</span>
-                    </div>
-                  </div>
-                  <div className="setup-mock-hero-main">
-                    <div className="setup-mock-kicker">TURNKEY PLATFORM</div>
-                    <h4 className="setup-mock-headline">
-                      Scale Your Enterprise Across the UAE.
-                    </h4>
-                    <p className="setup-mock-sub">
-                      Fast licensing, tax optimization & corporate banking assistance.
-                    </p>
-                    <div className="setup-mock-action-row">
-                      <div className="setup-mock-badge-pill">
-                        <span className="pill-dot" /> 24h Setup
-                      </div>
-                      <div className="setup-mock-badge-pill">
-                        <span className="pill-dot green" /> 100% Compliant
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Top-Right Corner: Preserved empty space */}
+          <div className="setup-websites-top-right" aria-hidden="true" />
 
           {/* Left-Bottom Corner: Person image + "best websites" Title */}
           <div className="setup-websites-left-bottom">

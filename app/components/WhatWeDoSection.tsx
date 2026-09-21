@@ -100,11 +100,15 @@ const MANUAL_CLICK_FREEZE_MS = 10000;
 export default function WhatWeDoSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Refs for bulletproof timer and viewport tracking
+  // Refs for bulletproof timer, dropdown, and viewport tracking
   const sectionRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const isInSectionRef = useRef<boolean>(false);
   const isHoveringRef = useRef<boolean>(false);
+  const isDropdownOpenRef = useRef<boolean>(false);
+  isDropdownOpenRef.current = isDropdownOpen;
   const manualPauseUntilRef = useRef<number>(0);
   const nextAdvanceTimeRef = useRef<number>(0); // Inactive on page load
 
@@ -199,8 +203,8 @@ export default function WhatWeDoSection() {
         return;
       }
 
-      // Skip if user is hovering directly on any text/category item
-      if (isHoveringRef.current) {
+      // Skip if user is hovering directly on any text/category item or dropdown is open
+      if (isHoveringRef.current || isDropdownOpenRef.current) {
         nextAdvanceTimeRef.current = now + ROTATION_INTERVAL_MS;
         return;
       }
@@ -221,10 +225,38 @@ export default function WhatWeDoSection() {
     return () => clearInterval(interval);
   }, [searchQuery]);
 
-  // When user manually clicks a category button:
-  // Immediately switch & freeze auto-advance for 10 full seconds!
+  // Click outside and escape key handling to close mobile dropdown
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    const handleEscKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isDropdownOpen]);
+
+  // When user manually clicks a category button or selects from dropdown:
+  // Immediately switch, clear active search, & freeze auto-advance for 10 full seconds!
   const handleSelectCategory = (index: number) => {
     setActiveIndex(index);
+    if (searchQuery) setSearchQuery("");
     manualPauseUntilRef.current = Date.now() + MANUAL_CLICK_FREEZE_MS;
     nextAdvanceTimeRef.current = Date.now() + MANUAL_CLICK_FREEZE_MS + ROTATION_INTERVAL_MS;
   };
@@ -476,6 +508,86 @@ export default function WhatWeDoSection() {
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
               </button>
+            )}
+          </div>
+
+          {/* Mobile Category Dropdown Capsule (Replaces horizontal scroll capsule on mobile) */}
+          <div
+            className="category-mobile-dropdown-container"
+            ref={dropdownRef}
+            aria-label="Service categories dropdown"
+          >
+            <button
+              type="button"
+              className={`category-mobile-dropdown-capsule ${isDropdownOpen ? "is-open" : ""}`}
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+              aria-haspopup="listbox"
+              aria-expanded={isDropdownOpen}
+              aria-label={`Current category: ${activeCategory.name}. Tap to change category.`}
+            >
+              <div className="category-mobile-dropdown-left">
+                <span className="category-mobile-dropdown-num">
+                  {String(activeIndex + 1).padStart(2, "0")}
+                </span>
+                <span className="category-mobile-dropdown-name">
+                  {activeCategory.name}
+                </span>
+              </div>
+              <div className="category-mobile-dropdown-right">
+                <svg
+                  className={`category-mobile-dropdown-chevron ${isDropdownOpen ? "chevron-open" : ""}`}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </div>
+            </button>
+
+            {/* Floating Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="category-mobile-dropdown-menu" role="listbox">
+                {CATEGORIES.map((category, idx) => {
+                  const isCurrent = activeIndex === idx && !query;
+
+                  return (
+                    <button
+                      key={category.id}
+                      type="button"
+                      role="option"
+                      aria-selected={isCurrent}
+                      onClick={() => {
+                        handleSelectCategory(idx);
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`category-mobile-dropdown-item ${isCurrent ? "is-active" : ""}`}
+                    >
+                      <div className="dropdown-item-left">
+                        <span className="dropdown-item-num">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <span className="dropdown-item-name">{category.name}</span>
+                      </div>
+                      <div className="dropdown-item-right">
+                        <span className="dropdown-item-services-count">
+                          {category.services.length}
+                        </span>
+                        <span
+                          className={`category-item-dot ${isCurrent ? "dot-active" : "dot-inactive"}`}
+                          aria-hidden="true"
+                        />
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             )}
           </div>
 

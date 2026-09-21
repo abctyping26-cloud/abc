@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { CATEGORIES, slugify } from "./data/servicesData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://abcauh.ae";
+  const baseUrl = "https://www.abcauh.ae";
 
   // Dedicated service pages
   const serviceUrls: MetadataRoute.Sitemap = CATEGORIES.flatMap((category) =>
