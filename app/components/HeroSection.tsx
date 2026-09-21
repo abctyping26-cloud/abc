@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getWhatsAppUrl, WHATSAPP_MESSAGES } from "../utils/whatsapp";
+import ContactModal from "./ContactModal";
 
 export default function HeroSection() {
   const [currentUser, setCurrentUser] = useState<{
@@ -11,6 +12,8 @@ export default function HeroSection() {
     identifier: string;
     name?: string;
   } | null>(null);
+
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   // Carousel slide state: 0 = Liquidation & Closure, 1 = Business Setup
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -31,6 +34,13 @@ export default function HeroSection() {
     } catch {
       // Ignore parse errors
     }
+
+    const handleOpenModal = () => setIsContactModalOpen(true);
+    window.addEventListener("abc:open-contact-modal", handleOpenModal);
+
+    return () => {
+      window.removeEventListener("abc:open-contact-modal", handleOpenModal);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -223,11 +233,12 @@ export default function HeroSection() {
                   </a>
                 </nav>
                 <div className="hero-nav-actions">
-                  <a
-                    href="tel:+97140000000"
+                  <button
+                    type="button"
+                    onClick={() => setIsContactModalOpen(true)}
                     className="hero-call-btn"
-                    title="Call Us"
-                    aria-label="Call Us"
+                    title="Call & Contact Us"
+                    aria-label="Call & Contact Us"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -239,7 +250,7 @@ export default function HeroSection() {
                     >
                       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
                     </svg>
-                  </a>
+                  </button>
                   <a href="#enquiry" className="hero-contact-btn">
                     Contact Us
                   </a>
@@ -274,7 +285,11 @@ export default function HeroSection() {
                   Complete Solutions for Business Closure &amp; Trade License Cancellation
                 </p>
                 <div className="hero-cta-group">
-                  <a href="#services" className="hero-cta-btn">
+                  <button
+                    type="button"
+                    onClick={() => setIsContactModalOpen(true)}
+                    className="hero-cta-btn"
+                  >
                     <span>Book a Call</span>
                     <svg
                       className="sleek-arrow"
@@ -288,7 +303,7 @@ export default function HeroSection() {
                       <path d="M5 12h14" />
                       <path d="m12 5 7 7-7 7" />
                     </svg>
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -321,11 +336,12 @@ export default function HeroSection() {
                   </a>
                 </nav>
                 <div className="hero-nav-actions">
-                  <a
-                    href="tel:+97140000000"
+                  <button
+                    type="button"
+                    onClick={() => setIsContactModalOpen(true)}
                     className="hero-call-btn"
-                    title="Call Us"
-                    aria-label="Call Us"
+                    title="Call & Contact Us"
+                    aria-label="Call & Contact Us"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -337,7 +353,7 @@ export default function HeroSection() {
                     >
                       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
                     </svg>
-                  </a>
+                  </button>
                   <a href="#enquiry" className="hero-contact-btn">
                     Contact Us
                   </a>
@@ -541,6 +557,11 @@ export default function HeroSection() {
           </svg>
         </button>
       </div>
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
     </section>
   );
 }

@@ -891,7 +891,7 @@
    -------------------------------------------------------------------------- */
 .setup-bento-section {
   position: relative;
-  background-color: #000000;
+  background-color: #ffffff;
   padding: 24px;
   min-height: 100vh;
   display: flex;
@@ -917,13 +917,14 @@
   border-radius: 26px;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
   will-change: transform;
 }
 
 .setup-bento-box:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.14);
 }
 
 /* ==========================================================================
@@ -1605,6 +1606,17 @@
   align-items: flex-start;
 }
 
+/* Left Column: Top-Left Title & Bottom-Left Tagline */
+.setup-websites-left-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 520px;
+  max-width: 520px;
+  position: relative;
+  z-index: 10;
+}
+
 /* Top-Left Headline */
 .setup-websites-top-left {
   position: relative;
@@ -1623,6 +1635,36 @@
   line-height: 1.02;
   margin: 0;
   text-align: left;
+}
+
+/* Bottom-Left Tagline */
+.setup-websites-bottom-left {
+  position: relative;
+  z-index: 10;
+  max-width: 520px;
+  margin-top: 48px;
+}
+
+.setup-websites-tagline {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: clamp(1.35rem, 2.05vw, 1.82rem);
+  line-height: 1.45;
+  color: #71717a;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.setup-digital-presence-text {
+  font-weight: 400;
+  transition: color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.setup-business-highlight {
+  color: #09090b;
+  font-weight: 400;
 }
 
 /* Corner Deck Container: anchored to bottom-right, overflowing the section */
@@ -1712,37 +1754,7 @@
   display: block;
 }
 
-.setup-card-badge {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(12px);
-  padding: 6px 14px;
-  border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  z-index: 5;
-  pointer-events: none;
-}
 
-.setup-card-badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
-}
-
-.setup-card-badge-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.76rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
 
 /* Block Section Wrapper */
 .setup-section-block {
@@ -2335,23 +2347,44 @@
   }
 
   .setup-websites-section {
-    padding: 70px 24px 80px;
+    padding: 80px 32px 90px;
+    min-height: 600px;
   }
 
   .setup-websites-container {
-    min-height: 560px;
+    min-height: 460px;
   }
 
   .setup-websites-title {
-    font-size: clamp(2.6rem, 4.6vw, 3.8rem);
+    font-size: clamp(2.4rem, 4.4vw, 3.6rem);
   }
 
-  .setup-websites-person-img {
-    height: clamp(400px, 42vw, 500px);
+  .setup-websites-left-col {
+    min-height: 460px;
   }
 
-  .setup-websites-showcase-wrap {
-    max-width: 480px;
+  .setup-websites-tagline {
+    font-size: 1.35rem;
+    line-height: 1.42;
+  }
+
+  .setup-websites-deck-wrap {
+    width: clamp(480px, 52vw, 640px);
+    height: clamp(340px, 38vw, 450px);
+    right: -40px;
+    bottom: -45px;
+  }
+
+  .setup-layered-card.layer-1 {
+    transform: translate(-26px, -24px) scale(0.94);
+  }
+
+  .setup-layered-card.layer-2 {
+    transform: translate(-52px, -48px) scale(0.88);
+  }
+
+  .setup-layered-card.layer-3 {
+    transform: translate(-78px, -72px) scale(0.82);
   }
 }
 
@@ -2672,22 +2705,23 @@
     gap: 12px;
   }
 
-  .bento-col-left,
+  /* Hide the 3 cards on mobile (T-shirt, what we do brand, mascot) */
+  .bento-apparel-bottom-left,
+  .bento-coral-brand,
+  .bento-mascot-card,
   .bento-col-center {
-    grid-template-rows: auto auto;
-    gap: 12px;
+    display: none !important;
   }
 
-  .bento-photo-card {
-    min-height: 220px;
+  .bento-col-left {
+    display: flex;
+    flex-direction: column;
+    grid-template-rows: none;
+    gap: 0;
   }
 
   .bento-billboard-card {
     min-height: 230px;
-  }
-
-  .bento-mascot-card {
-    min-height: 140px;
   }
 
   .bento-pills-card {
@@ -2695,79 +2729,80 @@
   }
 
   .setup-websites-section {
-    padding: 60px 16px 70px;
+    padding: 60px 20px 70px;
+    min-height: auto;
+    overflow: hidden;
   }
 
   .setup-websites-container {
     min-height: auto;
-    gap: 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .setup-websites-left-col {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+    max-width: 100%;
   }
 
   .setup-websites-top-left {
-    margin-bottom: 20px;
+    margin-bottom: 0;
     text-align: left;
+    max-width: 100%;
   }
 
   .setup-websites-title {
-    font-size: clamp(2.2rem, 8vw, 3.2rem);
+    font-size: clamp(2.2rem, 8.5vw, 3.2rem);
     line-height: 1.05;
   }
 
-  .setup-websites-main-row {
-    flex-direction: column;
-    align-items: center;
-    min-height: auto;
-    gap: 28px;
-  }
-
-  .setup-websites-showcase-wrap {
-    margin-left: 0;
+  .setup-websites-bottom-left {
+    margin-top: 0;
     max-width: 100%;
-    padding-bottom: 0;
   }
 
-  .setup-web-showcase-frame {
-    border-radius: 22px;
-    border: 5px solid #000000;
+  .setup-websites-tagline {
+    font-size: clamp(1.15rem, 4.6vw, 1.35rem);
+    line-height: 1.42;
   }
 
-  .setup-website-slide-img {
-    border-radius: 17px;
-  }
-
-  .setup-web-slide-caption {
-    bottom: 12px;
-    left: 12px;
-    padding: 4px 10px;
-  }
-
-  .setup-web-slide-tag {
-    font-size: 0.62rem;
-  }
-
-  .setup-web-slide-name {
-    font-size: 0.72rem;
-  }
-
-  .setup-web-dots {
-    bottom: 12px;
-    right: 12px;
-    padding: 6px 10px;
-  }
-
-  .setup-websites-person-wrap {
+  .setup-websites-deck-wrap {
     position: relative;
-    bottom: auto;
-    left: auto;
-    margin: 10px auto 0;
-    text-align: center;
+    right: -25px;
+    bottom: -35px;
+    width: calc(100% + 40px);
+    max-width: none;
+    height: 330px;
+    margin-top: 10px;
+    margin-left: auto;
   }
 
-  .setup-websites-person-img {
-    height: clamp(280px, 68vw, 380px);
-    margin: 0 auto;
-    object-position: bottom center;
+  .setup-layered-card {
+    border-radius: 22px;
+    border: 4.5px solid #000000;
   }
+
+  .setup-card-inner {
+    border-radius: 18px;
+  }
+
+  .setup-layered-card.layer-1 {
+    transform: translate(-16px, -14px) scale(0.95);
+  }
+
+  .setup-layered-card.layer-2 {
+    transform: translate(-32px, -28px) scale(0.90);
+  }
+
+  .setup-layered-card.layer-3 {
+    transform: translate(-48px, -42px) scale(0.85);
+  }
+
+
 }
 
 

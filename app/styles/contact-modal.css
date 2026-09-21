@@ -1,0 +1,248 @@
+/* ==========================================================================
+   Simple & Clean Contact Popup Modal
+   ========================================================================== */
+
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background-color: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: contactModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  padding: 22px 20px 20px;
+  box-sizing: border-box;
+  animation: contactModalScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.contact-modal-title {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.contact-modal-close-btn {
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.contact-modal-close-btn:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.contact-modal-close-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* List of 3 contact items */
+.contact-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-modal-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 10px 12px;
+  transition: all 0.18s ease;
+}
+
+.contact-modal-item:hover {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.contact-item-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.contact-item-icon-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phone-icon-circle {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.phone-icon-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.whatsapp-icon-circle {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.whatsapp-icon-circle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.email-icon-circle {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.email-icon-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-item-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contact-item-label {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  line-height: 1.2;
+}
+
+.contact-item-value {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.contact-item-copy-btn {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.contact-item-copy-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.contact-item-copy-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.contact-item-copy-btn.copied {
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #059669;
+}
+
+.contact-item-copy-btn .copied-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0 2px;
+}
+
+/* Modal Animations */
+@keyframes contactModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes contactModalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-modal-card {
+    padding: 20px 16px 18px;
+    border-radius: 18px;
+  }
+
+  .contact-item-value {
+    font-size: 0.88rem;
+  }
+}

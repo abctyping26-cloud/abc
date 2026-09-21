@@ -14,21 +14,25 @@ const sampleWebsites = [
     src: "/sample-web/web1.jpeg",
     title: "Prosen IT Solutions",
     tag: "Enterprise Portal",
+    themeColor: "#16a34a", // Emerald Green
   },
   {
     src: "/sample-web/web2.jpeg",
     title: "Expert Handyman Services",
     tag: "Service Business",
+    themeColor: "#ea580c", // Vibrant Orange
   },
   {
     src: "/sample-web/web3.jpeg",
     title: "LOGISTIQO Global Shipping",
     tag: "Logistics & Trade",
+    themeColor: "#2563eb", // Ocean Blue
   },
   {
     src: "/sample-web/web4.jpeg",
     title: "Ecovia Clean Energy",
     tag: "CleanTech Platform",
+    themeColor: "#059669", // CleanTech Mint Green
   },
 ];
 
@@ -577,13 +581,32 @@ export default function BusinessSetupDetailView({
           ------------------------------------------------------------------ */}
       <section className="setup-websites-section" id="best-websites">
         <div className="setup-websites-container">
-          {/* Top-Left: Bold 3-line Headline */}
-          <div className="setup-websites-top-left">
-            <h2 className="setup-websites-title">
-              Your Business.<br />
-              Your Brand.<br />
-              Your Website.
-            </h2>
+          {/* Left Column: Top-Left Title & Bottom-Left Tagline */}
+          <div className="setup-websites-left-col">
+            <div className="setup-websites-top-left">
+              <h2 className="setup-websites-title">
+                Your Business.<br />
+                Your Brand.<br />
+                Your Website.
+              </h2>
+            </div>
+
+            {/* Bottom-Left Corner Tagline */}
+            <div className="setup-websites-bottom-left">
+              <p className="setup-websites-tagline">
+                &ldquo;Creating a{" "}
+                <span
+                  className="setup-digital-presence-text"
+                  style={{
+                    color: sampleWebsites[activeWebIndex]?.themeColor || "#16a34a",
+                  }}
+                >
+                  digital presence
+                </span>{" "}
+                that speaks for your{" "}
+                <span className="setup-business-highlight">business.</span>&rdquo;
+              </p>
+            </div>
           </div>
 
           {/* Layered Website Cards Overflowing Bottom-Right Corner */}
@@ -607,10 +630,6 @@ export default function BusinessSetupDetailView({
                       priority={idx === 0}
                       className="setup-layered-card-img"
                     />
-                    <div className="setup-card-badge">
-                      <span className="setup-card-badge-dot" />
-                      <span className="setup-card-badge-title">{web.title}</span>
-                    </div>
                   </div>
                 </div>
               );

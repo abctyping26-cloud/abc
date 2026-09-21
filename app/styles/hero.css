@@ -293,6 +293,7 @@
   transition: all 0.2s ease;
   text-decoration: none;
   border: none;
+  cursor: pointer;
 }
 
 .hero-call-btn svg {
