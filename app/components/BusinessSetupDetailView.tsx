@@ -201,7 +201,7 @@ export default function BusinessSetupDetailView({
           <div className="hero-top-nav">
             <div className="hero-nav-actions">
               <a
-                href="tel:+97140000000"
+                href="tel:+97126427667"
                 className="hero-call-btn"
                 title="Call Us"
                 aria-label="Call Us"
