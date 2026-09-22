@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Simple & Clean Contact Popup Modal
+   Simple & Clean Contact Popup Modal - Minimal Text Style (No Box Designs)
    ========================================================================== */
 
 .contact-modal-backdrop {
@@ -16,37 +16,51 @@
   animation: contactModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Floating Custom Cursor Badge */
+.cursor-copy-badge {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000000;
+  background-color: #0f172a;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.cursor-copy-badge.is-copied {
+  background-color: #16a34a;
+  color: #ffffff;
+}
+
+/* Modal Box */
 .contact-modal-card {
   position: relative;
   width: 100%;
-  max-width: 380px;
+  max-width: 360px;
   background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.06);
-  padding: 22px 20px 20px;
+  border-radius: 22px;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  padding: 36px 28px 32px;
   box-sizing: border-box;
+  text-align: center;
   animation: contactModalScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.contact-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.contact-modal-title {
-  margin: 0;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: -0.02em;
-}
-
+/* Close Button (Top Right) */
 .contact-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   background: transparent;
   border: none;
   width: 32px;
@@ -71,148 +85,98 @@
   height: 18px;
 }
 
-/* List of 3 contact items */
-.contact-modal-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.contact-modal-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 10px 12px;
-  transition: all 0.18s ease;
-}
-
-.contact-modal-item:hover {
-  background-color: #ffffff;
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.contact-item-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  min-width: 0;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.contact-item-icon-circle {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
+/* Logo Top Center */
+.contact-modal-logo-wrap {
+  display: inline-flex;
+  align-items: baseline;
   justify-content: center;
-  flex-shrink: 0;
+  margin-bottom: 0;
 }
 
-.phone-icon-circle {
-  background-color: #f1f5f9;
+.contact-modal-logo-wrap .hero-logo-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #000000;
+  line-height: 1;
+}
+
+.contact-modal-logo-wrap .hero-logo-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: var(--accent-blue, #1868db);
+  border-radius: 50%;
+  margin-left: 2px;
+}
+
+/* Subtitle "Contact Us" */
+.contact-modal-title {
+  margin: 18px 0 26px;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.42rem;
+  font-weight: 700;
   color: #0f172a;
+  letter-spacing: -0.025em;
 }
 
-.phone-icon-circle svg {
-  width: 18px;
-  height: 18px;
-}
-
-.whatsapp-icon-circle {
-  background-color: #ecfdf5;
-  color: #10b981;
-}
-
-.whatsapp-icon-circle svg {
-  width: 20px;
-  height: 20px;
-}
-
-.email-icon-circle {
-  background-color: #eff6ff;
-  color: #2563eb;
-}
-
-.email-icon-circle svg {
-  width: 18px;
-  height: 18px;
-}
-
-.contact-item-info {
+/* Pure Text Contact List (No Box Designs) */
+.contact-modal-text-list {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  gap: 20px;
+  align-items: center;
 }
 
-.contact-item-label {
+.contact-text-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: copy;
+  padding: 4px 12px;
+  border-radius: 8px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.contact-text-item:hover {
+  transform: translateY(-1px);
+}
+
+.contact-text-item:hover .contact-text-value {
+  color: var(--accent-blue, #1868db);
+}
+
+.contact-text-label {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: #64748b;
-  line-height: 1.2;
-}
-
-.contact-item-value {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 2px;
-}
-
-.contact-item-copy-btn {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 6px 8px;
-  display: flex;
+  letter-spacing: 0.08em;
+  color: #94a3b8;
+  margin-bottom: 2px;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  color: #64748b;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  gap: 6px;
+}
+
+.mobile-copied-tag {
+  font-size: 0.68rem;
+  color: #16a34a;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.contact-text-value {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  margin-left: 8px;
-  flex-shrink: 0;
-}
-
-.contact-item-copy-btn svg {
-  width: 14px;
-  height: 14px;
-}
-
-.contact-item-copy-btn:hover {
-  background-color: #f1f5f9;
-  border-color: #cbd5e1;
+  font-size: 1.15rem;
+  font-weight: 650;
   color: #0f172a;
-}
-
-.contact-item-copy-btn.copied {
-  background-color: #ecfdf5;
-  border-color: #a7f3d0;
-  color: #059669;
-}
-
-.contact-item-copy-btn .copied-text {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0 2px;
+  letter-spacing: -0.015em;
+  transition: color 0.15s ease;
 }
 
 /* Modal Animations */
@@ -238,11 +202,11 @@
 
 @media (max-width: 480px) {
   .contact-modal-card {
-    padding: 20px 16px 18px;
-    border-radius: 18px;
+    padding: 30px 20px 26px;
+    border-radius: 20px;
   }
 
-  .contact-item-value {
-    font-size: 0.88rem;
+  .contact-text-value {
+    font-size: 1.05rem;
   }
 }

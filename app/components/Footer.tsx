@@ -44,6 +44,14 @@ const COLUMN_3_SERVICES = [
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const handleEnquiryClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const enquiryEl = document.getElementById("enquiry");
+    if (enquiryEl) {
+      e.preventDefault();
+      enquiryEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <footer className="footer-section" id="contact" role="contentinfo">
       {/* Ambient background lighting */}
@@ -180,9 +188,10 @@ export default function Footer() {
 
                 {/* 2. Enquiry Us */}
                 <a
-                  href="mailto:info@abctyping.ae?subject=Service%20Enquiry%20-%20ABC%20Typing"
+                  href="/#enquiry"
+                  onClick={handleEnquiryClick}
                   className="footer-enquiry-btn"
-                  title="Send us an enquiry"
+                  title="Go to enquiry section"
                 >
                   <span>Enquiry Us</span>
                   <svg

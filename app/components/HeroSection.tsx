@@ -285,12 +285,8 @@ export default function HeroSection() {
                   Complete Solutions for Business Closure &amp; Trade License Cancellation
                 </p>
                 <div className="hero-cta-group">
-                  <button
-                    type="button"
-                    onClick={() => setIsContactModalOpen(true)}
-                    className="hero-cta-btn"
-                  >
-                    <span>Book a Call</span>
+                  <a href="#enquiry" className="hero-cta-btn">
+                    <span>Send a Message</span>
                     <svg
                       className="sleek-arrow"
                       viewBox="0 0 24 24"
@@ -303,7 +299,7 @@ export default function HeroSection() {
                       <path d="M5 12h14" />
                       <path d="m12 5 7 7-7 7" />
                     </svg>
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
