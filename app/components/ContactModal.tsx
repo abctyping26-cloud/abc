@@ -9,7 +9,10 @@ interface ContactModalProps {
 }
 
 const PHONE_NUMBER = process.env.NEXT_PUBLIC_CONTACT_PHONE || "+971 2 642 7667";
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_PHONE_DISPLAY || "+971 50 000 0000";
+const WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_WHATSAPP_PHONE_DISPLAY ||
+  process.env.NEXT_PUBLIC_CONTACT_PHONE ||
+  PHONE_NUMBER;
 const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@abctyping.ae";
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
