@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Consultancy Section: 100vh Layout with Top-Left Title & Overlapping Man
+   - 100vh height
+   - Top-left: "We offer assistance and tailored services"
+   - Bottom: Full-width styled bar taking roughly half the height
+   - Right: Man cutout (/remove-bg_-0 copy.png) taking full height & overlapping bar
+   ========================================================================== */
+
+.consultancy-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff !important;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .consultancy-section {
+    height: 100vh;
+  }
+}
+
+.consultancy-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  height: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(36px, 5vh, 52px) clamp(20px, 3vw, 40px) clamp(24px, 3.5vh, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Top Left Title Area */
+.consultancy-header {
+  position: relative;
+  z-index: 5;
+  max-width: 680px;
+  text-align: left;
+  padding-top: clamp(10px, 2vh, 28px);
+}
+
+.consultancy-kicker {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1868db;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.consultancy-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(2.3rem, 4.4vw, 3.8rem);
+  font-weight: 700;
+  color: #000000;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  margin: 0 0 16px 0;
+}
+
+.consultancy-subtitle {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(0.95rem, 1.25vw, 1.12rem);
+  line-height: 1.65;
+  color: #475569;
+  max-width: 580px;
+  margin: 0;
+}
+
+/* Bottom Full-Width Bar */
+.consultancy-bar {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  min-height: clamp(450px, 58vh, 600px);
+  background: linear-gradient(145deg, #074335 0%, #0a624f 50%, #0d725c 100%);
+  border-radius: 32px;
+  padding: clamp(44px, 6vh, 68px) clamp(28px, 3.5vw, 56px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+  box-shadow: none;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+}
+
+@media (min-width: 1024px) {
+  .consultancy-bar {
+    border-radius: 32px;
+  }
+}
+
+.consultancy-bar-content {
+  position: relative;
+  z-index: 6;
+  max-width: 600px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.consultancy-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  color: #d1fae5;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.consultancy-bar-headline {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(1.4rem, 2.2vw, 1.95rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin: 0 0 14px 0;
+}
+
+.consultancy-bar-desc {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(0.88rem, 1.05vw, 0.98rem);
+  line-height: 1.65;
+  color: #e2f4ed;
+  margin: 0 0 28px 0;
+}
+
+.consultancy-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.consultancy-cta-btn,
+.consultancy-whatsapp-btn {
+  height: 52px;
+  min-height: 52px;
+  max-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  line-height: 1;
+  padding: 0 28px;
+  border-radius: 9999px;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.consultancy-cta-btn {
+  background-color: #ffffff;
+  color: #074335;
+  border: 1.5px solid #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.consultancy-cta-btn:hover {
+  background-color: #f0fdf4;
+  color: #042f24;
+  border-color: #f0fdf4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.consultancy-cta-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  margin-left: 10px;
+  transition: transform 0.2s ease;
+}
+
+.consultancy-cta-btn:hover .consultancy-cta-icon {
+  transform: translateX(3px);
+}
+
+.consultancy-whatsapp-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  text-decoration: none;
+}
+
+.consultancy-whatsapp-btn:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #25d366;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+.consultancy-wa-icon {
+  width: 20px;
+  height: 20px;
+  fill: #25d366;
+  margin-right: 10px;
+  transition: fill 0.2s ease;
+}
+
+.consultancy-whatsapp-btn:hover .consultancy-wa-icon {
+  fill: #ffffff;
+}
+
+/* Overlapping Man Cutout (Locked to exact bottom edge of the bar) */
+.consultancy-man-wrapper {
+  position: absolute;
+  right: clamp(10px, 3.5vw, 50px);
+  bottom: 0;
+  height: clamp(660px, 92vh, 880px);
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  border-bottom-right-radius: 32px;
+  overflow: hidden;
+}
+
+.consultancy-man-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(-12px 0px 20px rgba(0, 0, 0, 0.22));
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .consultancy-inner {
+    min-height: auto;
+    padding-bottom: 0;
+  }
+
+  .consultancy-man-wrapper {
+    height: clamp(480px, 65vh, 620px);
+    right: 0;
+    opacity: 0.85;
+  }
+
+  .consultancy-bar-content {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 768px) {
+  .consultancy-section {
+    min-height: auto;
+    padding-top: 30px;
+  }
+
+  .consultancy-inner {
+    min-height: auto;
+    padding: 24px 16px 0;
+  }
+
+  .consultancy-header {
+    max-width: 100%;
+    margin-bottom: 24px;
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .consultancy-subtitle {
+    margin: 0 auto;
+  }
+
+  .consultancy-bar {
+    flex-direction: column;
+    border-radius: 24px 24px 0 0;
+    padding: 36px 20px 0;
+    min-height: auto;
+    overflow: hidden;
+  }
+
+  .consultancy-bar-content {
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .consultancy-pill {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .consultancy-man-wrapper {
+    position: relative;
+    right: auto;
+    bottom: 0;
+    height: 340px;
+    margin: 0 auto;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .consultancy-man-img {
+    object-position: bottom center;
+  }
+
+  .consultancy-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .consultancy-cta-btn,
+  .consultancy-whatsapp-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
