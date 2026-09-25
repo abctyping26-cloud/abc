@@ -1,39 +1,35 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 interface ProcessStep {
-  number: number;
-  label: string;
+  number: string;
   title: string;
   description: string;
 }
 
 const steps: ProcessStep[] = [
   {
-    number: 1,
-    label: "Step 1",
+    number: "01.",
     title: "Initial Consultation",
     description:
       "Understanding your company's liquidation needs thoroughly within detailed consultation to assess your company's summary, understand your liquidation goals, and provide a clear roadmap tailored to your specific needs.",
   },
   {
-    number: 2,
-    label: "Step 2",
+    number: "02.",
     title: "Document Preparation",
     description:
       "Managing all necessary legal paperwork, our team handles all required documentation, from preparing liquidation board resolutions to compiling financial statements and ensuring all legal paperwork is accurate and complete.",
   },
   {
-    number: 3,
-    label: "Step 3",
+    number: "03.",
     title: "Government Approvals",
     description:
       "Handling legal clearances and formalities with relevant authorities to ensure necessary approvals, navigate cancelations, settling obligations, and obtaining final release document to relieve entities and stakeholders.",
   },
   {
-    number: 4,
-    label: "Step 4",
+    number: "04.",
     title: "Final Closure",
     description:
       "Company deregistration and completion of the process: the final step includes asset liquidation, debt settlement, conducting a final audit, and officially deregistering your company, ensuring complete legal closure with all documents and records.",
@@ -41,204 +37,130 @@ const steps: ProcessStep[] = [
 ];
 
 export default function ProcessSection() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [animKey, setAnimKey] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
 
-  const isHoveredRef = useRef(false);
-  isHoveredRef.current = isHovered;
-
-  const lastAdvanceTimeRef = useRef(Date.now());
-
-  // Advance to next step smoothly
-  const nextStep = useCallback(() => {
-    setActiveStep((prev) => (prev + 1) % steps.length);
-    setAnimKey((k) => k + 1);
-    lastAdvanceTimeRef.current = Date.now();
-  }, []);
-
-  // Continuous 3-second auto-advance loop (immune to iOS Safari timer throttling)
   useEffect(() => {
-    lastAdvanceTimeRef.current = Date.now();
-    let animId: number;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
 
-    const checkAutoAdvance = () => {
-      const now = Date.now();
-      if (now - lastAdvanceTimeRef.current >= 3000) {
-        if (!isHoveredRef.current) {
-          setActiveStep((prev) => (prev + 1) % steps.length);
-          setAnimKey((k) => k + 1);
-        }
-        lastAdvanceTimeRef.current = now;
-      }
-      animId = requestAnimationFrame(checkAutoAdvance);
-    };
-
-    animId = requestAnimationFrame(checkAutoAdvance);
-
-    // Fallback interval (runs every 1s, ensures advancing even if RAF paused during background/scroll)
-    const intervalId = setInterval(() => {
-      const now = Date.now();
-      if (now - lastAdvanceTimeRef.current >= 3000 && !isHoveredRef.current) {
-        setActiveStep((prev) => (prev + 1) % steps.length);
-        setAnimKey((k) => k + 1);
-        lastAdvanceTimeRef.current = now;
-      }
-    }, 1000);
+    const el = sectionRef.current;
+    if (el) observer.observe(el);
 
     return () => {
-      cancelAnimationFrame(animId);
-      clearInterval(intervalId);
+      if (el) observer.unobserve(el);
     };
   }, []);
 
-  // Resume smoothly if mobile browser tab was locked or backgrounded
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        lastAdvanceTimeRef.current = Date.now();
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
-
-  // Tap or click on any step circle to jump immediately
-  const handleSelectStep = (index: number) => {
-    setActiveStep(index);
-    setAnimKey((k) => k + 1);
-    lastAdvanceTimeRef.current = Date.now();
-  };
-
-  // Laptop/Desktop hover pause (strictly guarded against mobile touch devices)
-  const handleMouseEnter = () => {
-    if (
-      typeof window !== "undefined" &&
-      window.innerWidth > 820 &&
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches
-    ) {
-      setIsHovered(true);
+  const handleCtaClick = () => {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("abc:open-contact-modal"));
     }
   };
-
-  const handleMouseLeave = () => {
-    if (typeof window !== "undefined" && window.innerWidth > 820) {
-      setIsHovered(false);
-    }
-  };
-
-  const currentStep = steps[activeStep];
 
   return (
-    <section className="process-section" id="process">
+    <section
+      ref={sectionRef}
+      className={`process-section ${isInView ? "is-in-view" : ""}`}
+      id="process"
+    >
       <div className="container">
         {/* Section Header */}
         <div className="process-header" data-aos="fade-up">
-          <span className="process-kicker">STEP-BY-STEP ROADMAP</span>
-          <h2 className="process-title">Our Process</h2>
-        </div>
-
-        {/* 4 Connected Circles Network Row */}
-        <div className="process-network-wrapper" data-aos="fade-up" data-aos-delay="100">
-          <div
-            className="process-track"
-            role="tablist"
-            aria-label="Process navigation steps"
-          >
-            {steps.map((step, idx) => {
-              const isActive = activeStep === idx;
-              const isCompleted = idx < activeStep;
-
-              return (
-                <React.Fragment key={step.number}>
-                  {/* Node Button: native button with immediate tap & click support */}
-                  <button
-                    type="button"
-                    onClick={() => handleSelectStep(idx)}
-                    className={`process-node ${isActive ? "node-active" : ""} ${
-                      isCompleted ? "node-completed" : ""
-                    }`}
-                    role="tab"
-                    aria-selected={isActive}
-                    aria-label={`Step ${step.number}: ${step.title}`}
-                  >
-                    <div className="process-circle">
-                      {/* Active SVG countdown ring */}
-                      {isActive && (
-                        <svg
-                          className="process-circle-ring"
-                          viewBox="0 0 100 100"
-                          aria-hidden="true"
-                        >
-                          <circle
-                            className="ring-track"
-                            cx="50"
-                            cy="50"
-                            r="46"
-                          />
-                          <circle
-                            key={`ring-${activeStep}-${animKey}`}
-                            className={`ring-fill ${
-                              isHovered ? "ring-fill-paused" : ""
-                            }`}
-                            cx="50"
-                            cy="50"
-                            r="46"
-                          />
-                        </svg>
-                      )}
-                      <span className="process-circle-number">{step.number}</span>
-                    </div>
-                  </button>
-
-                  {/* Connecting Line between nodes */}
-                  {idx < steps.length - 1 && (
-                    <div
-                      className={`process-connector ${
-                        idx < activeStep ? "connector-active" : ""
-                      }`}
-                      aria-hidden="true"
-                    >
-                      <div
-                        className={`process-connector-line ${
-                          idx < activeStep ? "line-filled" : ""
-                        }`}
-                      />
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
+          <div className="process-title-container">
+            <h2 className="process-title">
+              <span className="process-title-line-1">
+                <span className="process-title-sweep sweep-1">Effortless Process,</span>
+              </span>
+              <span className="process-title-line-2">
+                <span className="process-title-text">
+                  <span className="process-title-sweep sweep-2">Continuous Supply</span>
+                </span>
+                <span className="process-divider" aria-hidden="true" />
+              </span>
+            </h2>
           </div>
         </div>
 
-        {/* Centered Idea Showcase Card directly under the circle row */}
-        <div
-          className="process-showcase-container"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="process-showcase-card">
-            {/* Top 3s countdown progress line */}
-            <div className="process-timer-track" aria-hidden="true">
-              <div
-                key={`bar-${activeStep}-${animKey}`}
-                className={`process-timer-bar ${
-                  isHovered ? "timer-paused" : ""
-                }`}
+        {/* 4 Cards Grid */}
+        <div className="process-grid" data-aos="fade-up" data-aos-delay="100">
+          {steps.map((step, idx) => (
+            <div key={step.number} className="process-card">
+              <div className="process-card-top">
+                <span className="process-card-number">{step.number}</span>
+                <h3 className="process-card-title">
+                  <span className={`process-card-title-sweep card-sweep-${idx + 1}`}>
+                    {step.title}
+                  </span>
+                </h3>
+              </div>
+              <p className="process-card-desc">{step.description}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Banner */}
+        <div className="process-banner" data-aos="fade-up" data-aos-delay="200">
+          <div className="process-banner-left">
+            <div className="process-avatar-stack" aria-hidden="true">
+              <Image
+                src="/images/person1.png"
+                alt="Client avatar 1"
+                width={40}
+                height={40}
+                className="process-avatar-img"
+              />
+              <Image
+                src="/images/person2.png"
+                alt="Client avatar 2"
+                width={40}
+                height={40}
+                className="process-avatar-img"
+              />
+              <Image
+                src="/images/person3.png"
+                alt="Client avatar 3"
+                width={40}
+                height={40}
+                className="process-avatar-img"
+              />
+              <Image
+                src="/images/avatar_1.png"
+                alt="Client avatar 4"
+                width={40}
+                height={40}
+                className="process-avatar-img"
               />
             </div>
-
-            {/* Inner Content with smooth entrance animation */}
-            <div className="process-showcase-inner" key={`content-${activeStep}`}>
-              <h3 className="process-showcase-title">{currentStep.title}</h3>
-              <p className="process-showcase-desc">{currentStep.description}</p>
-            </div>
+            <p className="process-banner-text">
+              Align with Businesses that <strong>Choose Quality</strong>
+            </p>
           </div>
+
+          <a
+            href="#enquiry"
+            onClick={handleCtaClick}
+            className="process-banner-btn"
+          >
+            <span className="process-banner-btn-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </span>
+            <span>Start Now</span>
+          </a>
         </div>
       </div>
     </section>
