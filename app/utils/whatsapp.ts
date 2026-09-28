@@ -6,7 +6,7 @@
 export const DEFAULT_WHATSAPP_PHONE =
   process.env.NEXT_PUBLIC_WHATSAPP_PHONE ||
   process.env.NEXT_PUBLIC_CONTACT_PHONE?.replace(/\D/g, "") ||
-  "97126427667";
+  "971543078430";
 
 /**
  * Returns a standardized wa.me link with encoded pre-filled text
