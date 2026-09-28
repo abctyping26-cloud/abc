@@ -179,6 +179,55 @@
   transition: color 0.15s ease;
 }
 
+/* WhatsApp Item & Direct Open Button */
+.contact-whatsapp-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 0;
+  width: 100%;
+}
+
+.contact-modal-whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background-color: #25d366;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  padding: 11px 24px;
+  border-radius: 9999px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.28);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.contact-modal-whatsapp-btn:hover {
+  background-color: #20ba59;
+  transform: translateY(-1.5px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.38);
+  color: #ffffff;
+}
+
+.contact-modal-whatsapp-btn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.contact-modal-whatsapp-icon {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
 /* Modal Animations */
 @keyframes contactModalFadeIn {
   from {
@@ -208,5 +257,13 @@
 
   .contact-text-value {
     font-size: 1.05rem;
+  }
+
+  .contact-modal-whatsapp-btn {
+    padding: 10px 20px;
+    font-size: 0.92rem;
+    width: 100%;
+    max-width: 240px;
+    box-sizing: border-box;
   }
 }
