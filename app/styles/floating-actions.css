@@ -129,6 +129,15 @@
 }
 
 /* Responsive Adaptations */
+@media (max-width: 768px) {
+  /* On mobile and tablet devices, keep floating actions ALWAYS visible and reachable from page load */
+  .floating-actions.is-hidden {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+  }
+}
+
 @media (max-width: 600px) {
   .floating-actions {
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
@@ -148,5 +157,17 @@
 
   .floating-tooltip {
     display: none; /* keep clean on touchscreens */
+  }
+
+  /* Make WhatsApp icon prominently green with white icon on mobile touchscreens */
+  .floating-whatsapp-btn {
+    background-color: #25d366;
+    color: #ffffff;
+    border-color: #25d366;
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+  }
+
+  .floating-whatsapp-btn .floating-icon {
+    fill: #ffffff;
   }
 }

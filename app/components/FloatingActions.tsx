@@ -9,9 +9,16 @@ interface FloatingActionsProps {
 
 export default function FloatingActions({ serviceContext }: FloatingActionsProps = {}) {
   const [inHero, setInHero] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
 
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+
     const heroEl = document.getElementById("hero") || document.querySelector(".hero-section");
     if (!heroEl) {
       setInHero(false);
@@ -53,6 +60,7 @@ export default function FloatingActions({ serviceContext }: FloatingActionsProps
     return () => {
       sectionObservers.forEach((obs) => obs.disconnect());
       window.removeEventListener("scroll", checkHeroVisibility);
+      window.removeEventListener("resize", checkMobile);
     };
   }, []);
 
@@ -96,11 +104,13 @@ export default function FloatingActions({ serviceContext }: FloatingActionsProps
     }
   };
 
+  const isHidden = inHero && !isMobile;
+
   return (
     <aside
-      className={`floating-actions ${inHero ? "is-hidden" : ""}`}
+      className={`floating-actions ${isHidden ? "is-hidden" : ""}`}
       aria-label="Quick Actions"
-      aria-hidden={inHero}
+      aria-hidden={isHidden}
     >
       {/* 1. Search */}
       <div className="floating-item">

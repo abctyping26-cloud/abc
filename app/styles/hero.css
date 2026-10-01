@@ -106,6 +106,7 @@
 .hero-cta-group {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 6px;
 }
@@ -150,6 +151,40 @@
 
 .hero-cta-btn:hover .sleek-arrow {
   transform: translateX(3px);
+}
+
+/* WhatsApp Pill Button alongside Send a Message */
+.hero-whatsapp-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background-color: #25d366;
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  height: 50px;
+  padding: 0 24px;
+  border-radius: 9999px;
+  border: none;
+  width: fit-content;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.hero-whatsapp-pill-btn:hover {
+  background-color: #20ba59;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+.hero-whatsapp-pill-btn svg {
+  flex-shrink: 0;
 }
 
 /* WhatsApp Icon Button alongside Book a Call */
@@ -548,6 +583,12 @@
   .hero-cta-btn {
     height: 46px;
     padding: 0 20px;
+    font-size: 0.88rem;
+  }
+
+  .hero-whatsapp-pill-btn {
+    height: 46px;
+    padding: 0 18px;
     font-size: 0.88rem;
   }
 
