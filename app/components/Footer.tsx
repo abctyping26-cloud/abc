@@ -25,6 +25,7 @@ const COLUMN_2_SERVICES = [
   { label: "Abu Dhabi Driving License", href: "/services/abu-dhabi-driving-license" },
   { label: "Vehicle Services Abu Dhabi", href: "/services/vehicle-services-abu-dhabi" },
   { label: "General Insurance Services", href: "/services/general-insurance-services" },
+  { label: "UAE Pass Assistance", href: "/services/uae-pass-assistance" },
   { label: "Digital Marketing Abu Dhabi", href: "/services/digital-marketing-abu-dhabi" },
 ];
 

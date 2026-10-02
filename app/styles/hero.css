@@ -21,7 +21,8 @@
 .hero-box {
   margin: var(--hero-margin);
   width: calc(100% - (var(--hero-margin) * 2));
-  min-height: calc(100vh - (var(--hero-margin) * 2));
+  min-height: calc(100vh - (var(--hero-margin) * 2) - var(--top-announcement-height, 38px));
+  min-height: calc(100dvh - (var(--hero-margin) * 2) - var(--top-announcement-height, 38px));
   border-radius: var(--hero-box-radius);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: none;
@@ -557,8 +558,8 @@
     padding: 76px 18px 76px;
     margin: 12px;
     width: calc(100% - 24px);
-    min-height: calc(100vh - 24px);
-    min-height: calc(100dvh - 24px);
+    min-height: calc(100vh - 24px - var(--top-announcement-height, 34px));
+    min-height: calc(100dvh - 24px - var(--top-announcement-height, 34px));
   }
 
   .hero-content {

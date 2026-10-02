@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import AuthToast from "./components/AuthToast";
 import AOSInit from "./components/AosInit";
 import ServerWarmer from "./components/ServerWarmer";
+import TopAnnouncementBar from "./components/TopAnnouncementBar";
 import "aos/dist/aos.css";
 import "./globals.css";
 
@@ -46,6 +47,9 @@ export const metadata: Metadata = {
     "VAT consultancy Abu Dhabi",
     "TAMM Abu Dhabi services",
     "Tasheel services Abu Dhabi",
+    "UAE Pass registration Abu Dhabi",
+    "UAE Pass kiosk assistance",
+    "UAE Pass phone number update",
     "Musaffah ME9 typing center",
   ],
   authors: [{ name: "ABC Typing Services", url: "https://www.abcauh.ae" }],
@@ -217,6 +221,15 @@ const jsonLd = {
             "Official LLC and commercial license cancellation, liquidator appointment, and clearance reports in Abu Dhabi & UAE.",
         },
       },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "UAE Pass Registration & Kiosk Assistance",
+          description:
+            "Official verification, kiosk biometrics upgrade, mobile number recovery, and qualified digital signature setup in Abu Dhabi.",
+        },
+      },
     ],
   },
 };
@@ -237,6 +250,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <TopAnnouncementBar />
         <ServerWarmer />
         <AOSInit />
         <AuthToast />

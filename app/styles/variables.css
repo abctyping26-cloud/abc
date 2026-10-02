@@ -34,4 +34,11 @@
   /* Layout */
   --container-max-width: 1180px;
   --container-padding: 24px;
+  --top-announcement-height: 38px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --top-announcement-height: 34px;
+  }
 }

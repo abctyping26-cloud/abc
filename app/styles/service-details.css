@@ -16,7 +16,7 @@
    -------------------------------------------------------------------------- */
 .service-top-navbar {
   position: sticky;
-  top: 0;
+  top: var(--top-announcement-height, 38px);
   z-index: 50;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(14px);
@@ -3372,3 +3372,152 @@
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   Specialized UAE Pass Assistance Layout Modules
+   ========================================================================== */
+.uae-pass-troubleshoot-block,
+.uae-pass-upsell-block {
+  margin-top: 10px;
+}
+
+.uae-pass-troubleshoot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.uae-pass-card {
+  background-color: #ffffff;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.uae-pass-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08);
+}
+
+.uae-pass-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.uae-pass-card-icon.red {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.uae-pass-card-icon.amber {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.uae-pass-card-icon.blue {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.uae-pass-card-icon.green {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+.uae-pass-card-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.uae-pass-card-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #52525b;
+  margin: 0;
+}
+
+.uae-pass-upsell-subtitle {
+  font-size: 0.92rem;
+  color: #52525b;
+  margin-top: -6px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.uae-pass-links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.uae-pass-link-card {
+  background: linear-gradient(180deg, #fafafa 0%, #f4f4f5 100%);
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  padding: 20px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.uae-pass-link-card:hover {
+  background: #ffffff;
+  border-color: #0f172a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.1);
+}
+
+.uae-pass-link-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #2563eb;
+}
+
+.uae-pass-link-card h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.uae-pass-link-card p {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: #52525b;
+  margin: 0;
+}
+
+.uae-pass-link-arrow {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+@media (max-width: 680px) {
+  .uae-pass-troubleshoot-grid,
+  .uae-pass-links-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

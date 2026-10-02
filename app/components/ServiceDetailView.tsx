@@ -288,6 +288,112 @@ export default function ServiceDetailView({
               </div>
             </section>
 
+            {/* Specialized UAE Pass Troubleshooting & Downstream Upsell Guide */}
+            {service.slug === "uae-pass-assistance" && (
+              <>
+                <section className="uae-pass-troubleshoot-block">
+                  <span className="service-block-kicker">COMMON BLOCKERS RESOLVED</span>
+                  <h2 className="service-block-heading">
+                    Troubleshooting Common UAE Pass Errors
+                  </h2>
+                  <div className="uae-pass-troubleshoot-grid">
+                    <div className="uae-pass-card">
+                      <div className="uae-pass-card-icon red">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          <line x1="1" y1="1" x2="23" y2="23" strokeWidth="2.5" />
+                        </svg>
+                      </div>
+                      <h3 className="uae-pass-card-title">Lost / Inactive Phone Number</h3>
+                      <p className="uae-pass-card-desc">
+                        Cannot receive 2FA SMS verification because your old SIM was cancelled? We assist with identity recovery and updating your registered mobile number directly via ICP and kiosk systems.
+                      </p>
+                    </div>
+
+                    <div className="uae-pass-card">
+                      <div className="uae-pass-card-icon amber">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M9 10h.01M15 10h.01M9.5 15.5a3.5 3.5 0 0 1 5 0" />
+                        </svg>
+                      </div>
+                      <h3 className="uae-pass-card-title">Face-Scan & Camera Failures</h3>
+                      <p className="uae-pass-card-desc">
+                        Biometric scanning errors occur when lighting is poor or when ICP facial records require refresh. We guide you to immediate in-person fingerprint verification at Musaffah kiosk terminals.
+                      </p>
+                    </div>
+
+                    <div className="uae-pass-card">
+                      <div className="uae-pass-card-icon blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                          <line x1="16" y1="13" x2="8" y2="13" />
+                          <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                      </div>
+                      <h3 className="uae-pass-card-title">Basic to Verified Upgrade</h3>
+                      <p className="uae-pass-card-desc">
+                        Government portals like TAMM, MOHRE, and Police require a Verified Profile with a Qualified Digital Signature. We upgrade your credentials so you can legally sign contracts online.
+                      </p>
+                    </div>
+
+                    <div className="uae-pass-card">
+                      <div className="uae-pass-card-icon green">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg>
+                      </div>
+                      <h3 className="uae-pass-card-title">Corporate Profile Linking</h3>
+                      <p className="uae-pass-card-desc">
+                        Cannot view your trade license or employee quotas inside TAMM? We link your personal Emirates ID to your establishment card with ADDED and the Ministry of Human Resources.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="uae-pass-upsell-block">
+                  <span className="service-block-kicker">ONE DIGITAL ID FOR ALL SERVICES</span>
+                  <h2 className="service-block-heading">
+                    What Are You Setting Up UAE Pass For?
+                  </h2>
+                  <p className="uae-pass-upsell-subtitle">
+                    Once your UAE Pass is verified, our senior PRO desk can immediately fast-track your downstream government transactions:
+                  </p>
+                  <div className="uae-pass-links-grid">
+                    <Link href="/services/business-setup-services" className="uae-pass-link-card">
+                      <span className="uae-pass-link-tag">Corporate</span>
+                      <h4>Mainland Business Setup</h4>
+                      <p>Instant trade name reservation, Tawtheeq, and commercial license issuance via TAMM.</p>
+                      <span className="uae-pass-link-arrow">Explore Setup →</span>
+                    </Link>
+
+                    <Link href="/services/abu-dhabi-driving-license" className="uae-pass-link-card">
+                      <span className="uae-pass-link-tag">Traffic</span>
+                      <h4>Driving License Conversion</h4>
+                      <p>Open driving files, convert foreign licenses, and process eye tests online.</p>
+                      <span className="uae-pass-link-arrow">License Services →</span>
+                    </Link>
+
+                    <Link href="/services/golden-visa-10-year" className="uae-pass-link-card">
+                      <span className="uae-pass-link-tag">Residency</span>
+                      <h4>10-Year Golden Visa</h4>
+                      <p>Pre-approval nomination, ICP document verification, and VIP medical clearance.</p>
+                      <span className="uae-pass-link-arrow">Golden Visa →</span>
+                    </Link>
+
+                    <Link href="/services/vehicle-services-abu-dhabi" className="uae-pass-link-card">
+                      <span className="uae-pass-link-tag">Transport</span>
+                      <h4>Vehicle Title Transfer</h4>
+                      <p>100% digital remote ownership transfer and Mulkiya renewals without visiting traffic departments.</p>
+                      <span className="uae-pass-link-arrow">Vehicle Transfer →</span>
+                    </Link>
+                  </div>
+                </section>
+              </>
+            )}
+
             {/* 3. Frequently Asked Questions */}
             {service.faqs && service.faqs.length > 0 && (
               <section className="service-faq-block">

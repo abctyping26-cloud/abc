@@ -13,6 +13,7 @@ const SERVICE_LABELS: Record<string, string> = {
   "attestation": "Certificate Attestation & Legal Translation",
   "tax-vat": "Corporate Tax, VAT & Accounting",
   "police-clearance": "Police Clearance & Approvals",
+  "uae-pass": "UAE Pass Registration & Kiosk Support",
   "other": "Other",
 };
 
@@ -265,6 +266,7 @@ export default function EnquirySection() {
                       <option value="attestation">Certificate Attestation &amp; Legal Translation</option>
                       <option value="tax-vat">Corporate Tax, VAT &amp; Accounting</option>
                       <option value="police-clearance">Police Clearance &amp; Approvals</option>
+                      <option value="uae-pass">UAE Pass Registration &amp; Kiosk Support</option>
                       <option value="other">Other (Specify)</option>
                     </select>
                     <span className="enquiry-select-arrow" aria-hidden="true">
