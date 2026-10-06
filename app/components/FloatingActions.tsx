@@ -164,7 +164,7 @@ export default function FloatingActions({ serviceContext }: FloatingActionsProps
       {/* 3. Map */}
       <div className="floating-item">
         <a
-          href="https://maps.app.goo.gl/Zfy3m3sPpGNJDLtr5"
+          href="https://maps.app.goo.gl/jffQWNvko3vaLCfz8"
           target="_blank"
           rel="noopener noreferrer"
           className="floating-btn floating-map-btn"
