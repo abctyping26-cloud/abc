@@ -256,17 +256,22 @@ export default function HeroSection() {
                   </a>
 
                   {currentUser ? (
-                    <a
-                      href="#logout"
-                      role="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleLogout();
-                      }}
-                      className="hero-login-btn"
-                    >
-                      Logout
-                    </a>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <Link href="/dashboard" className="hero-login-btn" style={{ background: "rgba(255, 255, 255, 0.15)" }}>
+                        Dashboard
+                      </Link>
+                      <a
+                        href="#logout"
+                        role="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLogout();
+                        }}
+                        className="hero-login-btn"
+                      >
+                        Logout
+                      </a>
+                    </div>
                   ) : (
                     <Link href="/login" className="hero-login-btn">
                       Login
@@ -373,17 +378,22 @@ export default function HeroSection() {
                   </a>
 
                   {currentUser ? (
-                    <a
-                      href="#logout"
-                      role="button"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleLogout();
-                      }}
-                      className="hero-login-btn"
-                    >
-                      Logout
-                    </a>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <Link href="/dashboard" className="hero-login-btn" style={{ background: "rgba(255, 255, 255, 0.15)" }}>
+                        Dashboard
+                      </Link>
+                      <a
+                        href="#logout"
+                        role="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLogout();
+                        }}
+                        className="hero-login-btn"
+                      >
+                        Logout
+                      </a>
+                    </div>
                   ) : (
                     <Link href="/login" className="hero-login-btn">
                       Login

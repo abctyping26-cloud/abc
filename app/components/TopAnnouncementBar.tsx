@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import "../styles/top-announcement.css";
 
 interface MarqueeItem {
@@ -32,11 +33,15 @@ const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export default function TopAnnouncementBar() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   const [isActive, setIsActive] = useState<boolean>(true);
   const [speedSeconds, setSpeedSeconds] = useState<number>(32);
   const [items, setItems] = useState<MarqueeItem[]>(DEFAULT_ITEMS);
 
   useEffect(() => {
+    if (!isHomePage) return;
     let isMounted = true;
 
     async function loadMarqueeConfig() {
@@ -65,25 +70,35 @@ export default function TopAnnouncementBar() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [isHomePage]);
 
   // Update root CSS variable when visibility changes
   useEffect(() => {
     if (typeof document !== "undefined") {
-      if (!isActive) {
+      if (!isHomePage || !isActive) {
         document.documentElement.style.setProperty(
           "--top-announcement-height",
           "0px"
         );
       } else {
-        document.documentElement.style.removeProperty(
-          "--top-announcement-height"
+        const height = window.innerWidth <= 600 ? "34px" : "38px";
+        document.documentElement.style.setProperty(
+          "--top-announcement-height",
+          height
         );
       }
     }
-  }, [isActive]);
+    return () => {
+      if (typeof document !== "undefined") {
+        document.documentElement.style.setProperty(
+          "--top-announcement-height",
+          "0px"
+        );
+      }
+    };
+  }, [isHomePage, isActive]);
 
-  if (!isActive || items.length === 0) {
+  if (!isHomePage || !isActive || items.length === 0) {
     return null;
   }
 

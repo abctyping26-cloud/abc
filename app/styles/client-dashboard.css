@@ -1,0 +1,353 @@
+.client-dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* Sidebar */
+.client-sidebar {
+  width: 250px;
+  background-color: #0f172a;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #1e293b;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.client-sidebar-top {
+  padding: 24px 20px;
+}
+
+.client-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+}
+
+.client-brand-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #38bdf8;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.client-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.client-nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.client-nav-item:hover {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+
+.client-nav-item.active {
+  background-color: #1e293b;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.client-sidebar-bottom {
+  padding: 20px;
+  border-top: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.client-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.client-user-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.client-user-phone {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.client-logout-btn {
+  width: 100%;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.client-logout-btn:hover {
+  background-color: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
+}
+
+/* Main Area */
+.client-main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.client-header {
+  height: 64px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+.client-header-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.client-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.client-contact-pill {
+  font-size: 0.84rem;
+  color: #475569;
+  background-color: #f1f5f9;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.15s;
+}
+
+.client-contact-pill:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+.client-content {
+  padding: 32px;
+  flex: 1;
+  max-width: 960px;
+}
+
+/* Cards & Sections */
+.client-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.client-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 16px;
+}
+
+/* Status Pill */
+.client-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.client-status-badge.in-progress {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.client-status-badge.completed {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.client-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.client-status-badge.in-progress .client-status-dot {
+  background-color: #d97706;
+}
+
+.client-status-badge.completed .client-status-dot {
+  background-color: #16a34a;
+}
+
+/* Files List */
+.client-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.client-file-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.client-file-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.client-file-sub {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.client-download-btn {
+  padding: 6px 14px;
+  background-color: #0f172a;
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.client-download-btn:hover {
+  opacity: 0.9;
+}
+
+/* Table */
+.client-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.client-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.client-table td {
+  padding: 12px;
+  font-size: 0.88rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Key Value Grid */
+.client-kv-grid {
+  display: grid;
+  grid-templateColumns: 1fr 1fr;
+  gap: 16px;
+}
+
+.client-kv-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.client-kv-label {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.client-kv-val {
+  font-size: 0.92rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .client-dashboard-layout {
+    flex-direction: column;
+  }
+  .client-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #1e293b;
+  }
+  .client-sidebar-top {
+    padding: 16px 20px;
+    margin-bottom: 0;
+  }
+  .client-brand {
+    margin-bottom: 16px;
+  }
+  .client-nav {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+  .client-content {
+    padding: 20px 16px;
+  }
+  .client-header {
+    padding: 0 16px;
+  }
+  .client-kv-grid {
+    grid-template-columns: 1fr;
+  }
+}

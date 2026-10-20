@@ -8,34 +8,28 @@ const API_BASE_URL =
 
 export default function LoginForm() {
   const router = useRouter();
-  const [identifier, setIdentifier] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [name, setName] = useState("");
+  const [countryCode, setCountryCode] = useState("+971");
+  const [phoneDigits, setPhoneDigits] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSlowResponse, setIsSlowResponse] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Pre-warm the home route in the background for instant, seamless navigation
   useEffect(() => {
-    router.prefetch("/");
+    router.prefetch("/dashboard");
   }, [router]);
-
-  // Show friendly wake-up status if authentication takes longer than 3.5 seconds
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    if (isSubmitting) {
-      timer = setTimeout(() => {
-        setIsSlowResponse(true);
-      }, 3500);
-    } else {
-      setIsSlowResponse(false);
-    }
-    return () => clearTimeout(timer);
-  }, [isSubmitting]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!identifier.trim() || !password) return;
+    const cleanDigits = phoneDigits.replace(/\D/g, "").replace(/^0+/, "");
+    if (!cleanDigits || !password) {
+      setError("Please enter your phone number and password/PIN.");
+      return;
+    }
+
+    const fullPhoneNumber = `${countryCode}${cleanDigits}`;
 
     setIsSubmitting(true);
     setError(null);
@@ -47,18 +41,19 @@ export default function LoginForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          identifier: identifier.trim(),
+          identifier: fullPhoneNumber,
           password,
+          name: isSignUp ? name.trim() : undefined,
+          isSignUp,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to log in. Please try again.");
+        throw new Error(data.message || "Failed to log in.");
       }
 
-      // Store authentication token and user profile
       if (data.data?.token) {
         localStorage.setItem("abc_client_token", data.data.token);
       }
@@ -69,43 +64,18 @@ export default function LoginForm() {
         );
       }
 
-      // Save toast notification to sessionStorage so the home page displays it
-      const userIdentifier = data.data?.user?.identifier || identifier.trim();
-      const toastData = {
-        title: data.isNewUser ? "Account Created" : "Welcome Back",
-        message: `Logged in as ${userIdentifier}`,
-        isNewUser: Boolean(data.isNewUser),
-      };
-
-      try {
-        sessionStorage.setItem("abc_auth_toast", JSON.stringify(toastData));
-      } catch {
-        // Fallback or ignore
-      }
-
       window.dispatchEvent(
-        new CustomEvent("abc:toast", { detail: toastData })
+        new CustomEvent("abc:toast", {
+          detail: {
+            title: data.isNewUser ? "Account Created" : "Welcome Back",
+            message: `Logged in as ${data.data?.user?.identifier || fullPhoneNumber}`,
+          },
+        })
       );
 
-      // Keep spinner spinning while transitioning to the home page in background
-      await new Promise((resolve) => setTimeout(resolve, 550));
-
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: unknown) {
-      let message = "An unexpected error occurred. Please try again.";
-      if (err instanceof Error) {
-        if (
-          err.message.includes("Failed to fetch") ||
-          err.message.includes("NetworkError") ||
-          err.name === "TypeError"
-        ) {
-          message =
-            "Could not connect to the server. If it was sleeping, it may take up to 45 seconds to start. Please try again in a few seconds.";
-        } else {
-          message = err.message;
-        }
-      }
-      setError(message);
+      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
       setIsSubmitting(false);
     }
   };
@@ -113,193 +83,147 @@ export default function LoginForm() {
   return (
     <div className="login-form-container">
       <div className="login-form-header">
-        <h1 className="login-title">Log in to your account</h1>
-        <p className="login-subtitle" style={{ fontSize: "0.85rem", color: "#64748b", marginTop: "4px" }}>
-          New here? An account is automatically created on your first login.
-        </p>
+        <h1 className="login-title">{isSignUp ? "Create Account" : "Client Login"}</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="login-form">
-          {error && (
-            <div
-              style={{
-                padding: "10px 14px",
-                backgroundColor: "#fef2f2",
-                border: "1px solid #fecaca",
-                borderRadius: "10px",
-                color: "#b91c1c",
-                fontSize: "0.86rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <span>⚠️</span>
-              <span>{error}</span>
-            </div>
-          )}
+      <form onSubmit={handleSubmit} className="login-form" style={{ marginTop: "20px" }}>
+        {error && (
+          <div
+            style={{
+              padding: "10px 14px",
+              backgroundColor: "#fef2f2",
+              border: "1px solid #fecaca",
+              borderRadius: "8px",
+              color: "#b91c1c",
+              fontSize: "0.86rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <span>{error}</span>
+          </div>
+        )}
 
-          {/* Email or Phone Number */}
+        {isSignUp && (
           <div className="login-field">
-            <label htmlFor="login-identifier" className="login-label">
-              Email or Phone Number
+            <label htmlFor="login-name" className="login-label">
+              Full Name
             </label>
             <div className="login-input-wrapper">
               <input
-                id="login-identifier"
+                id="login-name"
                 type="text"
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-                placeholder="name@company.com or +971 50 000 0000"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your full name"
                 className="login-input"
-                required
+                required={isSignUp}
                 disabled={isSubmitting}
               />
             </div>
           </div>
+        )}
 
-          {/* Password Field */}
-          <div className="login-field">
-            <div className="login-field-header">
-              <label htmlFor="login-password" className="login-label">
-                Password
-              </label>
-              <a href="#forgot" className="login-forgot-link">
-                Forgot password?
-              </a>
-            </div>
-            <div className="login-input-wrapper">
-              <input
-                id="login-password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="login-input"
-                required
-                disabled={isSubmitting}
-              />
+        <div className="login-field">
+          <label htmlFor="login-phone" className="login-label">
+            Phone Number
+          </label>
+          <div className="login-phone-group">
+            <select
+              value={countryCode}
+              onChange={(e) => setCountryCode(e.target.value)}
+              className="login-country-select"
+              disabled={isSubmitting}
+              aria-label="Country Code"
+            >
+              <option value="+971">🇦🇪 +971 (UAE)</option>
+              <option value="+91">🇮🇳 +91 (IND)</option>
+            </select>
+            <input
+              id="login-phone"
+              type="tel"
+              value={phoneDigits}
+              onChange={(e) => setPhoneDigits(e.target.value)}
+              placeholder={countryCode === "+971" ? "50 123 4567" : "98765 43210"}
+              className="login-input login-phone-input"
+              required
+              disabled={isSubmitting}
+            />
+          </div>
+        </div>
+
+        <div className="login-field">
+          <label htmlFor="login-password" className="login-label">
+            {isSignUp ? "Password" : "6-Digit PIN or Password"}
+          </label>
+          <div className="login-input-wrapper">
+            <input
+              id="login-password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={isSignUp ? "Create a password" : "Enter 6-digit PIN from store"}
+              className="login-input"
+              required
+              disabled={isSubmitting}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="login-password-toggle"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="login-submit-btn"
+          disabled={isSubmitting}
+          style={{
+            opacity: isSubmitting ? 0.85 : 1,
+            cursor: isSubmitting ? "wait" : "pointer",
+            marginTop: "8px",
+          }}
+        >
+          {isSubmitting ? "Please wait..." : isSignUp ? "Create Account" : "Log In"}
+        </button>
+
+        <div className="login-switch-row">
+          {isSignUp ? (
+            <>
+              Already have an account?
               <button
                 type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="login-password-toggle"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                onClick={() => {
+                  setIsSignUp(false);
+                  setError(null);
+                }}
+                className="login-switch-btn"
               >
-                {showPassword ? (
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  >
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                  </svg>
-                ) : (
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
+                Log in
               </button>
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="login-submit-btn"
-            disabled={isSubmitting}
-            style={{
-              opacity: isSubmitting ? 0.85 : 1,
-              cursor: isSubmitting ? "wait" : "pointer",
-            }}
-          >
-            {isSubmitting ? (
-              <>
-                <span className="login-spinner" />
-                <span>Signing in...</span>
-              </>
-            ) : (
-              <>
-                <span>Sign In / Auto Register</span>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </>
-            )}
-          </button>
-          {isSlowResponse && (
-            <div
-              style={{
-                marginTop: "8px",
-                padding: "8px 12px",
-                backgroundColor: "#f8fafc",
-                border: "1px solid #e2e8f0",
-                borderRadius: "8px",
-                fontSize: "0.8rem",
-                color: "#64748b",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-              }}
-            >
-              <span>⏳</span>
-              <span>Server is waking up from sleep mode, please wait a moment...</span>
-            </div>
+            </>
+          ) : (
+            <>
+              Don&apos;t have an account?
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignUp(true);
+                  setError(null);
+                }}
+                className="login-switch-btn"
+              >
+                Sign up
+              </button>
+            </>
           )}
-
-          {/* Divider */}
-          <div className="login-divider">
-            <span>or</span>
-          </div>
-
-          {/* Google One-Click Login */}
-          <button
-            type="button"
-            className="login-google-btn"
-            onClick={() => alert("Redirecting to Google Sign-In...")}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="18"
-              height="18"
-              aria-hidden="true"
-            >
-              <path
-                fill="#4285F4"
-                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"
-              />
-              <path
-                fill="#34A853"
-                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"
-              />
-              <path
-                fill="#FBBC05"
-                d="M5.28 14.27A7.18 7.18 0 0 1 4.9 12c0-.79.14-1.57.38-2.27V6.58H1.25A11.97 11.97 0 0 0 0 12c0 1.92.45 3.74 1.25 5.42l4.03-3.15z"
-              />
-              <path
-                fill="#EA4335"
-                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
-              />
-            </svg>
-            <span>Sign in with Google</span>
-          </button>
-        </form>
+        </div>
+      </form>
     </div>
   );
 }
