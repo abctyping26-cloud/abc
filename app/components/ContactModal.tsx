@@ -12,7 +12,8 @@ interface ContactModalProps {
 const PHONE_NUMBER = process.env.NEXT_PUBLIC_CONTACT_PHONE || "+971 2 642 7667";
 const WHATSAPP_PHONE =
   process.env.NEXT_PUBLIC_WHATSAPP_PHONE || DEFAULT_WHATSAPP_PHONE || "971543078430";
-const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@abctyping.ae";
+const EMAIL_ADDRESS = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@abcauh.ae";
+const ADDRESS_TEXT = "17 Al Asad St - Musaffah - ME9, Abu Dhabi";
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [mounted, setMounted] = useState(false);
@@ -181,7 +182,51 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
             <span className="contact-text-value">{PHONE_NUMBER}</span>
           </div>
 
-          {/* 2. WhatsApp Direct Button */}
+          {/* 2. Email */}
+          <div
+            className="contact-text-item"
+            onMouseEnter={() => handleMouseEnter("email")}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => handleCopy(EMAIL_ADDRESS, "email")}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleCopy(EMAIL_ADDRESS, "email");
+              }
+            }}
+            title="Click to copy email address"
+          >
+            <span className="contact-text-label">
+              Email {copiedField === "email" && <span className="mobile-copied-tag">Copied!</span>}
+            </span>
+            <span className="contact-text-value">{EMAIL_ADDRESS}</span>
+          </div>
+
+          {/* 3. Location / Address */}
+          <div
+            className="contact-text-item"
+            onMouseEnter={() => handleMouseEnter("address")}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => handleCopy(ADDRESS_TEXT, "address")}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                handleCopy(ADDRESS_TEXT, "address");
+              }
+            }}
+            title="Click to copy address"
+          >
+            <span className="contact-text-label">
+              Location / Address {copiedField === "address" && <span className="mobile-copied-tag">Copied!</span>}
+            </span>
+            <span className="contact-text-value contact-address-text">{ADDRESS_TEXT}</span>
+          </div>
+
+          {/* 4. WhatsApp Direct Button */}
           <div
             className="contact-whatsapp-item"
             onMouseEnter={handleMouseLeave}
@@ -205,28 +250,6 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               </svg>
               <span>Chat on WhatsApp</span>
             </a>
-          </div>
-
-          {/* 3. Email */}
-          <div
-            className="contact-text-item"
-            onMouseEnter={() => handleMouseEnter("email")}
-            onMouseLeave={handleMouseLeave}
-            onClick={() => handleCopy(EMAIL_ADDRESS, "email")}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleCopy(EMAIL_ADDRESS, "email");
-              }
-            }}
-            title="Click to copy email address"
-          >
-            <span className="contact-text-label">
-              Email {copiedField === "email" && <span className="mobile-copied-tag">Copied!</span>}
-            </span>
-            <span className="contact-text-value">{EMAIL_ADDRESS}</span>
           </div>
         </div>
       </div>

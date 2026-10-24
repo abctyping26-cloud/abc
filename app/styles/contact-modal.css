@@ -179,6 +179,13 @@
   transition: color 0.15s ease;
 }
 
+.contact-address-text {
+  font-size: 0.95rem;
+  line-height: 1.35;
+  text-align: center;
+  max-width: 290px;
+}
+
 /* WhatsApp Item & Direct Open Button */
 .contact-whatsapp-item {
   display: flex;

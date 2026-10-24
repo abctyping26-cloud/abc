@@ -260,15 +260,79 @@
 
 
 /* ==========================================================================
-   Right Column: WhatsApp Capsule Only (Vertical Split)
+   Right Column: Contact Details + WhatsApp Capsule (Clean & Unboxed)
    ========================================================================== */
 .enquiry-right-col {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   border-left: 1px solid #e2e8f0;
   padding-left: clamp(40px, 6vw, 84px);
   min-height: 400px;
+}
+
+.enquiry-contact-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 440px;
+}
+
+.enquiry-contact-heading {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: clamp(1.8rem, 2.8vw, 2.2rem);
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 24px 0;
+}
+
+.enquiry-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.enquiry-detail-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #1e293b;
+  transition: color 0.2s ease, transform 0.2s ease;
+  width: fit-content;
+}
+
+.enquiry-detail-row:hover {
+  color: var(--accent-blue, #1868db);
+  transform: translateX(2px);
+}
+
+.enquiry-detail-icon {
+  width: 20px;
+  height: 20px;
+  stroke: #475569;
+  flex-shrink: 0;
+  transition: stroke 0.2s ease;
+}
+
+.enquiry-detail-row:hover .enquiry-detail-icon {
+  stroke: var(--accent-blue, #1868db);
+}
+
+.enquiry-detail-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: inherit;
+  line-height: 1.4;
+}
+
+.enquiry-whatsapp-wrap {
+  display: flex;
+  width: 100%;
 }
 
 .enquiry-whatsapp-capsule {
@@ -278,22 +342,23 @@
   gap: 12px;
   background-color: #25d366;
   color: #ffffff;
-  padding: 16px 36px;
+  padding: 15px 32px;
   border-radius: 9999px;
   font-family: 'Plus Jakarta Sans', 'Inter', var(--font-family);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.02rem;
+  font-weight: 650;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.28);
+  box-shadow: 0 4px 18px rgba(37, 211, 102, 0.28);
   transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .enquiry-whatsapp-capsule:hover {
   background-color: #20ba59;
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.42);
+  box-shadow: 0 8px 26px rgba(37, 211, 102, 0.38);
 }
 
 .enquiry-whatsapp-icon {
@@ -325,6 +390,10 @@
     min-height: auto;
   }
 
+  .enquiry-contact-card {
+    max-width: 100%;
+  }
+
   .enquiry-submit-btn {
     width: 100%;
   }
@@ -350,6 +419,24 @@
 
   .enquiry-right-col {
     padding-top: 36px;
+  }
+
+  .enquiry-contact-heading {
+    font-size: 1.6rem;
+  }
+
+  .enquiry-details-list {
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .enquiry-detail-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .enquiry-detail-text {
+    font-size: 0.95rem;
   }
 
   .enquiry-input,
